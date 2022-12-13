@@ -1,0 +1,6 @@
+package com.example.sublet_app
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity() {
+}
