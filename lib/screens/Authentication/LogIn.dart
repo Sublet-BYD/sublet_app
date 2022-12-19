@@ -8,7 +8,7 @@ class LogIn extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Log In page')),
       body: const Center(
-        child: Text('Log In page'),
+        child: LoginForm(),
       ),
     );
   }
