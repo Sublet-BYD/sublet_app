@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:sublet_app/screens/Owner/new_property.dart';
+import '/screens/Owner/properties_list_view.dart';
 
 class ManageProperties extends StatelessWidget {
   const ManageProperties({super.key});
@@ -15,6 +16,9 @@ class ManageProperties extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String _recently = 'Recently Added';
+    final String _Accupied = 'Accupied Properties';
+
     return Scaffold(
       appBar: AppBar(title: Text('Manage Properties')),
       body: Column(
@@ -28,6 +32,17 @@ class ManageProperties extends StatelessWidget {
                 contentPadding: EdgeInsets.all(8.0),
                 border:
                     OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
+              ),
+            ),
+          ),
+          Container(
+            height: 589,
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  PropertiesListCategories(_recently),
+                  PropertiesListCategories(_Accupied),
+                ],
               ),
             ),
           )
