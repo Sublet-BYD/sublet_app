@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             ElevatedButton(
               child: const Text(
-                'Move to log in',
+                'Log in',
                 style: TextStyle(fontSize: 15.0),
               ),
               onPressed: () {
