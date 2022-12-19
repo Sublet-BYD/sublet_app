@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:sublet_app/screens/Owner/new_property.dart';
 
 class ManageProperties extends StatelessWidget {
   const ManageProperties({super.key});
+
+  void _startAddNewProperty(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (((context) => NewProperty())),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +32,12 @@ class ManageProperties extends StatelessWidget {
             ),
           )
         ],
+      ),
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.miniCenterFloat,
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: (() => _startAddNewProperty(context)),
       ),
     );
   }
