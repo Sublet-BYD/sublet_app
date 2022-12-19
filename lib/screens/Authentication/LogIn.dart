@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter/services.dart';
 class LogIn extends StatelessWidget {
   const LogIn({super.key});
 
@@ -26,35 +26,62 @@ class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    String res = 'No name';
+    String uname = 'No name';
+    String password = 'No password';
     return Form(
       key: _formKey, //Using our unique key
-      child: Column(
+       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          //Username widget
           TextFormField(
+            keyboardType: TextInputType.emailAddress,
+            decoration: const InputDecoration(
+              labelText: 'Username'
+            ),
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter some text';
               }
-              res = value;
+              uname = value;
+              return null;
+            },
+          ),
+          //Password widget
+          TextFormField(
+            decoration: const InputDecoration(
+              labelText: 'Password'
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter some text';
+              }
+              password = value;
               return null;
             },
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: ElevatedButton(
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {//Checking the validity of the form's state
-                  //Interaction with firebase here
-                  print(res);
-                }
+              onPressed: (){
+                OnSubmit(uname, password);
               },
-              child: const Text('Submit'),
+              child: const Text('Log in'),
             ),
           ),
         ],
-      ),
+      ), 
     );
+  }
+  void OnSubmit(String uname, String password){
+    if (_formKey.currentState!.validate()) {//Checking the validity of the form's state
+      //Interaction with firebase here
+      if(uname == 'No name' || password == 'No password'){
+        //Print an error message to the screen
+        
+      }
+      print(uname);
+      print(password);
+    }
   }
 }
