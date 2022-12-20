@@ -9,6 +9,10 @@ class PropertiesListCategories extends StatelessWidget {
 
   PropertiesListCategories(this._title, {super.key});
 
+  void onPropertyCardPress(BuildContext context, int asset_id) {
+    print(asset_id);
+  }
+
   final List<Property> _properties = [
     Property(
       id: UniqueKey(),
@@ -96,7 +100,9 @@ class PropertiesListCategories extends StatelessWidget {
                 padding: EdgeInsets.only(left: 10),
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
-                  return PropertyCard(this._properties[index]);
+                  return GestureDetector(
+                      onTap: (() => onPropertyCardPress(context, index)),
+                      child: PropertyCard(this._properties[index]));
                 },
                 itemCount: _properties.length,
               ),
