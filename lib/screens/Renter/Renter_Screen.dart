@@ -17,10 +17,22 @@ class _Renter_ScreenState extends State<Renter_Screen> {
       appBar: appBar,
       body: Column(
         children: [
-          Container(
-            //Implement sort here
-            height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top) *0.2,
-          ),
+          Container( // Temporary, will be changed into sort/search using multiple variables in the future.
+              height: (MediaQuery.of(context).size.height -
+                      appBar.preferredSize.height -
+                      MediaQuery.of(context).padding.top) * 0.2,
+              padding: EdgeInsets.only(top: 20, left: 40, right: 40),
+              child: TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Search',
+                  prefixIcon: Icon(Icons.search),
+                  contentPadding: EdgeInsets.all(8.0),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+              ),
+            ),
           Container(
             height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top) *0.8,           
             child: AssetList()
