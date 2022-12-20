@@ -52,12 +52,27 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
 
-          ElevatedButton(onPressed: null, child: const Text('Sign in'))
+          Text(
+              'Creating an account means you\'r okey with our Terms of Service and our Privacy Policy'),
+
+          ElevatedButton(
+              onPressed: () {
+                _navigateToNextScreen(context, 1);
+              },
+              child: const Text('Sign in')),
+
+          Text('Don\'t have an accont? '),
+
+          ElevatedButton(
+              onPressed: () {
+                _navigateToNextScreen(context, 2);
+              },
+              child: const Text('Sign up')),
         ],
       )),
     );
   }
-}
+
 //     return Scaffold(
 //       appBar: AppBar(title: Text('Sublet')),
 //       body: Center(
@@ -84,13 +99,14 @@ class _HomeScreenState extends State<HomeScreen> {
 //     );
 //   }
 
-//   void _navigateToNextScreen(BuildContext context, int tag) {
-//     if (tag == 1) {
-//       Navigator.of(context)
-//           .push(MaterialPageRoute(builder: (context) => LogIn()));
-//     } else if (tag == 2) {
-//       Navigator.of(context)
-//           .push(MaterialPageRoute(builder: (context) => Register()));
-//     }
-//   }
-// }
+  void _navigateToNextScreen(BuildContext context, int tag) {
+    if (tag == 1) {
+      Null;
+      // Navigator.of(context)
+      //     .push(MaterialPageRoute(builder: (context) => LogIn()));
+    } else if (tag == 2) {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => Register()));
+    }
+  }
+}
