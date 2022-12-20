@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:sublet_app/screens/Owner/properties_list_view.dart';
+import 'package:sublet_app/screens/Owner/properties_list_categories.dart';
 
 import 'property.dart';
 
@@ -29,12 +29,14 @@ class PropertyCard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              _property.name,
-              style: TextStyle(
-                  fontFamily: 'QuickSand',
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold),
+            FittedBox(
+              child: Text(
+                _property.name,
+                style: TextStyle(
+                    fontFamily: 'QuickSand',
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
             Text(
               'Location: ${_property.location}',

@@ -68,8 +68,10 @@ class PropertiesListCategories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final curScaleFactor = MediaQuery.of(context).textScaleFactor;
+
     return Container(
-      margin: EdgeInsets.only(top: 30),
+      margin: EdgeInsets.only(top: 10, bottom: 15),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,7 +81,7 @@ class PropertiesListCategories extends StatelessWidget {
               child: Text(
                 _title,
                 style: TextStyle(
-                  fontSize: 30,
+                  fontSize: 30 * curScaleFactor,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'OpenSans',
                 ),
@@ -89,7 +91,7 @@ class PropertiesListCategories extends StatelessWidget {
             // Row Presentation of the properties of this category.
 
             Container(
-              height: 200,
+              height: MediaQuery.of(context).size.height * 0.25,
               child: ListView.builder(
                 padding: EdgeInsets.only(left: 10),
                 scrollDirection: Axis.horizontal,
