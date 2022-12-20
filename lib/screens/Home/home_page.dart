@@ -121,13 +121,15 @@ class _AuthCardState extends State<AuthCard> {
 
   void _submit() {
     // validtion faild
-    if (_formKey.currentState!.validate()) {
+    if (!_formKey.currentState!.validate()) {
       //Invalid!
+      print('NOT VALID');
       return;
     }
     //valtion succeeced
     //save all input
     _formKey.currentState!.save();
+    print('SECCED!!');
 
     // set the loading spinner
     setState(() {
