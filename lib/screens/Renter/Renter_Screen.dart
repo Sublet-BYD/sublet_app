@@ -16,9 +16,9 @@ class _Renter_ScreenState extends State<Renter_Screen> {
       resizeToAvoidBottomInset: false, // Preventing pixel overflow warnings
       appBar: appBar,
       body: Column(
-        //Implement search here
         children: [
           Container(
+            //Implement sort here
             height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top) *0.2,
           ),
           Container(
@@ -37,13 +37,13 @@ class AssetList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 20),
+      padding: EdgeInsets.symmetric(horizontal: 5),
       alignment: Alignment.bottomCenter,
       child: ListView.builder(
         itemBuilder: (ctx, index) {
           return GestureDetector(
-            onTap: () => {
-              onPress(context, index),
+            onTap: () {
+              onPress(context, index);
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
