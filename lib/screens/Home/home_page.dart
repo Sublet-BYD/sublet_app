@@ -22,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
     String uname = 'No name';
     String password = 'No password';
 
-    //
+    //r
     final deviceSize = MediaQuery.of(context).size;
 
     return Scaffold(
