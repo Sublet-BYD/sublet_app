@@ -6,8 +6,6 @@ import 'package:sublet_app/screens/Owner/manage_properties.dart';
 import 'package:sublet_app/screens/Renter/Asset_Page.dart';
 import 'package:sublet_app/screens/Renter/Renter_Screen.dart';
 import 'package:sublet_app/screens/Owner/property_screen.dart';
-import './screens/Owner/manage_properties.dart';
-import './screens/Owner/property_screen.dart';
 import 'firebase_options.dart';
 import 'package:provider/provider.dart';
 
@@ -30,22 +28,23 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider.value(
-          value: Auth(),
-        ),
-      ],
-      child: MaterialApp(
-        title: 'Sublet',
-        theme: ThemeData(
-          primarySwatch: Colors.purple,
-          accentColor: Colors.deepOrange,
-          fontFamily: 'Lato',
-        ),
-        home: const HomeScreen(),
-      ),
-      home: const ManageProperties(),
-      routes: {'/property-screen': ((context) => PropertyScreen())},
-    );
+        providers: [
+          ChangeNotifierProvider.value(
+            value: Auth(),
+          ),
+        ],
+        //rebuild this part of the tree
+        //this ensure whenever that outh object changes
+        child: Consumer<Auth>(
+          builder: (ctx, auth, _) => MaterialApp(
+            title: 'Sublet',
+            theme: ThemeData(
+              primarySwatch: Colors.purple,
+              accentColor: Colors.deepOrange,
+              fontFamily: 'Lato',
+            ),
+            home: auth.isAuth ? ManageProperties() : HomeScreen(),
+          ),
+        ));
   }
 }
