@@ -15,28 +15,42 @@ class _Asset_PageState extends State<Asset_Page> {
     return Column(
       children: [
           //Image with buttons on top of it
-          Stack(
-            alignment: Alignment.topCenter,
-            children: [
-              //Image
-              Container(
-                  height: 300,
-                  width: MediaQuery.of(context).size.width,
-                  child: Image(image: AssetImage('assets/Apartment_example.jpg'),),
-              ),
-              //Back button
-              Positioned(
-                top:0,
-                left:0,
-                child: FloatingActionButton(
-                  child: Icon(Icons.arrow_back),
-                  onPressed: (){
-                    Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => Renter_Screen()));
-                  },
+          Expanded(
+            flex: 3,
+            child: Stack(
+              alignment: Alignment.topCenter,
+              children: [
+                //Image
+                Container(
+                    height: 300,
+                    width: MediaQuery.of(context).size.width,
+                    child: FittedBox(
+                      fit: BoxFit.fill,
+                      child: Image(image: AssetImage('assets/Apartment_example.jpg'),
+                      )
+                    ),
                 ),
-              ),
-            ],
+                //Back button
+                Positioned(
+                  top:0,
+                  left:0,
+                  child: FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    child: Icon(Icons.arrow_back),
+                    onPressed: (){
+                      Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) => Renter_Screen()));
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            flex: 7,
+            child: Container(
+              color: Colors.white,
+            ),
           ),
       ],
     );
