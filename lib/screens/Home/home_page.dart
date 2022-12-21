@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:sublet_app/providers/auth.dart';
 import 'package:sublet_app/screens/Authentication/LogIn.dart';
 import 'package:sublet_app/screens/Authentication/Register.dart';
 import 'dart:math';
+import 'package:provider/provider.dart';
 
 enum AuthMode { Signup, Login }
 
@@ -119,7 +121,7 @@ class _AuthCardState extends State<AuthCard> {
   var _isLoading = false;
   final _passwordController = TextEditingController();
 
-  void _submit() {
+  Future<void> _submit() async {
     // validtion faild
     if (!_formKey.currentState!.validate()) {
       //Invalid!
@@ -137,8 +139,12 @@ class _AuthCardState extends State<AuthCard> {
     });
     if (_authMode == AuthMode.Login) {
       // Log user in
+       await Provider.of<Auth>(context, listen: false).login(
+          _authData['email'].toString(), _authData['password'].toString());
     } else {
       // Sign user up
+      await Provider.of<Auth>(context, listen: false).signup(
+          _authData['email'].toString(), _authData['password'].toString());
     }
     setState(() {
       _isLoading = false;
@@ -195,6 +201,7 @@ class _AuthCardState extends State<AuthCard> {
                   },
                 ),
                 TextFormField(
+                  controller: _passwordController,
                   decoration: InputDecoration(labelText: 'Password'),
                   // make sure input show to the user
                   obscureText: true,
@@ -205,6 +212,7 @@ class _AuthCardState extends State<AuthCard> {
                   },
                   onSaved: (value) {
                     _authData['password'] = value.toString();
+                    print(value);
                   },
                 ),
                 if (_authMode == AuthMode.Signup)
@@ -216,6 +224,9 @@ class _AuthCardState extends State<AuthCard> {
                         //check the password match
                         ? (value) {
                             if (value != _passwordController.text) {
+                              print("dbug");
+                              print("value ${value}");
+                              print(_passwordController.text);
                               return 'Passwords do not match!';
                             }
                           }

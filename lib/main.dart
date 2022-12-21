@@ -1,8 +1,12 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:sublet_app/screens/Home/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:sublet_app/screens/Owner/manage_properties.dart';
 import 'firebase_options.dart';
+import 'package:provider/provider.dart';
+
+import './providers/auth.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,12 +24,21 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(
+          value: Auth(),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Sublet',
+        theme: ThemeData(
+          primarySwatch: Colors.purple,
+          accentColor: Colors.deepOrange,
+          fontFamily: 'Lato',
+        ),
+        home: const HomeScreen(),
       ),
-      home: const ManageProperties(),
     );
   }
 }
