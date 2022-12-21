@@ -1,41 +1,81 @@
 //this clas mange all out user logic (sign up ,loggin, loggout ,and also make sure when the app restart
 // we try loggin in user again)
+//Firebase Auth REST API
 
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import '../models/http_exception.dart';
 
 class Auth with ChangeNotifier {
-  // String _token; // expire at some point of the time
-  // DateTime _expriryDate;
-  // String _userId;
+  String _token = ''; // expire at some point of the time
+  DateTime _expiryDate = DateTime.now();
+  String _userId = '';
+
+//if we have a token and the token didnt expire then then user is authenticated
+  bool get isAuth {
+    return token != '';
+  }
+
+  String get token {
+    // if it's null we cants  have a vaild token
+    if (_expiryDate != null &&
+        _expiryDate.isAfter(DateTime.now()) &&
+        _token != '') {
+      return _token;
+    }
+    return '';
+  }
 
   Future<void> _authentication(
       String email, String password, String UrlSegment) async {
-    final url = Uri.parse(
-        'https://identitytoolkit.googleapis.com/v1/accounts:$UrlSegment?key=AIzaSyC4LGeN_A0MAJEeJON5Azv5UVCdUoRiAIU');
-    final response = await http.post(
-      url,
-      body: json.encode(
-        {
-          'email': email,
-          'password': password,
-          'returnSecureToken': true,
-        },
-      ),
-    );
-    print("-------------------------");
-    print(response.statusCode);
-    print(json.decode(response.body));
-    print("-------------------------");
+    try {
+      final url = Uri.parse(
+          'https://identitytoolkit.googleapis.com/v1/accounts:$UrlSegment?key=AIzaSyC4LGeN_A0MAJEeJON5Azv5UVCdUoRiAIU');
+      final response = await http.post(
+        url,
+        body: json.encode(
+          {
+            'email': email,
+            'password': password,
+            'returnSecureToken': true,
+          },
+        ),
+      );
+      // print("-------------------------");
+      // print(response.statusCode);
+      // print(json.decode(response.body));
+      // print("-------------------------");
+      final responseData = json.decode(response.body);
+      //check for http error
+      if (responseData['error'] != null) {
+        //using our exption handler and send the error message from firebase
+        // faild validtion
+        throw HttpException(responseData['error']['message']);
+      }
+      _token = responseData['idToken'];
+      _userId = responseData['localId'];
+      _expiryDate = DateTime.now().add(
+        Duration(
+          seconds: int.parse(
+            responseData['expiresIn'],
+          ),
+        ),
+      );
+      notifyListeners();
+    } catch (error) {
+      throw error;
+    }
   }
 
   Future<void> signup(String email, String password) async {
-   return _authentication(email, password, 'signUp');
+    return _authentication(email, password, 'signUp');
   }
 
   Future<void> login(String email, String password) async {
-  return  _authentication(email, password, 'signInWithPassword');
+    print(email);
+    print(password);
+    return _authentication(email, password, 'signInWithPassword');
   }
 }

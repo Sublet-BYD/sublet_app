@@ -25,20 +25,23 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider.value(
-          value: Auth(),
-        ),
-      ],
-      child: MaterialApp(
-        title: 'Sublet',
-        theme: ThemeData(
-          primarySwatch: Colors.purple,
-          accentColor: Colors.deepOrange,
-          fontFamily: 'Lato',
-        ),
-        home: const HomeScreen(),
-      ),
-    );
+        providers: [
+          ChangeNotifierProvider.value(
+            value: Auth(),
+          ),
+        ],
+        //rebuild this part of the tree
+        //this ensure whenever that outh object changes
+        child: Consumer<Auth>(
+          builder: (ctx, auth, _) => MaterialApp(
+            title: 'Sublet',
+            theme: ThemeData(
+              primarySwatch: Colors.purple,
+              accentColor: Colors.deepOrange,
+              fontFamily: 'Lato',
+            ),
+            home: auth.isAuth ? ManageProperties() : HomeScreen(),
+          ),
+        ));
   }
 }

@@ -4,6 +4,7 @@ import 'package:sublet_app/screens/Authentication/LogIn.dart';
 import 'package:sublet_app/screens/Authentication/Register.dart';
 import 'dart:math';
 import 'package:provider/provider.dart';
+import 'package:sublet_app/models/http_exception.dart';
 
 enum AuthMode { Signup, Login }
 
@@ -121,6 +122,25 @@ class _AuthCardState extends State<AuthCard> {
   var _isLoading = false;
   final _passwordController = TextEditingController();
 
+//show dialog to the users
+  void _showErrorDiallog(String message) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('An Error Occurred!'),
+        content: Text(message),
+        actions: <Widget>[
+          TextButton(
+              onPressed: () {
+                // colse that dialog
+                Navigator.of(ctx).pop();
+              },
+              child: Text('Okey')),
+        ],
+      ),
+    );
+  }
+
   Future<void> _submit() async {
     // validtion faild
     if (!_formKey.currentState!.validate()) {
@@ -137,14 +157,42 @@ class _AuthCardState extends State<AuthCard> {
     setState(() {
       _isLoading = true;
     });
-    if (_authMode == AuthMode.Login) {
-      // Log user in
-       await Provider.of<Auth>(context, listen: false).login(
-          _authData['email'].toString(), _authData['password'].toString());
-    } else {
-      // Sign user up
-      await Provider.of<Auth>(context, listen: false).signup(
-          _authData['email'].toString(), _authData['password'].toString());
+
+    try {
+      if (_authMode == AuthMode.Login) {
+        // Log user in
+        await Provider.of<Auth>(context, listen: false).login(
+            _authData['email'].toString(), _authData['password'].toString());
+      } else {
+        // Sign user up
+        await Provider.of<Auth>(context, listen: false).signup(
+            _authData['email'].toString(), _authData['password'].toString());
+      }
+    }
+
+    //TODO: change the securing.
+
+    // check for specific kind of error
+    on HttpException catch (error) {
+      print("erorr is : ${error.toString()} ");
+      var errorMessage = 'Authentication faild';
+
+      if (error.toString().contains('EMAIL_EXISTS')) {
+        errorMessage = 'This email address is already in use.';
+      } else if (error.toString().contains('INVALID_EMAIL')) {
+        errorMessage = 'This is not a valid email address.';
+      } else if (error.toString().contains('WEAK_PASSWORD')) {
+        errorMessage = 'This password is too weak.';
+      } else if (error.toString().contains('EMAIL_NOT_FOUND')) {
+        errorMessage = 'Could not find a user with that email.';
+      } else if (error.toString().contains('INVALID_PASSWORD')) {
+        errorMessage = 'Invaild password.';
+      }
+      _showErrorDiallog(errorMessage);
+    } catch (error) {
+      const errorMessage =
+          'Could not authenticate you. Please try agian later.';
+      _showErrorDiallog(errorMessage);
     }
     setState(() {
       _isLoading = false;
@@ -232,6 +280,22 @@ class _AuthCardState extends State<AuthCard> {
                           }
                         : null,
                   ),
+                // TextFormField(
+                //   enabled: _authMode == AuthMode.Signup,
+                //   decoration: InputDecoration(labelText: 'onwer'),
+                //   obscureText: true,
+                //   validator: _authMode == AuthMode.Signup
+                //       //check the password match
+                //       ? (value) {
+                //           if (value != _passwordController.text) {
+                //             print("dbug");
+                //             print("value ${value}");
+                //             print(_passwordController.text);
+                //             return 'Passwords do not match!';
+                //           }
+                //         }
+                //       : null,
+                // ),
                 SizedBox(
                   height: 20,
                 ),
