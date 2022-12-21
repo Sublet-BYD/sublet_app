@@ -11,11 +11,10 @@ class PropertiesListCategories extends StatelessWidget {
   PropertiesListCategories(this._title, {super.key});
 
   void onPropertyCardPress(BuildContext ctx, int asset_id) {
-    Navigator.of(ctx).push(MaterialPageRoute(
-      builder: (_) {
-        return PropertyScreen();
-      },
-    ));
+    Navigator.of(ctx).pushNamed(
+      '/property-screen',
+      arguments: _properties[asset_id],
+    );
   }
 
   final List<Property> _properties = [
