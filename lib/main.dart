@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:sublet_app/screens/Home/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:sublet_app/screens/Owner/manage_properties.dart';
+import 'package:sublet_app/screens/Renter/Asset_Page.dart';
+import 'package:sublet_app/screens/Renter/Renter_Screen.dart';
 import 'package:sublet_app/screens/Owner/property_screen.dart';
 import 'firebase_options.dart';
 import 'package:provider/provider.dart';
@@ -40,6 +42,7 @@ class MyApp extends StatelessWidget {
         ),
         home: const HomeScreen(),
       ),
+      home: const Asset_Page(),
     );
   }
 }
