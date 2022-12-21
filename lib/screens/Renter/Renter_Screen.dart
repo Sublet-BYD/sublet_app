@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sublet_app/screens/Renter/Asset_Page.dart';
 
 class Renter_Screen extends StatefulWidget {
   const Renter_Screen({super.key});
@@ -59,33 +60,21 @@ class AssetList extends StatelessWidget {
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-              child: SizedBox(
-                height: 100,
                 child: Card(
                   shape: RoundedRectangleBorder( //Making each card's edges circular
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                        Text(index.toString()),
-                        const VerticalDivider(
-                          width: 20,
-                          color: Colors.black,
-                        ),
-                        CircleAvatar(
+                  child: ListTile(
+                    leading: CircleAvatar(
                           backgroundImage: AssetImage('assets/Apartment_example.jpg'),
-                          radius: 30,
+                          radius: 50,
                         ),
-                        const VerticalDivider(
-                          width: 20,
-                          color: Colors.black,
-                        ),
-                    ],
+                    title: Text('Apartment number $index'),
+                    subtitle: Text('Location of apartment $index'),
+                    trailing: Text('$index\$'),
                   ),
                 ),
-              ),
-            ), 
+              ), 
           );  
         },
         itemCount: 10,
@@ -93,6 +82,7 @@ class AssetList extends StatelessWidget {
     );
   }
   void onPress(BuildContext context, int asset_id){
-      print(asset_id);
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => Asset_Page()));
   }
 }
