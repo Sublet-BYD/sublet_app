@@ -22,30 +22,44 @@ class PropertyCard extends StatelessWidget {
       ),
       child: Container(
         width: 150.0,
-        margin: EdgeInsets.symmetric(
-          vertical: 10,
-          horizontal: 15,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            FittedBox(
-              child: Text(
-                _property.name,
-                style: TextStyle(
-                    fontFamily: 'QuickSand',
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-            Text(
-              'Location: ${_property.location}',
-              style: TextStyle(
-                fontFamily: 'QuickSand',
-                fontSize: 15,
-              ),
-            ),
-          ],
+        child: LayoutBuilder(
+          builder: (context, constrains) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                ClipRRect(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20)),
+                  child: Image.asset(
+                    'assets/Apartment_example.jpg',
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    _property.name,
+                    style: TextStyle(
+                        fontFamily: 'QuickSand',
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    'Location: ${_property.location}',
+                    style: TextStyle(
+                      fontFamily: 'QuickSand',
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
