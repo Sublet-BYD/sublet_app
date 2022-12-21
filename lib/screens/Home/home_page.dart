@@ -243,12 +243,16 @@ class _AuthCardState extends State<AuthCard> {
                     return null;
                     return null;
                   },
+                  style: TextStyle(
+                      fontSize: MediaQuery.of(context).textScaleFactor * 20),
                   onSaved: (value) {
                     _authData['email'] = value.toString();
                     // print(_authData);
                   },
                 ),
                 TextFormField(
+                  style: TextStyle(
+                      fontSize: MediaQuery.of(context).textScaleFactor * 20),
                   controller: _passwordController,
                   decoration: InputDecoration(labelText: 'Password'),
                   // make sure input show to the user
@@ -265,6 +269,8 @@ class _AuthCardState extends State<AuthCard> {
                 ),
                 if (_authMode == AuthMode.Signup)
                   TextFormField(
+                    style: TextStyle(
+                        fontSize: MediaQuery.of(context).textScaleFactor * 20),
                     enabled: _authMode == AuthMode.Signup,
                     decoration: InputDecoration(labelText: 'Confirm Password'),
                     obscureText: true,
@@ -280,22 +286,6 @@ class _AuthCardState extends State<AuthCard> {
                           }
                         : null,
                   ),
-                // TextFormField(
-                //   enabled: _authMode == AuthMode.Signup,
-                //   decoration: InputDecoration(labelText: 'onwer'),
-                //   obscureText: true,
-                //   validator: _authMode == AuthMode.Signup
-                //       //check the password match
-                //       ? (value) {
-                //           if (value != _passwordController.text) {
-                //             print("dbug");
-                //             print("value ${value}");
-                //             print(_passwordController.text);
-                //             return 'Passwords do not match!';
-                //           }
-                //         }
-                //       : null,
-                // ),
                 SizedBox(
                   height: 20,
                 ),
@@ -335,69 +325,3 @@ class _AuthCardState extends State<AuthCard> {
   }
 }
 
-//old
-//   Scaffold(
-//     appBar: AppBar(title: Text('Sublet')),
-//     body: Center(
-//         child: Column(
-//       children: <Widget>[
-//         //Username widget
-//         TextFormField(
-//           keyboardType: TextInputType.emailAddress,
-//           decoration: const InputDecoration(labelText: "Username or E-mail"),
-//           validator: (value) {
-//             if (value == null || value.isEmpty) {
-//               return 'This field cannot be empty!';
-//             }
-//             uname = value;
-//             return null;
-//           },
-//         ),
-
-//         //Password widget
-//         TextFormField(
-//           keyboardType: TextInputType.visiblePassword,
-//           decoration: const InputDecoration(labelText: 'Password'),
-//           validator: (value) {
-//             if (value == null || value.isEmpty) {
-//               return 'This field cannot be empty!';
-//             }
-//             password = value;
-//             return null;
-//           },
-//         ),
-
-//         Text(
-//             'Creating an account means you\'r okey with our Terms of Service and our Privacy Policy'),
-
-//         ElevatedButton(
-//             onPressed: () {
-//               _navigateToNextScreen(context, 1);
-//             },
-//             child: const Text('Sign in')),
-
-//         Text('Don\'t have an accont? '),
-
-//         ElevatedButton(
-//             onPressed: () {
-//               _navigateToNextScreen(context, 2);
-//             },
-//             child: const Text('Sign up')),
-//       ],
-//     )),
-//   );
-//}
-
-//   void _navigateToNextScreen(BuildContext context, int tag) {
-//     if (tag == 1) {
-//       Null;
-//       // this suold navgitate to acount home page
-
-//       // Navigator.of(context)
-//       //     .push(MaterialPageRoute(builder: (context) => LogIn()));
-//     } else if (tag == 2) {
-//       Navigator.of(context)
-//           .push(MaterialPageRoute(builder: (context) => Register()));
-//     }
-//   }
-// }

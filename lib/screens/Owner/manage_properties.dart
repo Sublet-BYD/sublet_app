@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:sublet_app/screens/Owner/new_property.dart';
 import 'properties_list_categories.dart';
+import 'package:sublet_app/widgets/app_drawer.dart';
 
 class ManageProperties extends StatelessWidget {
   const ManageProperties({super.key});
@@ -25,6 +26,7 @@ class ManageProperties extends StatelessWidget {
 
     return Scaffold(
         appBar: appBar,
+        drawer: AppDrawer(),
         body: Column(
           children: <Widget>[
             // Search Bar

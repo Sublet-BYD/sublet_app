@@ -10,6 +10,7 @@ import 'firebase_options.dart';
 import 'package:provider/provider.dart';
 
 import './providers/auth.dart';
+import './widgets/app_drawer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
           builder: (ctx, auth, _) => MaterialApp(
             title: 'Sublet',
             theme: ThemeData(
-              primarySwatch: Colors.purple,
+              primarySwatch: Colors.deepPurple,
               accentColor: Colors.deepOrange,
               fontFamily: 'Lato',
             ),

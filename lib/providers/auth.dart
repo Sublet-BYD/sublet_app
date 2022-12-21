@@ -10,22 +10,32 @@ import '../models/http_exception.dart';
 
 class Auth with ChangeNotifier {
   String _token = ''; // expire at some point of the time
-  DateTime _expiryDate = DateTime.now();
+  DateTime? _expiryDate;
   String _userId = '';
 
-//if we have a token and the token didnt expire then then user is authenticated
+// //if we have a token and the token didnt expire then then user is authenticated
+  // bool get isAuth {
+  //   return token != '';
+  // }
+
+  // String get token {
+  //   // if it's null we cants  have a vaild token
+  //   if (_expiryDate != null &&
+  //       _expiryDate.isAfter(DateTime.now()) &&
+  //       _token != '') {
+  //     return _token;
+  //   }
+  //   return '';
+  // }
+
   bool get isAuth {
-    return token != '';
+    // Check if the token is not empty and the expiry date is after the current time
+    return _token != '' && (_expiryDate?.isAfter(DateTime.now()) ?? false);
   }
 
   String get token {
-    // if it's null we cants  have a vaild token
-    if (_expiryDate != null &&
-        _expiryDate.isAfter(DateTime.now()) &&
-        _token != '') {
-      return _token;
-    }
-    return '';
+    // Only return the token if the user is authenticated
+    return isAuth ? _token : '';
   }
 
   Future<void> _authentication(
@@ -77,5 +87,12 @@ class Auth with ChangeNotifier {
     print(email);
     print(password);
     return _authentication(email, password, 'signInWithPassword');
+  }
+
+  void logout() {
+    _token = '';
+    _userId = '';
+    _expiryDate = null;
+    notifyListeners();
   }
 }
