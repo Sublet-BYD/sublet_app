@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
           accentColor: Colors.deepOrange,
           fontFamily: 'Lato',
         ),
-        home: const HomeScreen(),
+        home: const Renter_Screen(),
       ),
     );
   }

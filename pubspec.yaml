@@ -34,7 +34,7 @@ dependencies:
     sdk: flutter
   firebase_auth: ^4.2.0
   cloud_firestore: ^4.2.0
-  provider: 4.3.2+1
+  provider: ^6.0.5
   http: any
  
 
@@ -69,6 +69,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/Apartment_example.jpg
+    - assets/Profile_pic.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
