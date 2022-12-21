@@ -8,6 +8,7 @@ class ManageProperties extends StatelessWidget {
   const ManageProperties({super.key});
 
   void _startAddNewProperty(BuildContext context) {
+    // The half window for adding new property
     showModalBottomSheet(
       context: context,
       builder: (((context) => NewProperty())),
@@ -45,6 +46,7 @@ class ManageProperties extends StatelessWidget {
               ),
             ),
             Container(
+              // Categories Lists -
               height: (MediaQuery.of(context).size.height -
                       appBar.preferredSize.height -
                       MediaQuery.of(context).padding.top) *

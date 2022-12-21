@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:sublet_app/screens/Owner/property_screen.dart';
 import '/screens/Owner/property_card.dart';
 import '/screens/Owner/property.dart';
 
@@ -9,8 +10,12 @@ class PropertiesListCategories extends StatelessWidget {
 
   PropertiesListCategories(this._title, {super.key});
 
-  void onPropertyCardPress(BuildContext context, int asset_id) {
-    print(asset_id);
+  void onPropertyCardPress(BuildContext ctx, int asset_id) {
+    Navigator.of(ctx).push(MaterialPageRoute(
+      builder: (_) {
+        return PropertyScreen();
+      },
+    ));
   }
 
   final List<Property> _properties = [
@@ -100,7 +105,9 @@ class PropertiesListCategories extends StatelessWidget {
                 padding: EdgeInsets.only(left: 10),
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
-                  return GestureDetector(
+                  return InkWell(
+                      splashColor: Theme.of(context).primaryColor,
+                      borderRadius: BorderRadius.circular(20),
                       onTap: (() => onPropertyCardPress(context, index)),
                       child: PropertyCard(this._properties[index]));
                 },
