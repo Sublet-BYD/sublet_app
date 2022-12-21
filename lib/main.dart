@@ -42,7 +42,6 @@ class MyApp extends StatelessWidget {
         ),
         home: const HomeScreen(),
       ),
-      home: const Asset_Page(),
     );
   }
 }
