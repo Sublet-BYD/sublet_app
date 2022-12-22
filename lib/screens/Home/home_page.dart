@@ -186,12 +186,13 @@ class _AuthCardState extends State<AuthCard> {
       } else if (error.toString().contains('EMAIL_NOT_FOUND')) {
         errorMessage = 'Could not find a user with that email.';
       } else if (error.toString().contains('INVALID_PASSWORD')) {
-        errorMessage = 'Invaild password.';
+        errorMessage = 'Incorrect email or password.';
       }
       _showErrorDiallog(errorMessage);
     } catch (error) {
+      print(error.toString());
       const errorMessage =
-          'Could not authenticate you. Please try agian later.';
+          'Could not authenticate you. Please try again later.';
       _showErrorDiallog(errorMessage);
     }
     setState(() {
@@ -324,4 +325,3 @@ class _AuthCardState extends State<AuthCard> {
     );
   }
 }
-
