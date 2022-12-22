@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sublet_app/screens/Owner/property.dart';
 import 'package:sublet_app/screens/Renter/Asset_Page.dart';
 import 'package:sublet_app/widgets/app_drawer.dart';
 
@@ -45,16 +46,22 @@ class _Renter_ScreenState extends State<Renter_Screen> {
                       appBar.preferredSize.height -
                       MediaQuery.of(context).padding.top) *
                   0.8,
-              child: AssetList()),
+              child: Assetlist()),
         ],
       ),
     );
   }
 }
 
-class AssetList extends StatelessWidget {
-  const AssetList({super.key});
+class Assetlist extends StatefulWidget {
+  const Assetlist({super.key});
+  
+  @override
+  State<Assetlist> createState() => _AssetlistState();
+}
 
+class _AssetlistState extends State<Assetlist> {
+  List<Property> list = [Property(id: UniqueKey(), owner_id: UniqueKey(),name: 'name', location: 'location'), Property(id: UniqueKey(), owner_id: UniqueKey(),name: 'name', location: 'location'), Property(id: UniqueKey(), owner_id: UniqueKey(),name: 'name', location: 'location'), Property(id: UniqueKey(), owner_id: UniqueKey(),name: 'name', location: 'location'), Property(id: UniqueKey(), owner_id: UniqueKey(),name: 'name', location: 'location'), Property(id: UniqueKey(), owner_id: UniqueKey(),name: 'name', location: 'location'), Property(id: UniqueKey(), owner_id: UniqueKey(),name: 'name', location: 'location'), Property(id: UniqueKey(), owner_id: UniqueKey(),name: 'name', location: 'location'), Property(id: UniqueKey(), owner_id: UniqueKey(),name: 'name', location: 'location')];
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -64,7 +71,7 @@ class AssetList extends StatelessWidget {
         itemBuilder: (ctx, index) {
           return GestureDetector(
             onTap: () {
-              onPress(context, index);
+              onPress(context, list[index].id);
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
@@ -75,24 +82,25 @@ class AssetList extends StatelessWidget {
                 ),
                 child: ListTile(
                   leading: CircleAvatar(
-                    backgroundImage: AssetImage('assets/Apartment_example.jpg'),
+                    backgroundImage: (list[index].image != null) ? list[index].image as ImageProvider : AssetImage('assets/Apartment_example.jpg'),
                     radius: 50,
                   ),
-                  title: Text('Apartment number $index'),
-                  subtitle: Text('Location of apartment $index'),
-                  trailing: Text('$index\$'),
+                  title: Text((list[index].name != null && list[index].name.length > 5) ? list[index].name : 'No available name'), // The comparison is technically unneccesary, since name cant be null, but is still used as a safety precaution
+                  subtitle: Text((list[index].location != null) ? list[index].location : 'No available location'),
+                  trailing: Text((list[index].price != null) ? list[index].price.toString() + '\$' : '0\$'),
                 ),
               ),
             ),
           );
         },
-        itemCount: 10,
+        itemCount: 9,
       ),
     );
   }
 
-  void onPress(BuildContext context, int asset_id) {
+  void onPress(BuildContext context, UniqueKey asset_id) {
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => Asset_Page()));
+        .push(MaterialPageRoute(builder: (context) => Asset_Page(property_id: asset_id,)));
   }
 }
+
