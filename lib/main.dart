@@ -43,7 +43,8 @@ class MyApp extends StatelessWidget {
               accentColor: Colors.deepOrange,
               fontFamily: 'Lato',
             ),
-            home: auth.isAuth ? ManageProperties() : HomeScreen(),
+            // home: auth.isAuth ? ManageProperties() : HomeScreen(),
+            home: Renter_Screen(),
           ),
         ));
   }
