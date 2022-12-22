@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 
 import './providers/auth.dart';
 import './widgets/app_drawer.dart';
+import './screens/chat_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,7 +45,8 @@ class MyApp extends StatelessWidget {
               accentColor: Colors.deepOrange,
               fontFamily: 'Lato',
             ),
-            home: auth.isAuth ? ManageProperties() : HomeScreen(),
+            // home: auth.isAuth ? ManageProperties() : HomeScreen(),
+            home: ChatScreen(),
           ),
         ));
   }
