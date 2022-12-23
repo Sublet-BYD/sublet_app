@@ -45,10 +45,11 @@ class MyApp extends StatelessWidget {
               fontFamily: 'Lato',
             ),
             // home: auth.isAuth ? ManageProperties() : HomeScreen(),
-            home: HomeScreen(),
+            // home: HomeScreen(),
             routes: {
               '/property-screen': ((context) => PropertyScreen()),
             },
+            home: ManageProperties(),
           ),
         ));
   }

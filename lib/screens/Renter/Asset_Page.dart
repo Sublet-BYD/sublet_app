@@ -18,13 +18,14 @@ class _Asset_PageState extends State<Asset_Page> {
   Color contact_color = (Colors.amber[600]!);
   @override
   Widget build(BuildContext context) {
-    Property property = Property(
-      id: widget.property_id,
-      name: 'name',
-      location: 'location',
-      owner_id: UniqueKey(),
-    ); // Will be taken from firebase according to the given key
-    Owner_data owner = Owner_data('name', property: property);
+    Property property = Property(id: widget.property_id, name: 'name', location: 'location', owner_id: UniqueKey(),); // Will be taken from firebase according to the given key
+    Owner_data owner = Owner_data('name', property: property.id);
+    // DateTimeRange available_dates =
+    //     DateTimeRange(start: DateTime.now(), end: DateTime.now());
+    // String available_dates_str =
+    //     DateFormat('dd/MM/yyyy').format(available_dates.start) +
+    //         '-' +
+    //         DateFormat('dd/MM/yyyy').format(available_dates.end);
     return Container(
       child: ListView(
         children: [

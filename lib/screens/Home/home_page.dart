@@ -152,7 +152,7 @@ class _AuthCardState extends State<AuthCard> {
     //valtion succeeced
     //save all input
     _formKey.currentState!.save();
-    print('SECCED!!');
+    print('SUCCESS!!');
 
     // set the loading spinner
     setState(() {
