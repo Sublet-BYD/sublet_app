@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             padding:
                                 //box size
                                 EdgeInsets.symmetric(
-                                    vertical: 10.0, horizontal: 94.0),
+                                    vertical: 10.0, horizontal: 92.0),
                             transform: Matrix4.rotationZ(-8 * pi / 180)
                               ..translate(-10.0),
                             decoration: BoxDecoration(
@@ -81,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               'Sublet',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 44,
+                                fontSize: 46,
                                 fontFamily: 'Quando',
                                 // fontWeight: FontWeight.normal,
                               ),

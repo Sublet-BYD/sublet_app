@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 
 class Asset_Page extends StatefulWidget {
   final UniqueKey property_id;
-  const Asset_Page({Key? key, required this.property_id}): super(key: key); 
+  const Asset_Page({Key? key, required this.property_id}) : super(key: key);
 
   @override
   State<Asset_Page> createState() => _Asset_PageState();
@@ -18,7 +18,12 @@ class _Asset_PageState extends State<Asset_Page> {
   Color contact_color = (Colors.amber[600]!);
   @override
   Widget build(BuildContext context) {
-    Property property = Property(id: widget.property_id, name: 'name', location: 'location', owner_id: UniqueKey(),); // Will be taken from firebase according to the given key
+    Property property = Property(
+      id: widget.property_id,
+      name: 'name',
+      location: 'location',
+      owner_id: UniqueKey(),
+    ); // Will be taken from firebase according to the given key
     Owner_data owner = Owner_data('name', property: property);
     // DateTimeRange available_dates =
     //     DateTimeRange(start: DateTime.now(), end: DateTime.now());
@@ -27,26 +32,30 @@ class _Asset_PageState extends State<Asset_Page> {
     //         '-' +
     //         DateFormat('dd/MM/yyyy').format(available_dates.end);
     return Container(
-      height: MediaQuery.of(context).size.height,
-      width: MediaQuery.of(context).size.width,
+      // height: MediaQuery.of(context).size.height -
+      //     MediaQuery.of(context).padding.top,
+      // width: MediaQuery.of(context).size.width,
       // child: SingleChildScrollView(
       child: ListView(
         children: [
           //Image with buttons on top of it
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.3,
+            height: (MediaQuery.of(context).size.height -
+                    MediaQuery.of(context).padding.top) *
+                0.3,
             width: MediaQuery.of(context).size.width,
             child: Stack(
               alignment: Alignment.topCenter,
               children: [
                 //Image
                 SizedBox(
-                  height: 300,
                   width: MediaQuery.of(context).size.width,
                   child: FittedBox(
                       fit: BoxFit.fill,
                       child: Image(
-                        image: (property.image != null) ? property.image as ImageProvider : AssetImage('assets/Apartment_example.jpg'),
+                        image: (property.image != null)
+                            ? property.image as ImageProvider
+                            : AssetImage('assets/Apartment_example.jpg'),
                       )),
                 ),
                 //Back button
@@ -66,7 +75,9 @@ class _Asset_PageState extends State<Asset_Page> {
             ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.7,
+            height: (MediaQuery.of(context).size.height -
+                    MediaQuery.of(context).padding.top) *
+                0.7,
             width: MediaQuery.of(context).size.width,
             child: Container(
               color: Colors.white,
@@ -129,7 +140,10 @@ class _Asset_PageState extends State<Asset_Page> {
                       child: Card(
                         elevation: 0,
                         child: Text(
-                          (property.description != null && property.description!.length > 5) ? property.description as String : '{Man} Once upon a time there was a lovely princess.But she had an enchantment upon her of a fearful sort which could only be broken by loves first kiss.She was locked away in a castle guarded by a terrible fire-breathing dragon.Many brave knigts had attempted to free her from this dreadful prison, but non prevailed.She waited in the dragons keep in the highest room of the tallest tower for her true love and true loves first kiss.{Laughing} Like thats ever gonna happen.', 
+                          (property.description != null &&
+                                  property.description!.length > 5)
+                              ? property.description as String
+                              : '{Man} Once upon a time there was a lovely princess.But she had an enchantment upon her of a fearful sort which could only be broken by loves first kiss.She was locked away in a castle guarded by a terrible fire-breathing dragon.Many brave knigts had attempted to free her from this dreadful prison, but non prevailed.She waited in the dragons keep in the highest room of the tallest tower for her true love and true loves first kiss.{Laughing} Like thats ever gonna happen.',
                           style:
                               TextStyle(fontFamily: 'OpenSans', fontSize: 10),
                         ),
@@ -151,8 +165,8 @@ class _Asset_PageState extends State<Asset_Page> {
                             style: TextStyle(
                                 fontFamily: 'OpenSans',
                                 fontWeight: FontWeight.bold)),
-                        subtitle:
-                            Text('They\'ve been hosting since ${owner.joined_at}'),
+                        subtitle: Text(
+                            'They\'ve been hosting since ${owner.joined_at}'),
                       ),
                     ),
                   ),
@@ -165,10 +179,10 @@ class _Asset_PageState extends State<Asset_Page> {
                         leading: Container(
                           padding: EdgeInsets.only(left: 25),
                           child: GestureDetector(
-                            onTap: (){
-                              //open a calendar widget to view dates - to do in the future
-                              print('Clicked on calendar\n');
-                            },
+                              onTap: () {
+                                //open a calendar widget to view dates - to do in the future
+                                print('Clicked on calendar\n');
+                              },
                               child: Icon(Icons.calendar_month_outlined,
                                   size: 30)),
                         ),
@@ -178,7 +192,10 @@ class _Asset_PageState extends State<Asset_Page> {
                                     fontFamily: 'OpenSans',
                                     fontWeight: FontWeight.bold))),
                         subtitle: Center(
-                            child: Text((property.dates != null) ? '${DateFormat('dd/MM/yyyy').format(property.dates!.start)} - ${DateFormat('dd/MM/yyyy').format(property.dates!.end)}' : 'No available dates',
+                            child: Text(
+                                (property.dates != null)
+                                    ? '${DateFormat('dd/MM/yyyy').format(property.dates!.start)} - ${DateFormat('dd/MM/yyyy').format(property.dates!.end)}'
+                                    : 'No available dates',
                                 style: TextStyle(fontFamily: 'OpenSans'))),
                       ),
                     ),
