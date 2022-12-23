@@ -28,7 +28,7 @@ class _Renter_ScreenState extends State<Renter_Screen> {
             height: (MediaQuery.of(context).size.height -
                     appBar.preferredSize.height -
                     MediaQuery.of(context).padding.top) *
-                0.2,
+                0.15,
             padding: EdgeInsets.only(top: 20, left: 40, right: 40),
             child: TextFormField(
               decoration: InputDecoration(
@@ -41,12 +41,14 @@ class _Renter_ScreenState extends State<Renter_Screen> {
               ),
             ),
           ),
-          Container(
-              height: (MediaQuery.of(context).size.height -
-                      appBar.preferredSize.height -
-                      MediaQuery.of(context).padding.top) *
-                  0.8,
-              child: Assetlist()),
+          Expanded(
+            child: Container(
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height -
+                        MediaQuery.of(context).padding.top) *
+                    0.8,
+                child: Assetlist()),
+          ),
         ],
       ),
     );
@@ -55,19 +57,66 @@ class _Renter_ScreenState extends State<Renter_Screen> {
 
 class Assetlist extends StatefulWidget {
   const Assetlist({super.key});
-  
+
   @override
   State<Assetlist> createState() => _AssetlistState();
 }
 
 class _AssetlistState extends State<Assetlist> {
-  List<Property> list = [Property(id: UniqueKey(), owner_id: UniqueKey(),name: 'name', location: 'location'), Property(id: UniqueKey(), owner_id: UniqueKey(),name: 'name', location: 'location'), Property(id: UniqueKey(), owner_id: UniqueKey(),name: 'name', location: 'location'), Property(id: UniqueKey(), owner_id: UniqueKey(),name: 'name', location: 'location'), Property(id: UniqueKey(), owner_id: UniqueKey(),name: 'name', location: 'location'), Property(id: UniqueKey(), owner_id: UniqueKey(),name: 'name', location: 'location'), Property(id: UniqueKey(), owner_id: UniqueKey(),name: 'name', location: 'location'), Property(id: UniqueKey(), owner_id: UniqueKey(),name: 'name', location: 'location'), Property(id: UniqueKey(), owner_id: UniqueKey(),name: 'name', location: 'location')];
+  List<Property> list = [
+    Property(
+        id: UniqueKey(),
+        owner_id: UniqueKey(),
+        name: 'name',
+        location: 'location'),
+    Property(
+        id: UniqueKey(),
+        owner_id: UniqueKey(),
+        name: 'name',
+        location: 'location'),
+    Property(
+        id: UniqueKey(),
+        owner_id: UniqueKey(),
+        name: 'name',
+        location: 'location'),
+    Property(
+        id: UniqueKey(),
+        owner_id: UniqueKey(),
+        name: 'name',
+        location: 'location'),
+    Property(
+        id: UniqueKey(),
+        owner_id: UniqueKey(),
+        name: 'name',
+        location: 'location'),
+    Property(
+        id: UniqueKey(),
+        owner_id: UniqueKey(),
+        name: 'name',
+        location: 'location'),
+    Property(
+        id: UniqueKey(),
+        owner_id: UniqueKey(),
+        name: 'name',
+        location: 'location'),
+    Property(
+        id: UniqueKey(),
+        owner_id: UniqueKey(),
+        name: 'name',
+        location: 'location'),
+    Property(
+        id: UniqueKey(),
+        owner_id: UniqueKey(),
+        name: 'name',
+        location: 'location')
+  ];
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 5),
       alignment: Alignment.bottomCenter,
       child: ListView.builder(
+        physics: BouncingScrollPhysics(),
         itemBuilder: (ctx, index) {
           return GestureDetector(
             onTap: () {
@@ -82,12 +131,21 @@ class _AssetlistState extends State<Assetlist> {
                 ),
                 child: ListTile(
                   leading: CircleAvatar(
-                    backgroundImage: (list[index].image != null) ? list[index].image as ImageProvider : AssetImage('assets/Apartment_example.jpg'),
+                    backgroundImage: (list[index].image != null)
+                        ? list[index].image as ImageProvider
+                        : AssetImage('assets/Apartment_example.jpg'),
                     radius: 50,
                   ),
-                  title: Text((list[index].name != null && list[index].name.length > 5) ? list[index].name : 'No available name'), // The comparison is technically unneccesary, since name cant be null, but is still used as a safety precaution
-                  subtitle: Text((list[index].location != null) ? list[index].location : 'No available location'),
-                  trailing: Text((list[index].price != null) ? list[index].price.toString() + '\$' : '0\$'),
+                  title: Text((list[index].name != null &&
+                          list[index].name.length > 5)
+                      ? list[index].name
+                      : 'No available name'), // The comparison is technically unneccesary, since name cant be null, but is still used as a safety precaution
+                  subtitle: Text((list[index].location != null)
+                      ? list[index].location
+                      : 'No available location'),
+                  trailing: Text((list[index].price != null)
+                      ? list[index].price.toString() + '\$'
+                      : '0\$'),
                 ),
               ),
             ),
@@ -99,8 +157,9 @@ class _AssetlistState extends State<Assetlist> {
   }
 
   void onPress(BuildContext context, UniqueKey asset_id) {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => Asset_Page(property_id: asset_id,)));
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => Asset_Page(
+              property_id: asset_id,
+            )));
   }
 }
-
