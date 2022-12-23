@@ -25,17 +25,7 @@ class _Asset_PageState extends State<Asset_Page> {
       owner_id: UniqueKey(),
     ); // Will be taken from firebase according to the given key
     Owner_data owner = Owner_data('name', property: property);
-    // DateTimeRange available_dates =
-    //     DateTimeRange(start: DateTime.now(), end: DateTime.now());
-    // String available_dates_str =
-    //     DateFormat('dd/MM/yyyy').format(available_dates.start) +
-    //         '-' +
-    //         DateFormat('dd/MM/yyyy').format(available_dates.end);
     return Container(
-      // height: MediaQuery.of(context).size.height -
-      //     MediaQuery.of(context).padding.top,
-      // width: MediaQuery.of(context).size.width,
-      // child: SingleChildScrollView(
       child: ListView(
         children: [
           //Image with buttons on top of it

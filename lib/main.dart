@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
               fontFamily: 'Lato',
             ),
             // home: auth.isAuth ? ManageProperties() : HomeScreen(),
-            home: Renter_Screen(),
+            home: HomeScreen(),
             routes: {
               '/property-screen': ((context) => PropertyScreen()),
             },
