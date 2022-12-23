@@ -93,7 +93,7 @@ class _AssetlistState extends State<Assetlist> {
             ),
           );
         },
-        itemCount: 9,
+        itemCount: list.length,
       ),
     );
   }

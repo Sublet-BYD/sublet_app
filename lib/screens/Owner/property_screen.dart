@@ -18,7 +18,7 @@ class PropertyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _property = ModalRoute.of(context)?.settings.arguments as Property;
-
+    int available_color = (_property.occupied != null &&_property.occupied) ? 0xFFEF5350 : 0xFF8BC34A; // Light green for unoccupied, light red for occupied
     final appBar = AppBar(
       backgroundColor: Colors.transparent,
       foregroundColor: Colors.white,
@@ -34,7 +34,9 @@ class PropertyScreen extends StatelessWidget {
                   MediaQuery.of(context).padding.top) *
               0.3,
           width: MediaQuery.of(context).size.width,
-          child: Image.asset('assets/Apartment_example.jpg', fit: BoxFit.cover),
+          child: (_property.image != null)
+              ? _property.image as Widget
+              : Image.asset('assets/Apartment_example.jpg', fit: BoxFit.cover),
         ),
         Container(
           // Name of Property
@@ -90,7 +92,98 @@ class PropertyScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-              )
+              ),
+              //Chats with renters
+              GestureDetector(
+                onTap: () {
+                  //Move to chat page for this property
+                  print('Moving to chats page\n');
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.amber[600],
+                    border: Border.all(
+                        color: (Colors.amber[800]!),
+                        width:
+                            3), //Exclamation mark added to assure null safety
+                  ),
+                  margin: EdgeInsets.only(top: 10),
+                  alignment: Alignment
+                      .topLeft, // require for the title to begin from left
+                  height: constrains.maxHeight * 0.2,
+                  child: Row(
+                    children: [
+                      Container(
+                          child: Icon(Icons.message),
+                          margin: EdgeInsets.only(left: 15)),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      FittedBox(
+                        child: Text(
+                          // textAlign: TextAlign.left,
+                          'Contact your renters',
+                          style: TextStyle(
+                            fontFamily: 'OpenSans',
+                            color: Colors.grey[700],
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              //Occupation status
+              Container(
+                color: Color(available_color),
+                margin: EdgeInsets.only(top: 10),
+                alignment: Alignment
+                    .topLeft, // require for the title to begin from left
+                height: constrains.maxHeight * 0.2,
+                child: Row(
+                  children: [
+                    Container(
+                        child: Icon(Icons.message),
+                        margin: EdgeInsets.only(left: 15)),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    FittedBox(
+                      child: Text(
+                        // textAlign: TextAlign.left,
+                        (_property.occupied) ? 'This Property is now occupied' : 'This property is not occupied',
+                        style: TextStyle(
+                          fontFamily: 'OpenSans',
+                          color: Colors.grey[700],
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              //Empty container as a placeholder
+              Container(
+                margin: EdgeInsets.only(top: 10),
+                height: constrains.maxHeight * 0.2,
+              ),
+              //Remove this property -> will be fully implemented in the future
+              GestureDetector(
+                onTap: () {
+                  //Implement pop up warning window here
+                  print((_property.occupied) ? 'You cannot delete this property, as it is currently occupied.' : 'Are you sure you want to delete this property?\n');
+                },
+                child: Container(
+                  color: Colors.red[800],
+                  margin: EdgeInsets.only(top: 10),
+                  height: constrains.maxHeight * 0.2,
+                  child: ListTile(
+                    leading: Icon(Icons.delete),
+                    title: Text('Delete this property', style: TextStyle(fontFamily: 'OpenSans', fontWeight: FontWeight.bold)),
+                  ),
+                ),
+              ),
             ]);
           }),
         ),

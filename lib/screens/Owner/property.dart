@@ -10,6 +10,7 @@ class Property {
   final ImageProvider? image;
   final String? description; // Short paragraph about the property which would be provided by the owner
   final int? price; // Price of subletting the property for a single night
+  final bool occupied;
 
   Property({
     required this.id,
@@ -20,5 +21,6 @@ class Property {
     this.description,
     this.image,
     this.price,
+    this.occupied = false, // any property would be available on default
   });
 }

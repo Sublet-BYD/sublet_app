@@ -19,7 +19,7 @@ class _Asset_PageState extends State<Asset_Page> {
   @override
   Widget build(BuildContext context) {
     Property property = Property(id: widget.property_id, name: 'name', location: 'location', owner_id: UniqueKey(),); // Will be taken from firebase according to the given key
-    Owner_data owner = Owner_data('name', property: property);
+    Owner_data owner = Owner_data('name', property: property.id);
     // DateTimeRange available_dates =
     //     DateTimeRange(start: DateTime.now(), end: DateTime.now());
     // String available_dates_str =
