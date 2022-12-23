@@ -47,53 +47,54 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
 
           //
-          SingleChildScrollView(
-            child: Container(
-              height: deviceSize.height,
-              width: deviceSize.width,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Flexible(
-                    child: Container(
-                      margin: EdgeInsets.only(bottom: 20.0),
-                      padding:
-                          //box size
-                          EdgeInsets.symmetric(vertical: 8.0, horizontal: 94.0),
-                      transform: Matrix4.rotationZ(-8 * pi / 180)
-                        ..translate(-10.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color:
-                            Color.fromRGBO(255, 188, 117, 1).withOpacity(0.9),
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 8,
-                            color: Colors.black26,
-                            offset: Offset(0, 2),
+          LayoutBuilder(
+              builder: (context, constrains) => Container(
+                    height: constrains.maxHeight,
+                    width: constrains.maxWidth,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Flexible(
+                          // The SUBLET LOGO
+                          child: Container(
+                            margin: EdgeInsets.only(bottom: 50.0),
+                            padding:
+                                //box size
+                                EdgeInsets.symmetric(
+                                    vertical: 10.0, horizontal: 94.0),
+                            transform: Matrix4.rotationZ(-8 * pi / 180)
+                              ..translate(-10.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Color.fromRGBO(255, 188, 117, 1)
+                                  .withOpacity(0.9),
+                              boxShadow: [
+                                BoxShadow(
+                                  blurRadius: 8,
+                                  color: Colors.black26,
+                                  offset: Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: Text(
+                              'Sublet',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 44,
+                                fontFamily: 'Quando',
+                                // fontWeight: FontWeight.normal,
+                              ),
+                            ),
                           ),
-                        ],
-                      ),
-                      child: Text(
-                        'Sublet',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 50,
-                          fontFamily: 'Anton',
-                          fontWeight: FontWeight.normal,
                         ),
-                      ),
+                        Flexible(
+                          flex: deviceSize.width > 600 ? 2 : 1,
+                          child: AuthCard(),
+                        ),
+                      ],
                     ),
-                  ),
-                  Flexible(
-                    flex: deviceSize.width > 600 ? 2 : 1,
-                    child: AuthCard(),
-                  ),
-                ],
-              ),
-            ),
-          ),
+                  )),
         ],
       ),
     );
@@ -231,93 +232,110 @@ class _AuthCardState extends State<AuthCard> {
         padding: EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'E-Mail'),
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (value) {
-                    if (value!.isEmpty || !value.contains('@')) {
-                      return 'Invalid email!';
-                    }
-                    return null;
-                    return null;
-                  },
-                  style: TextStyle(
-                      fontSize: MediaQuery.of(context).textScaleFactor * 20),
-                  onSaved: (value) {
-                    _authData['email'] = value.toString();
-                    // print(_authData);
-                  },
-                ),
-                TextFormField(
-                  style: TextStyle(
-                      fontSize: MediaQuery.of(context).textScaleFactor * 20),
-                  controller: _passwordController,
-                  decoration: InputDecoration(labelText: 'Password'),
-                  // make sure input show to the user
-                  obscureText: true,
-                  validator: (value) {
-                    if (value!.isEmpty || value.length < 5) {
-                      return 'Password is too short!';
-                    }
-                  },
-                  onSaved: (value) {
-                    _authData['password'] = value.toString();
-                    print(value);
-                  },
-                ),
-                if (_authMode == AuthMode.Signup)
-                  TextFormField(
-                    style: TextStyle(
-                        fontSize: MediaQuery.of(context).textScaleFactor * 20),
-                    enabled: _authMode == AuthMode.Signup,
-                    decoration: InputDecoration(labelText: 'Confirm Password'),
-                    obscureText: true,
-                    validator: _authMode == AuthMode.Signup
-                        //check the password match
-                        ? (value) {
-                            if (value != _passwordController.text) {
-                              print("dbug");
-                              print("value ${value}");
-                              print(_passwordController.text);
-                              return 'Passwords do not match!';
-                            }
-                          }
-                        : null,
+          child: LayoutBuilder(
+            builder: (ctx, constrains) => Container(
+              height: constrains.maxHeight,
+              width: constrains.maxWidth,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: constrains.maxHeight * 0.2,
+                    child: TextFormField(
+                      decoration: InputDecoration(labelText: 'E-Mail'),
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (value) {
+                        if (value!.isEmpty || !value.contains('@')) {
+                          return 'Invalid email!';
+                        }
+                        return null;
+                      },
+                      style: TextStyle(
+                          fontSize:
+                              MediaQuery.of(context).textScaleFactor * 15),
+                      onSaved: (value) {
+                        _authData['email'] = value.toString();
+                        // print(_authData);
+                      },
+                    ),
                   ),
-                SizedBox(
-                  height: 20,
-                ),
-                if (_isLoading)
-                  CircularProgressIndicator()
-                else
-                  ElevatedButton(
-                    onPressed: _submit,
-                    child:
-                        Text(_authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP'),
-                    style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 30.0, vertical: 8.0),
-                        backgroundColor: Color.fromRGBO(215, 117, 255, 1)
-                            .withOpacity(0.5) //Theme.of(context).primaryColor,
-                        ),
+                  SizedBox(
+                    height: constrains.maxHeight * 0.2,
+                    child: TextFormField(
+                      style: TextStyle(
+                          fontSize:
+                              MediaQuery.of(context).textScaleFactor * 15),
+                      controller: _passwordController,
+                      decoration: InputDecoration(labelText: 'Password'),
+                      // make sure input show to the user
+                      obscureText: true,
+                      validator: (value) {
+                        if (value!.isEmpty || value.length < 5) {
+                          return 'Password is too short!';
+                        }
+                      },
+                      onSaved: (value) {
+                        _authData['password'] = value.toString();
+                        print(value);
+                      },
+                    ),
                   ),
-                TextButton(
-                  onPressed: _switchAuthMode,
-                  child: Text(
-                      '${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'} INSTEAD'),
-                  style: TextButton.styleFrom(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
-                    primary: Color.fromRGBO(215, 117, 255, 1),
+                  if (_authMode == AuthMode.Signup)
+                    SizedBox(
+                      height: constrains.maxHeight * 0.2,
+                      child: TextFormField(
+                        style: TextStyle(
+                            fontSize:
+                                MediaQuery.of(context).textScaleFactor * 15),
+                        enabled: _authMode == AuthMode.Signup,
+                        decoration:
+                            InputDecoration(labelText: 'Confirm Password'),
+                        obscureText: true,
+                        validator: _authMode == AuthMode.Signup
+                            //check the password match
+                            ? (value) {
+                                if (value != _passwordController.text) {
+                                  print("dbug");
+                                  print("value ${value}");
+                                  print(_passwordController.text);
+                                  return 'Passwords do not match!';
+                                }
+                              }
+                            : null,
+                      ),
+                    ),
+                  SizedBox(
+                    height: 15,
                   ),
-                ),
-              ],
+                  if (_isLoading)
+                    CircularProgressIndicator()
+                  else
+                    ElevatedButton(
+                      onPressed: _submit,
+                      child: Text(
+                          _authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP'),
+                      style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 30.0, vertical: 8.0),
+                          backgroundColor: Color.fromRGBO(215, 117, 255, 1)
+                              .withOpacity(
+                                  0.5) //Theme.of(context).primaryColor,
+                          ),
+                    ),
+                  TextButton(
+                    onPressed: _switchAuthMode,
+                    child: Text(
+                        '${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'} INSTEAD'),
+                    style: TextButton.styleFrom(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
+                      primary: Color.fromRGBO(215, 117, 255, 1),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

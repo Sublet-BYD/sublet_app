@@ -70,6 +70,7 @@ flutter:
   assets:
     - assets/Apartment_example.jpg
     - assets/Profile_pic.jpg
+    - assets/Images/1Sublet_logo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -93,6 +94,9 @@ flutter:
         - asset: assets/fonts/Quicksand-regular.ttf
         - asset: assets/fonts/Quicksand-Bold.ttf
           weight: 700
-
+    - family: Quando
+      fonts:
+        - asset: assets/fonts/Quando-Regular.ttf
+          weight: 700
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
