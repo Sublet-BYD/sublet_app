@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sublet_app/screens/Home/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:sublet_app/screens/Owner/manage_properties.dart';
+import 'package:sublet_app/screens/Owner/tabs_screen.dart';
 import 'package:sublet_app/screens/Renter/Asset_Page.dart';
 import 'package:sublet_app/screens/Renter/Renter_Screen.dart';
 import 'package:sublet_app/screens/Owner/property_screen.dart';
@@ -45,9 +46,9 @@ class MyApp extends StatelessWidget {
               fontFamily: 'Lato',
             ),
             // home: auth.isAuth ? ManageProperties() : HomeScreen(),
-            // home: HomeScreen(),
+            home: const TabsScreen(),
             routes: {
-              '/property-screen': ((context) => PropertyScreen()),
+              '/property-screen': ((context) => const PropertyScreen()),
             },
             home: ManageProperties(),
           ),

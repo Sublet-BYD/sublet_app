@@ -56,9 +56,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Flexible(
+                          // flex: ,
                           // The SUBLET LOGO
                           child: Container(
-                            margin: EdgeInsets.only(bottom: 50.0),
+                            height: constrains.maxHeight * 0.2,
+                            margin: EdgeInsets.only(bottom: 2),
                             padding:
                                 //box size
                                 EdgeInsets.symmetric(
@@ -66,26 +68,32 @@ class _HomeScreenState extends State<HomeScreen> {
                             transform: Matrix4.rotationZ(-8 * pi / 180)
                               ..translate(-10.0),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Color.fromRGBO(255, 188, 117, 1)
-                                  .withOpacity(0.9),
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 8,
-                                  color: Colors.black26,
-                                  offset: Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            child: Text(
-                              'Sublet',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 46,
-                                fontFamily: 'Quando',
-                                // fontWeight: FontWeight.normal,
+                              image: DecorationImage(
+                                image: AssetImage(
+                                    'assets/Images/1Sublet_logo.png'),
+                                scale: 3,
+                                filterQuality: FilterQuality.high,
                               ),
+                              // borderRadius: BorderRadius.circular(20),
+                              // color: Color.fromRGBO(255, 188, 117, 1)
+                              //     .withOpacity(0.9),
+                              // boxShadow: [
+                              //   BoxShadow(
+                              //     blurRadius: 8,
+                              //     color: Colors.black26,
+                              //     offset: Offset(0, 2),
+                              //   ),
+                              // ],
                             ),
+                            // child: Text(
+                            //   'Sublet',
+                            //   style: TextStyle(
+                            //     color: Colors.white,
+                            //     fontSize: 46,
+                            //     fontFamily: 'Quando',
+                            //     // fontWeight: FontWeight.normal,
+                            //   ),
+                            // ),
                           ),
                         ),
                         Flexible(
