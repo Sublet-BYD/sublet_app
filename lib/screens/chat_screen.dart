@@ -2,6 +2,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sublet_app/widgets/chat/messages.dart';
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key});
@@ -9,25 +10,20 @@ class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView.builder(
-        itemCount: 10,
-        itemBuilder: (context, index) => Container(
-          padding: EdgeInsets.all(8),
-          child: Text('This work'),
-        ),
-      ),
+      body: Container(
+          child: Column(
+        children: [
+          Expanded(
+            child: Messages(),
+          ),
+        ],
+      )),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          // tell firestroe we want get access to the message collection indise the path
           FirebaseFirestore.instance
-              .collection('chats/KTu5DVP9EB1Cd4ZFSd8u/messages')
-              .snapshots()
-              .Snapshot((snapshot) {
-            for (var doc in snapshot.documents) {
-              print(doc.data()['text']);
-            }
-          });
+              .collection('chats/wCEB3xZRRjoavOnLtuGT/messages')
+              .add({'text': 'This was added by clicking the button !'});
         },
       ),
     );

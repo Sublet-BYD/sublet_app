@@ -118,6 +118,7 @@ class _AuthCardState extends State<AuthCard> {
     'email': '',
     'password': '',
   };
+  late String? _userName;
 
   var _isLoading = false;
   final _passwordController = TextEditingController();
@@ -142,16 +143,21 @@ class _AuthCardState extends State<AuthCard> {
   }
 
   Future<void> _submit() async {
+//close the soft keyboard which might still be open as soon we submit
+    FocusScope.of(context).unfocus();
+
     // validtion faild
     if (!_formKey.currentState!.validate()) {
       //Invalid!
       print('NOT VALID');
       return;
     }
+
     //valtion succeeced
     //save all input
     _formKey.currentState!.save();
     print('SECCED!!');
+    print(_userName);
 
     // set the loading spinner
     setState(() {
@@ -234,6 +240,7 @@ class _AuthCardState extends State<AuthCard> {
             child: Column(
               children: [
                 TextFormField(
+                  key: ValueKey('email'),
                   decoration: InputDecoration(labelText: 'E-Mail'),
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
@@ -250,7 +257,24 @@ class _AuthCardState extends State<AuthCard> {
                     // print(_authData);
                   },
                 ),
+                if (_authMode == AuthMode.Signup)
+                  TextFormField(
+                    key: ValueKey('username'),
+                    style: TextStyle(
+                        fontSize: MediaQuery.of(context).textScaleFactor * 20),
+                    decoration: InputDecoration(labelText: 'Username'),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please add you name here';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _userName = value;
+                    },
+                  ),
                 TextFormField(
+                  key: ValueKey('password'),
                   style: TextStyle(
                       fontSize: MediaQuery.of(context).textScaleFactor * 20),
                   controller: _passwordController,
@@ -324,4 +348,3 @@ class _AuthCardState extends State<AuthCard> {
     );
   }
 }
-
