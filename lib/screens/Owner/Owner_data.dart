@@ -23,7 +23,8 @@ class Owner_data {
     plist!.add(new_property);
   }
   void Remove_Property(Property old_property){
-    plist!.remove(old_property);
+    plist!.remove(old_property.id);
   }
+
 
 }
