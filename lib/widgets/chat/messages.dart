@@ -11,10 +11,10 @@ class Messages extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: FirebaseFirestore.instance
-          .collection('chat').snapshots(),
+          .collection('chat').
           // //oreder of the chat by time and fix the view
-          // .orderBy('createdAt', descending: true)
-          // .snapshots(),
+           orderBy('createdAt', descending: true)
+           .snapshots(),
       builder: (context, chatSnapshot) {
         //still waitng for some data
         if (chatSnapshot.connectionState == ConnectionState.waiting) {
@@ -26,9 +26,9 @@ class Messages extends StatelessWidget {
         return ListView.builder(
           reverse: true,
           itemCount: chatSnapshot.data!.docs.length, //how many item we need
-          itemBuilder: (context, index) => Text(
+          itemBuilder: (context, index) => MessageBubble(
             chatDocs[index]['text'],
-           // chatDocs[index]['userId'],
+            // chatDocs[index]['userId'],
           ),
         );
       },
