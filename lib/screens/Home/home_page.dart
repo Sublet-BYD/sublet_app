@@ -127,6 +127,7 @@ class _AuthCardState extends State<AuthCard> {
     'email': '',
     'password': '',
   };
+  late String? _userName;
 
   var _isLoading = false;
   final _passwordController = TextEditingController();
@@ -151,16 +152,20 @@ class _AuthCardState extends State<AuthCard> {
   }
 
   Future<void> _submit() async {
+//close the soft keyboard which might still be open as soon we submit
+    FocusScope.of(context).unfocus();
+
     // validtion faild
     if (!_formKey.currentState!.validate()) {
       //Invalid!
       print('NOT VALID');
       return;
     }
+
     //valtion succeeced
     //save all input
     _formKey.currentState!.save();
-    print('SUCCESS!!');
+    print('SECCED!!');
 
     // set the loading spinner
     setState(() {
