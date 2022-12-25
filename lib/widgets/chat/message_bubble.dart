@@ -11,6 +11,7 @@ class MessageBubble extends StatelessWidget {
   final Key key;
   final String message;
   final bool isMe;
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -29,13 +30,17 @@ class MessageBubble extends StatelessWidget {
           width: 140,
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
           margin: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-          child: Text(
-            message,
-            style: TextStyle(
-              fontFamily: 'QuickSand',
-              fontSize: 18,
-              color: isMe ? Colors.black : Colors.white,
-            ),
+          child: Column(
+            children: [
+              Text(
+                message,
+                style: TextStyle(
+                  fontFamily: 'QuickSand',
+                  fontSize: 18,
+                  color: isMe ? Colors.black : Colors.white,
+                ),
+              ),
+            ],
           ),
         ),
       ],
