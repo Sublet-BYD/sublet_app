@@ -18,7 +18,9 @@ class PropertyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _property = ModalRoute.of(context)?.settings.arguments as Property;
-    int available_color = (_property.occupied != null &&_property.occupied) ? 0xFFEF5350 : 0xFF8BC34A; // Light green for unoccupied, light red for occupied
+    int available_color = (_property.occupied != null && _property.occupied!)
+        ? 0xFFEF5350
+        : 0xFF8BC34A; // Light green for unoccupied, light red for occupied
     final appBar = AppBar(
       backgroundColor: Colors.transparent,
       foregroundColor: Colors.white,
@@ -152,7 +154,9 @@ class PropertyScreen extends StatelessWidget {
                     FittedBox(
                       child: Text(
                         // textAlign: TextAlign.left,
-                        (_property.occupied) ? 'This Property is now occupied' : 'This property is not occupied',
+                        (_property.occupied!)
+                            ? 'This Property is now occupied'
+                            : 'This property is not occupied',
                         style: TextStyle(
                           fontFamily: 'OpenSans',
                           color: Colors.grey[700],
@@ -172,7 +176,9 @@ class PropertyScreen extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   //Implement pop up warning window here
-                  print((_property.occupied) ? 'You cannot delete this property, as it is currently occupied.' : 'Are you sure you want to delete this property?\n');
+                  print((_property.occupied!)
+                      ? 'You cannot delete this property, as it is currently occupied.'
+                      : 'Are you sure you want to delete this property?\n');
                 },
                 child: Container(
                   color: Colors.red[800],
@@ -180,7 +186,10 @@ class PropertyScreen extends StatelessWidget {
                   height: constrains.maxHeight * 0.2,
                   child: ListTile(
                     leading: Icon(Icons.delete),
-                    title: Text('Delete this property', style: TextStyle(fontFamily: 'OpenSans', fontWeight: FontWeight.bold)),
+                    title: Text('Delete this property',
+                        style: TextStyle(
+                            fontFamily: 'OpenSans',
+                            fontWeight: FontWeight.bold)),
                   ),
                 ),
               ),
