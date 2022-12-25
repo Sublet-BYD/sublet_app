@@ -7,7 +7,7 @@ import 'package:sublet_app/screens/Renter/Renter_Screen.dart';
 import 'package:intl/intl.dart';
 
 class Asset_Page extends StatefulWidget {
-  final UniqueKey property_id;
+  final int property_id;
   const Asset_Page({Key? key, required this.property_id}) : super(key: key);
 
   @override
@@ -19,7 +19,7 @@ class _Asset_PageState extends State<Asset_Page> {
   @override
   Widget build(BuildContext context) {
     Property property = Property(id: widget.property_id, name: 'name', location: 'location', owner_id: UniqueKey(),); // Will be taken from firebase according to the given key
-    Owner_data owner = Owner_data('name', property: property.id);
+    Owner_data owner = Owner_data('name', plist: [property.id]);
     // DateTimeRange available_dates =
     //     DateTimeRange(start: DateTime.now(), end: DateTime.now());
     // String available_dates_str =
@@ -149,7 +149,7 @@ class _Asset_PageState extends State<Asset_Page> {
                       padding: EdgeInsets.only(top: 10),
                       child: ListTile(
                         leading: CircleAvatar(
-                          backgroundImage: owner.profile_pic,
+                          backgroundImage: AssetImage('assets/Empty_profile_pic.jpg'), // Commented out: owner.profile_pic
                           radius: 40,
                         ),
                         title: Text('Meet your host, ${owner.name}',
@@ -201,6 +201,7 @@ class _Asset_PageState extends State<Asset_Page> {
                     // },
                     onTap: () {
                       //Move to chat with owner
+                      print(owner.Prepare_upload_to_firestore());
                       print('Redirecting to chat\n');
                     },
                     child: Card(

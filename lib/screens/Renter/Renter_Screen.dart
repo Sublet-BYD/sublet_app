@@ -63,47 +63,47 @@ class Assetlist extends StatefulWidget {
 class _AssetlistState extends State<Assetlist> {
   List<Property> list = [
     Property(
-        id: UniqueKey(),
+        id: 1,
         owner_id: UniqueKey(),
         name: 'name',
         location: 'location'),
     Property(
-        id: UniqueKey(),
+        id: 2,
         owner_id: UniqueKey(),
         name: 'name',
         location: 'location'),
     Property(
-        id: UniqueKey(),
+        id: 3,
         owner_id: UniqueKey(),
         name: 'name',
         location: 'location'),
     Property(
-        id: UniqueKey(),
+        id: 4,
         owner_id: UniqueKey(),
         name: 'name',
         location: 'location'),
     Property(
-        id: UniqueKey(),
+        id: 5,
         owner_id: UniqueKey(),
         name: 'name',
         location: 'location'),
     Property(
-        id: UniqueKey(),
+        id: 6,
         owner_id: UniqueKey(),
         name: 'name',
         location: 'location'),
     Property(
-        id: UniqueKey(),
+        id: 7,
         owner_id: UniqueKey(),
         name: 'name',
         location: 'location'),
     Property(
-        id: UniqueKey(),
+        id: 8,
         owner_id: UniqueKey(),
         name: 'name',
         location: 'location'),
     Property(
-        id: UniqueKey(),
+        id: 9,
         owner_id: UniqueKey(),
         name: 'name',
         location: 'location')
@@ -159,7 +159,7 @@ class _AssetlistState extends State<Assetlist> {
     );
   }
 
-  void onPress(BuildContext context, UniqueKey asset_id) {
+  void onPress(BuildContext context, int asset_id) {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => Asset_Page(
               property_id: asset_id,

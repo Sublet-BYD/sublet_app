@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Property {
-  final UniqueKey id;
+  final int id;
   final UniqueKey owner_id;
   final String name;
   final String location;
