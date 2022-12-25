@@ -13,7 +13,6 @@ class Property {
   final ImageProvider? image;
   final String?
       description; // Short paragraph about the property which would be provided by the owner
-  final int chat_id;
 
   Property({
     required this.id,
