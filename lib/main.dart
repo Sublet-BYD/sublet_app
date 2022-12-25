@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
             routes: {
               '/property-screen': ((context) => const PropertyScreen()),
             },
-            home: Renter_Screen(),
+            home: TabsScreen(),
           ),
         ));
   }

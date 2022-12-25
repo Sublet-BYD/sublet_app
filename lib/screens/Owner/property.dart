@@ -6,21 +6,25 @@ class Property {
   final UniqueKey owner_id;
   final String name;
   final String location;
-  final DateTimeRange? dates;
+  final DateTime dateAdded;
+  final DateTimeRange dates;
+  final bool? occupied;
+  final int price; // Price of subletting the property for a single night
   final ImageProvider? image;
-  final String? description; // Short paragraph about the property which would be provided by the owner
-  final int? price; // Price of subletting the property for a single night
-  final bool occupied;
+  final String?
+      description; // Short paragraph about the property which would be provided by the owner
+  final int chat_id;
 
   Property({
     required this.id,
     required this.name,
     required this.location,
     required this.owner_id,
-    this.dates,
-    this.description,
-    this.image,
-    this.price,
+    required this.dates,
+    required this.price,
+    required this.dateAdded,
     this.occupied = false, // any property would be available on default
+    this.image,
+    this.description,
   });
 }
