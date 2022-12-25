@@ -55,58 +55,22 @@ class _Renter_ScreenState extends State<Renter_Screen> {
 
 class Assetlist extends StatefulWidget {
   const Assetlist({super.key});
-
+  static int property_id = 0;
   @override
   State<Assetlist> createState() => _AssetlistState();
 }
 
 class _AssetlistState extends State<Assetlist> {
   List<Property> list = [
-    Property(
-        id: 1,
-        owner_id: UniqueKey(),
-        name: 'name',
-        location: 'location'),
-    Property(
-        id: 2,
-        owner_id: UniqueKey(),
-        name: 'name',
-        location: 'location'),
-    Property(
-        id: 3,
-        owner_id: UniqueKey(),
-        name: 'name',
-        location: 'location'),
-    Property(
-        id: 4,
-        owner_id: UniqueKey(),
-        name: 'name',
-        location: 'location'),
-    Property(
-        id: 5,
-        owner_id: UniqueKey(),
-        name: 'name',
-        location: 'location'),
-    Property(
-        id: 6,
-        owner_id: UniqueKey(),
-        name: 'name',
-        location: 'location'),
-    Property(
-        id: 7,
-        owner_id: UniqueKey(),
-        name: 'name',
-        location: 'location'),
-    Property(
-        id: 8,
-        owner_id: UniqueKey(),
-        name: 'name',
-        location: 'location'),
-    Property(
-        id: 9,
-        owner_id: UniqueKey(),
-        name: 'name',
-        location: 'location')
+    Property(id: 1, owner_id: 656329, name: 'name', location: 'location'),
+    Property(id: 2, owner_id: 656329, name: 'name', location: 'location'),
+    Property(id: 3, owner_id: 77401, name: 'name', location: 'location'),
+    Property(id: 4, owner_id: 77401, name: 'name', location: 'location'),
+    Property(id: 5, owner_id: 77401, name: 'name', location: 'location'),
+    Property(id: 6, owner_id: 77401, name: 'name', location: 'location'),
+    Property(id: 7, owner_id: 77401, name: 'name', location: 'location'),
+    Property(id: 8, owner_id: 77401, name: 'name', location: 'location'),
+    Property(id: 9, owner_id: 77401, name: 'name', location: 'location')
   ];
   @override
   Widget build(BuildContext context) {
@@ -160,9 +124,8 @@ class _AssetlistState extends State<Assetlist> {
   }
 
   void onPress(BuildContext context, int asset_id) {
-    Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => Asset_Page(
-              property_id: asset_id,
-            )));
+    Assetlist.property_id = asset_id;
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => Asset_Page()));
   }
 }

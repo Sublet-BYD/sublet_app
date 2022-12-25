@@ -1,14 +1,16 @@
 // ignore_for_file: non_constant_identifier_names, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:sublet_app/Firebase_functions.dart';
+import 'package:sublet_app/main.dart';
 import 'package:sublet_app/screens/Owner/Owner_data.dart';
 import 'package:sublet_app/screens/Owner/property.dart';
 import 'package:sublet_app/screens/Renter/Renter_Screen.dart';
 import 'package:intl/intl.dart';
 
 class Asset_Page extends StatefulWidget {
-  final int property_id;
-  const Asset_Page({Key? key, required this.property_id}) : super(key: key);
+  // static final int? property_id;
+  const Asset_Page({Key? key}) : super(key: key);
 
   @override
   State<Asset_Page> createState() => _Asset_PageState();
@@ -16,16 +18,14 @@ class Asset_Page extends StatefulWidget {
 
 class _Asset_PageState extends State<Asset_Page> {
   Color contact_color = (Colors.amber[600]!);
+  Property property = Property(id: MyApp.property_id, name: 'name', location: 'location', owner_id: 262170); // Will be taken from firebase according to the given key
+  late Owner_data? owner = null;
+  void get_owner_data() async{
+    owner = await Firebase_functions.get_owner(property.owner_id);
+  }
   @override
   Widget build(BuildContext context) {
-    Property property = Property(id: widget.property_id, name: 'name', location: 'location', owner_id: UniqueKey(),); // Will be taken from firebase according to the given key
-    Owner_data owner = Owner_data('name', plist: [property.id]);
-    // DateTimeRange available_dates =
-    //     DateTimeRange(start: DateTime.now(), end: DateTime.now());
-    // String available_dates_str =
-    //     DateFormat('dd/MM/yyyy').format(available_dates.start) +
-    //         '-' +
-    //         DateFormat('dd/MM/yyyy').format(available_dates.end);
+    get_owner_data();
     return Container(
       child: ListView(
         children: [
@@ -152,12 +152,12 @@ class _Asset_PageState extends State<Asset_Page> {
                           backgroundImage: AssetImage('assets/Empty_profile_pic.jpg'), // Commented out: owner.profile_pic
                           radius: 40,
                         ),
-                        title: Text('Meet your host, ${owner.name}',
+                        title: Text('Meet your host, ${(owner != null) ? owner!.name : 'no name'}',
                             style: TextStyle(
                                 fontFamily: 'OpenSans',
                                 fontWeight: FontWeight.bold)),
                         subtitle: Text(
-                            'They\'ve been hosting since ${owner.joined_at}'),
+                            'They\'ve been hosting since ${(owner!= null) ? owner!.joined_at : 'literally just now'}'),
                       ),
                     ),
                   ),
@@ -201,7 +201,7 @@ class _Asset_PageState extends State<Asset_Page> {
                     // },
                     onTap: () {
                       //Move to chat with owner
-                      print(owner.Prepare_upload_to_firestore());
+                      print(owner!.toJson());
                       print('Redirecting to chat\n');
                     },
                     child: Card(

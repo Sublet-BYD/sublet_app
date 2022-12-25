@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class Property {
   final int id;
-  final UniqueKey owner_id;
+  final int owner_id;
   final String name;
   final String location;
   final DateTimeRange? dates;

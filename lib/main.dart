@@ -20,7 +20,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  Owner_data first = Owner_data('first name');
+  Owner_data first = Owner_data('Different name');
   print('Connection to firebase established. Running application\n');
   Firebase_functions.Upload_owner(first);
   runApp(const MyApp());
@@ -28,7 +28,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
+  static int property_id = 0; // id of a property. since the variable needs to be static to be easily accessible through multiple classes, it is declared in the main class and initialized with a meaningless value (0).
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
