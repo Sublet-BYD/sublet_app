@@ -170,7 +170,7 @@ class _Asset_PageState extends State<Asset_Page> {
                                 fontFamily: 'OpenSans',
                                 fontWeight: FontWeight.bold)),
                         subtitle: Text(
-                            'They\'ve been hosting since ${(owner != null) ? owner!.joined_at : 'literally just now'}'),
+                            'They\'ve been hosting since ${(owner != null) ? owner.joined_at : 'literally just now'}'),
                       ),
                     ),
                   ),
@@ -215,7 +215,7 @@ class _Asset_PageState extends State<Asset_Page> {
                     // },
                     onTap: () {
                       //Move to chat with owner
-                      print(owner!.toJson());
+                      print(owner.toJson());
                       print('Redirecting to chat\n');
                     },
                     child: Card(
