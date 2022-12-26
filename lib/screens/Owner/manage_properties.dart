@@ -35,8 +35,8 @@ class _ManagePropertiesState extends State<ManageProperties> {
       onRefresh: () async {
         setState(() {
           // PropertiesListCategories().createState();
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => TabsScreen()));
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => TabsScreen()));
         });
       },
       child: Column(
@@ -46,7 +46,7 @@ class _ManagePropertiesState extends State<ManageProperties> {
             child: TextFormField(
               decoration: InputDecoration(
                 labelText: 'Search',
-                prefixIcon: Icon(
+                prefixIcon: const Icon(
                   Icons.search,
                   // color: Colors.white,
                 ),
@@ -66,6 +66,7 @@ class _ManagePropertiesState extends State<ManageProperties> {
                   Column(
                     children: [
                       Container(
+                        margin: EdgeInsets.only(bottom: 15.0, left: 20),
                         child: Text(
                           'Recently Added',
                           style: TextStyle(
@@ -74,7 +75,6 @@ class _ManagePropertiesState extends State<ManageProperties> {
                             fontFamily: 'OpenSans',
                           ),
                         ),
-                        margin: EdgeInsets.only(bottom: 15.0, left: 20),
                       ),
                       PropertiesListCategories(),
                     ],
@@ -82,6 +82,7 @@ class _ManagePropertiesState extends State<ManageProperties> {
                   Column(
                     children: [
                       Container(
+                        margin: EdgeInsets.only(bottom: 15.0, left: 20),
                         child: Text(
                           'Recently Added',
                           style: TextStyle(
@@ -90,7 +91,6 @@ class _ManagePropertiesState extends State<ManageProperties> {
                             fontFamily: 'OpenSans',
                           ),
                         ),
-                        margin: EdgeInsets.only(bottom: 15.0, left: 20),
                       ),
                       PropertiesListCategories(),
                     ],
@@ -98,6 +98,7 @@ class _ManagePropertiesState extends State<ManageProperties> {
                   Column(
                     children: [
                       Container(
+                        margin: EdgeInsets.only(bottom: 15.0, left: 20),
                         child: Text(
                           'Recently Added',
                           style: TextStyle(
@@ -106,9 +107,8 @@ class _ManagePropertiesState extends State<ManageProperties> {
                             fontFamily: 'OpenSans',
                           ),
                         ),
-                        margin: EdgeInsets.only(bottom: 15.0, left: 20),
                       ),
-                      PropertiesListCategories(),
+                      const PropertiesListCategories(),
                     ],
                   ),
                 ],
