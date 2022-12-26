@@ -9,24 +9,8 @@ import 'package:sublet_app/screens/Owner/property_screen.dart';
 import '/screens/Owner/property_card.dart';
 import '/screens/Owner/property.dart';
 
-class MyWidget extends StatefulWidget {
-  const MyWidget({super.key});
-
-  @override
-  State<MyWidget> createState() => _MyWidgetState();
-}
-
-class _MyWidgetState extends State<MyWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
-
 class PropertiesListCategories extends StatefulWidget {
-  final String _title;
-  const PropertiesListCategories(this._title, {super.key});
-
+  const PropertiesListCategories({super.key});
   @override
   State<PropertiesListCategories> createState() =>
       _PropertiesListCategoriesState();
@@ -63,10 +47,13 @@ class _PropertiesListCategoriesState extends State<PropertiesListCategories> {
     plist = await _properties;
   }
 
+
   @override
   Widget build(BuildContext context) {
-    final curScaleFactor = MediaQuery.of(context).textScaleFactor;
     update_plist();
+    setState(() {
+      
+    });
     return FutureBuilder(
         future: _properties,
         builder:
@@ -75,40 +62,23 @@ class _PropertiesListCategoriesState extends State<PropertiesListCategories> {
             return Container(
               margin: EdgeInsets.only(top: 10, bottom: 15),
               child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Title of the category
-                    Container(
-                      child: Text(
-                        widget._title,
-                        style: TextStyle(
-                          fontSize: 30 * curScaleFactor,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'OpenSans',
-                        ),
-                      ),
-                      margin: EdgeInsets.only(bottom: 15.0, left: 20),
-                    ),
-                    // Row Presentation of the properties of this category.
-
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.25,
-                      child: ListView.builder(
-                        padding: EdgeInsets.only(left: 10),
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                              splashColor: Theme.of(context).primaryColor,
-                              borderRadius: BorderRadius.circular(20),
-                              onTap: (() =>
-                                  onPropertyCardPress(context, index)),
-                              child: PropertyCard(plist[index]));
-                        },
-                        itemCount: plist.length,
-                      ),
-                    ),
-                  ],
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.25,
+                  child: ListView.builder(
+                    padding: EdgeInsets.only(left: 10),
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                    //   return InkWell(
+                    //       splashColor: Theme.of(context).primaryColor,
+                    //       borderRadius: BorderRadius.circular(20),
+                    //       onTap: (() =>
+                    //           onPropertyCardPress(context, index)),
+                    //       child: PropertyCard(plist[index]));
+                    // },
+                    return PropertyCard(plist[index]);
+                    },
+                    itemCount: plist.length,
+                  ),
                 ),
               ),
             );

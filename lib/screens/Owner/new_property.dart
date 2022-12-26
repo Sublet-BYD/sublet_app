@@ -10,11 +10,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sublet_app/Firebase_functions.dart';
 import 'package:sublet_app/main.dart';
+import 'package:sublet_app/screens/Owner/manage_properties.dart';
 import 'package:sublet_app/screens/Owner/properties_list_categories.dart';
 import './property.dart';
 
 class NewProperty extends StatefulWidget {
-  const NewProperty({super.key});
+  final Function refresh;
+  const NewProperty({required this.refresh,super.key});
 
   @override
   State<NewProperty> createState() => _NewPropertyState();
@@ -198,7 +200,6 @@ class _NewPropertyState extends State<NewProperty> {
                     onPressed: () {
                       FocusScope.of(context).unfocus();
                       final user = FirebaseAuth.instance.currentUser;
-                      Navigator.pop(context);
                       //  _addNewProperty();
                       Property pro = new Property(
                         name: propNameController.text,
@@ -213,7 +214,9 @@ class _NewPropertyState extends State<NewProperty> {
                       Firebase_functions.Upload_property(pro);
                       // PropertiesListCategories.setState()
                       setState(() {
-                        
+                        Navigator.pop(context);
+                        widget.refresh();
+                        // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ManageProperties()));
                       });
                     },
                     child: Text("Add"))
