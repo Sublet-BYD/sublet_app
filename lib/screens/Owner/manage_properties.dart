@@ -43,30 +43,7 @@ class ManageProperties extends StatelessWidget {
                 PropertiesListCategories(_recently),
                 PropertiesListCategories(_occupied),
                 PropertiesListCategories(_unoccupied),
-                ElevatedButton(
-                  // onPressed: () => Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //       builder: (context) => Scaffold(
-                  //         body: Center(
-                  //           child: ElevatedButton(
-                  //             onPressed: () {
-                  //               if (Navigator.canPop(context)) {
-                  //                 Navigator.pop(context);
-                  //               }
-                  //             },
-                  //             child: const Text('POP'),
-                  //           ),
-                  //         ),
-                  //       ),
-                  //     )),
-                  onPressed: () {
-                    if (Navigator.canPop(context)) {
-                      Navigator.pop(context);
-                    }
-                  },
-                  child: const Text('PUSH'),
-                )
+              
               ],
             ),
           ),
