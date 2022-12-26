@@ -100,5 +100,7 @@ class Auth with ChangeNotifier {
     MyApp.uid = '';
     MyApp.uType = '';
     notifyListeners();
+
+    print(_userId);
   }
 }

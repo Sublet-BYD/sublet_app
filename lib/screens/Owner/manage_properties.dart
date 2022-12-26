@@ -31,92 +31,83 @@ class _ManagePropertiesState extends State<ManageProperties> {
   @override
   Widget build(BuildContext context) {
     final curScaleFactor = MediaQuery.of(context).textScaleFactor;
-    return RefreshIndicator(
-      onRefresh: () async {
-        setState(() {
-          // PropertiesListCategories().createState();
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => TabsScreen()));
-        });
-      },
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 8.0),
-            child: TextFormField(
-              decoration: InputDecoration(
-                labelText: 'Search',
-                prefixIcon: Icon(
-                  Icons.search,
-                  // color: Colors.white,
-                ),
-                contentPadding: EdgeInsets.all(8.0),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 8.0),
+          child: TextFormField(
+            decoration: InputDecoration(
+              labelText: 'Search',
+              prefixIcon: Icon(
+                Icons.search,
+                // color: Colors.white,
+              ),
+              contentPadding: EdgeInsets.all(8.0),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(30),
               ),
             ),
           ),
-          Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.only(bottom: 60),
-              physics: const BouncingScrollPhysics(),
-              child: Column(
-                children: <Widget>[
-                  Column(
-                    children: [
-                      Container(
-                        child: Text(
-                          'Recently Added',
-                          style: TextStyle(
-                            fontSize: 30 * curScaleFactor,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'OpenSans',
-                          ),
+        ),
+        Expanded(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.only(bottom: 60),
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              children: <Widget>[
+                Column(
+                  children: [
+                    Container(
+                      child: Text(
+                        'Recently Added',
+                        style: TextStyle(
+                          fontSize: 30 * curScaleFactor,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'OpenSans',
                         ),
-                        margin: EdgeInsets.only(bottom: 15.0, left: 20),
                       ),
-                      PropertiesListCategories(),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Container(
-                        child: Text(
-                          'Recently Added',
-                          style: TextStyle(
-                            fontSize: 30 * curScaleFactor,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'OpenSans',
-                          ),
+                      margin: EdgeInsets.only(bottom: 15.0, left: 20),
+                    ),
+                    PropertiesListCategories(),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Container(
+                      child: Text(
+                        'Recently Added',
+                        style: TextStyle(
+                          fontSize: 30 * curScaleFactor,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'OpenSans',
                         ),
-                        margin: EdgeInsets.only(bottom: 15.0, left: 20),
                       ),
-                      PropertiesListCategories(),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Container(
-                        child: Text(
-                          'Recently Added',
-                          style: TextStyle(
-                            fontSize: 30 * curScaleFactor,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'OpenSans',
-                          ),
+                      margin: EdgeInsets.only(bottom: 15.0, left: 20),
+                    ),
+                    PropertiesListCategories(),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Container(
+                      child: Text(
+                        'Recently Added',
+                        style: TextStyle(
+                          fontSize: 30 * curScaleFactor,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'OpenSans',
                         ),
-                        margin: EdgeInsets.only(bottom: 15.0, left: 20),
                       ),
-                      PropertiesListCategories(),
-                    ],
-                  ),
-                ],
-              ),
+                      margin: EdgeInsets.only(bottom: 15.0, left: 20),
+                    ),
+                    PropertiesListCategories(),
+                  ],
+                ),
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
