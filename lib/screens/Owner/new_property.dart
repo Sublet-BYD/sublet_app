@@ -12,6 +12,7 @@ import 'package:sublet_app/Firebase_functions.dart';
 import 'package:sublet_app/main.dart';
 import 'package:sublet_app/screens/Owner/manage_properties.dart';
 import 'package:sublet_app/screens/Owner/properties_list_categories.dart';
+import 'package:sublet_app/screens/Owner/tabs_screen.dart';
 import './property.dart';
 
 class NewProperty extends StatefulWidget {
@@ -216,7 +217,8 @@ class _NewPropertyState extends State<NewProperty> {
                       setState(() {
                         Navigator.pop(context);
                         widget.refresh();
-                        // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ManageProperties()));
+              //           Navigator.pushReplacement(context,
+              // MaterialPageRoute(builder: (context) => TabsScreen()));
                       });
                     },
                     child: Text("Add"))
