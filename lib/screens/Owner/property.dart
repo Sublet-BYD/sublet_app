@@ -5,7 +5,7 @@ part 'property.g.dart';
 
 @JsonSerializable()
 class Property {
-  late String id;
+  String? id;
   final String owner_id;
   final String name;
   final String location;
@@ -18,7 +18,7 @@ class Property {
       description; // Short paragraph about the property which would be provided by the owner
 
   Property({
-    required this.id,
+    this.id,
     required this.name,
     required this.location,
     required this.owner_id,
