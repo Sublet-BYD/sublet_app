@@ -1,9 +1,16 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:intl/intl.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+// Add the Firestore library
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sublet_app/Firebase_functions.dart';
+import 'package:sublet_app/main.dart';
+import './property.dart';
 class NewProperty extends StatefulWidget {
   const NewProperty({super.key});
 
@@ -23,13 +30,56 @@ class _NewPropertyState extends State<NewProperty> {
     text: DateFormat.yMMMd().format(DateTime.now()).toString(),
   );
 
-  void _PresentDataPicker() {
-    showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2022),
-      lastDate: DateTime(2022),
-    );
+  // void _PresentDataPicker() {
+  //   showDatePicker(
+  //     context: context,
+  //     initialDate: DateTime.now(),
+  //     firstDate: DateTime(2022),
+  //     lastDate: DateTime(2022),
+  //   );
+  // }
+
+  // Get a reference to the Firestore database
+
+  final _db = FirebaseFirestore.instance;
+
+  Future<DocumentSnapshot> getOwnerDocument(String id) async {
+    DocumentSnapshot doc = await _db.collection('owners').doc(id).get();
+    if (doc.exists) {
+      // Document data is available
+      return doc;
+    } else {
+      // Document is not found, return an error
+      return Future.error('Document not found');
+    }
+  }
+
+  void _addNewProperty() async {
+    // Add the new property to the 'properties' collection
+    DocumentReference newPropertyRef = await _db.collection('properties').add({
+      'name': propNameController.text,
+      'location': propLocationController.text,
+      'price': propPriceController.text,
+      'startDate': propStartDateController.text,
+      'endDate': propEndDateController.text,
+      'status': propStatusController.text
+    });
+
+    // // Get the ID of the new property
+    // String newPropertyId = newPropertyRef.id;
+
+    // // Get the current user ID from Firebase Authentication
+    // final currentUserId = FirebaseAuth.instance.currentUser;
+    // print(MyApp.uid);
+
+    // // Update the owner's plist field with the new property ID
+    // await _db.collection('owners').doc(MyApp.uid).update({
+    //   'plist': FieldValue.arrayUnion([newPropertyId])
+    // });
+
+    setState(() {});
+
+    print('was add');
   }
 
   @override
@@ -51,17 +101,26 @@ class _NewPropertyState extends State<NewProperty> {
                 TextField(
                   decoration: InputDecoration(labelText: 'Property Name'),
                   controller: propNameController,
-                  onSubmitted: ((value) {}), // TODO
+                  onSubmitted: ((value) {
+                    FocusScope.of(context).unfocus();
+                    final user = FirebaseAuth.instance.currentUser;
+                  }), // TODO
                 ),
                 TextField(
                   decoration: InputDecoration(labelText: 'Property Location'),
                   controller: propLocationController,
-                  onSubmitted: ((value) {}), // TODO
+                  onSubmitted: ((value) {
+                    FocusScope.of(context).unfocus();
+                    final user = FirebaseAuth.instance.currentUser;
+                  }), // TODO
                 ),
                 TextField(
                   decoration: InputDecoration(labelText: 'Property Price'),
                   controller: propPriceController,
-                  onSubmitted: ((value) {}), // TODO
+                  onSubmitted: ((value) {
+                    FocusScope.of(context).unfocus();
+                    final user = FirebaseAuth.instance.currentUser;
+                  }), // TODO
                 ),
                 Container(
                   padding: EdgeInsets.only(top: 15, left: 15, right: 15),
@@ -133,6 +192,16 @@ class _NewPropertyState extends State<NewProperty> {
                     ),
                   ),
                 ),
+                TextButton(
+                    onPressed: () {
+                      FocusScope.of(context).unfocus();
+                      final user = FirebaseAuth.instance.currentUser;
+                      Navigator.pop(context);
+                      //  _addNewProperty();
+                      
+                     // Firebase_functions.Upload_property();
+                    },
+                    child: Text("Add"))
               ],
             ),
           ),

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sublet_app/Firebase_functions.dart';
@@ -180,6 +181,23 @@ class _AuthCardState extends State<AuthCard> {
     try {
       if (_authMode == AuthMode.Login) {
         // Log user in
+        if (MyApp.uid != '') {
+          FirebaseFirestore.instance
+              .collection('users')
+              .doc(MyApp.uid)
+              .get()
+              .then((doc) {
+            if (doc.exists) {
+              // Document data is available
+              MyApp.uType = doc.data()!['type'];
+            } else {
+              // Document is not found
+              print("No such document!");
+            }
+            print("HERE");
+            print(MyApp.uType);
+          });
+        }
         MyApp.uid = await Provider.of<Auth>(context, listen: false).login(
             _authData['email'].toString(), _authData['password'].toString());
       } else {
