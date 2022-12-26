@@ -10,6 +10,7 @@ import 'package:sublet_app/screens/Owner/tabs_screen.dart';
 import 'package:sublet_app/screens/Renter/Asset_Page.dart';
 import 'package:sublet_app/screens/Renter/Renter_Screen.dart';
 import 'package:sublet_app/screens/Owner/property_screen.dart';
+import 'package:sublet_app/screens/Renter/renter_tab_screen.dart';
 import 'firebase_options.dart';
 import 'package:provider/provider.dart';
 import 'Firebase_functions.dart';
@@ -63,14 +64,14 @@ class MyApp extends StatelessWidget {
               accentColor: Colors.deepOrange,
               fontFamily: 'Lato',
             ),
-            home: (auth.isAuth)
-                ? (uType == 'client' ? Renter_Screen() : TabsScreen())
-                : HomeScreen(),
+            // home: (auth.isAuth)
+            //     ? (uType == 'client' ? RenterTabsScreen() : TabsScreen())
+            //     : HomeScreen(),
             // home: const HomeScreen(),
             routes: {
               '/property-screen': ((context) => const PropertyScreen()),
             },
-            // home: Renter_Screen(),
+            home: RenterTabsScreen(),
           ),
         ));
   }

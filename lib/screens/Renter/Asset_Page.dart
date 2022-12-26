@@ -9,6 +9,7 @@ import 'package:sublet_app/screens/Owner/Owner_data.dart';
 import 'package:sublet_app/screens/Owner/property.dart';
 import 'package:sublet_app/screens/Renter/Renter_Screen.dart';
 import 'package:intl/intl.dart';
+import 'package:sublet_app/screens/Renter/renter_tab_screen.dart';
 import 'package:sublet_app/screens/chat_screen.dart';
 
 class Asset_Page extends StatefulWidget {
@@ -77,7 +78,7 @@ class _Asset_PageState extends State<Asset_Page> {
                             child: Icon(Icons.arrow_back),
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => Renter_Screen()));
+                                  builder: (context) => RenterTabsScreen()));
                             },
                           ),
                         ),

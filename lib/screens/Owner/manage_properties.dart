@@ -23,13 +23,12 @@ class _ManagePropertiesState extends State<ManageProperties> {
 
   // void refresh(){
   //     setState(() {
-        
+
   //     });
   //   }
 
   @override
   Widget build(BuildContext context) {
-    
     final curScaleFactor = MediaQuery.of(context).textScaleFactor;
     return Column(
       children: [
@@ -57,22 +56,6 @@ class _ManagePropertiesState extends State<ManageProperties> {
               children: <Widget>[
                 Column(
                   children: [
-                      Container(
-                      child: Text(
-                        'Recently Added',
-                        style: TextStyle(
-                          fontSize: 30 * curScaleFactor,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'OpenSans',
-                        ),
-                      ),
-                      margin: EdgeInsets.only(bottom: 15.0, left: 20),
-                    ),
-                    PropertiesListCategories(),
-                  ],
-                ),
-                Column(
-                  children: [
                     Container(
                       child: Text(
                         'Recently Added',
@@ -103,7 +86,22 @@ class _ManagePropertiesState extends State<ManageProperties> {
                     PropertiesListCategories(),
                   ],
                 ),
-              
+                Column(
+                  children: [
+                    Container(
+                      child: Text(
+                        'Recently Added',
+                        style: TextStyle(
+                          fontSize: 30 * curScaleFactor,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'OpenSans',
+                        ),
+                      ),
+                      margin: EdgeInsets.only(bottom: 15.0, left: 20),
+                    ),
+                    PropertiesListCategories(),
+                  ],
+                ),
               ],
             ),
           ),
