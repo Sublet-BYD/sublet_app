@@ -20,47 +20,47 @@ class PropertiesListCategories extends StatelessWidget {
   final List<Property> _properties = [
     Property(
       id: 1,
-        owner_id: 656329,
+        owner_id: '656329',
         name: 'name',
         location: 'location'),
     Property(
         id: 2,
-        owner_id: 656329,
+        owner_id: '656329',
         name: 'name',
         location: 'location'),
     Property(
         id: 3,
-        owner_id: 656329,
+        owner_id: '656329',
         name: 'name',
         location: 'location'),
     Property(
         id: 4,
-        owner_id: 656329,
+        owner_id: '656329',
         name: 'name',
         location: 'location'),
     Property(
         id: 5,
-        owner_id: 656329,
+        owner_id: '656329',
         name: 'name',
         location: 'location'),
     Property(
         id: 6,
-        owner_id: 656329,
+        owner_id: '656329',
         name: 'name',
         location: 'location'),
     Property(
         id: 7,
-        owner_id: 656329,
+        owner_id: '656329',
         name: 'name',
         location: 'location'),
     Property(
         id: 8,
-        owner_id: 656329,
+        owner_id: '656329',
         name: 'name',
         location: 'location'),
     Property(
         id: 9,
-        owner_id: 656329,
+        owner_id: '656329',
         name: 'name',
         location: 'location'),
   ];

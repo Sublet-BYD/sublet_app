@@ -24,15 +24,15 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  Owner_data first = Owner_data('first name');
+  Owner_data first = Owner_data('first name', 'first_id');
   Property property = Property(
       id: Random().nextInt(999999),
-      name: 'name',
-      location: 'location',
-      owner_id: 208512);
+      name: 'no name',
+      location: ' all locations',
+      owner_id: 'first_id');
   print('Connection to firebase established. Running application\n');
-  // Firebase_functions.Upload_owner(first);
-  // Firebase_functions.Upload_property(property);
+  Firebase_functions.Upload_owner(first);
+  Firebase_functions.Upload_property(property);
   // Firebase_functions.Delete_property(0);
   // Firebase_functions.get_avail_properties();
   runApp(const MyApp());
