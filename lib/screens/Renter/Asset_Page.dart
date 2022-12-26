@@ -1,5 +1,7 @@
 // ignore_for_file: non_constant_identifier_names, prefer_const_constructors
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:sublet_app/Firebase_functions.dart';
 import 'package:sublet_app/main.dart';
@@ -19,14 +21,24 @@ class Asset_Page extends StatefulWidget {
 
 class _Asset_PageState extends State<Asset_Page> {
   Color contact_color = (Colors.amber[600]!);
-  Property property = Property(id: MyApp.property_id, name: 'name', location: 'location', owner_id: 262170); // Will be taken from firebase according to the given key
-  late Owner_data? owner = null;
-  void get_owner_data() async{
-    owner = await Firebase_functions.get_owner(property.owner_id);
+  Property property = Property(
+      id: MyApp.property_id,
+      name: 'name',
+      location: 'location',
+      owner_id:
+          208512); // Will be taken from firebase according to the given key
+  late Owner_data owner;
+  void get_owner_data() async {
+    owner = await Firebase_functions.get_owner(property.owner_id).whenComplete(() => setState(() {
+      
+    },));
+    // setState(() {});
   }
+
   @override
   Widget build(BuildContext context) {
     get_owner_data();
+    // sleep(Duration(milliseconds: 7));
     return Container(
       child: ListView(
         children: [
@@ -45,9 +57,8 @@ class _Asset_PageState extends State<Asset_Page> {
                   child: FittedBox(
                       fit: BoxFit.fill,
                       child: Image(
-                        image: (property.image != null)
-                            ? property.image as ImageProvider
-                            : AssetImage('assets/Apartment_example.jpg'),
+                        image: AssetImage(
+                            'assets/Apartment_example.jpg'), //(property.image != null)? property.image as ImageProvider :
                       )),
                 ),
                 //Back button
@@ -154,12 +165,13 @@ class _Asset_PageState extends State<Asset_Page> {
                               'assets/Empty_profile_pic.jpg'), // Commented out: owner.profile_pic
                           radius: 40,
                         ),
-                        title: Text('Meet your host, ${(owner != null) ? owner!.name : 'no name'}',
+                        title: Text(
+                            'Meet your host, ${owner.name}',
                             style: TextStyle(
                                 fontFamily: 'OpenSans',
                                 fontWeight: FontWeight.bold)),
                         subtitle: Text(
-                            'They\'ve been hosting since ${(owner!= null) ? owner!.joined_at : 'literally just now'}'),
+                            'They\'ve been hosting since ${(owner != null) ? owner.joined_at : 'literally just now'}'),
                       ),
                     ),
                   ),
@@ -186,8 +198,9 @@ class _Asset_PageState extends State<Asset_Page> {
                                     fontWeight: FontWeight.bold))),
                         subtitle: Center(
                             child: Text(
-                                (property.dates != null)
-                                    ? '${DateFormat('dd/MM/yyyy').format(property.dates!.start)} - ${DateFormat('dd/MM/yyyy').format(property.dates!.end)}'
+                                (property.fromdate != null &&
+                                        property.tilldate != null)
+                                    ? '${DateFormat('dd/MM/yyyy').format(property.fromdate!)} - ${DateFormat('dd/MM/yyyy').format(property.tilldate!)}'
                                     : 'No available dates',
                                 style: TextStyle(fontFamily: 'OpenSans'))),
                       ),
@@ -203,7 +216,7 @@ class _Asset_PageState extends State<Asset_Page> {
                     // },
                     onTap: () {
                       //Move to chat with owner
-                      print(owner!.toJson());
+                      print(owner.toJson());
                       print('Redirecting to chat\n');
                       Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) => ChatScreen()),
