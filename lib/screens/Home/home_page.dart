@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sublet_app/Firebase_functions.dart';
+import 'package:sublet_app/main.dart';
 import 'package:sublet_app/providers/auth.dart';
 import 'package:sublet_app/screens/Authentication/LogIn.dart';
 import 'dart:math';
@@ -178,13 +179,13 @@ class _AuthCardState extends State<AuthCard> {
     try {
       if (_authMode == AuthMode.Login) {
         // Log user in
-        String uid = await Provider.of<Auth>(context, listen: false).login(
+        MyApp.uid = await Provider.of<Auth>(context, listen: false).login(
             _authData['email'].toString(), _authData['password'].toString());
       } else {
         // Sign user up
-        String uid = await Provider.of<Auth>(context, listen: false).signup(
+        MyApp.uid = await Provider.of<Auth>(context, listen: false).signup(
             _authData['email'].toString(), _authData['password'].toString());
-        Firebase_functions.Add_users(uid, _userName.text, type);
+        Firebase_functions.Add_users(MyApp.uid, _userName.text, type);
       }
     }
 
@@ -276,17 +277,18 @@ class _AuthCardState extends State<AuthCard> {
                         },
                       ),
                     ),
-                    SizedBox(
-                      height: constrains.maxHeight * 0.2,
-                      child: TextFormField(
-                        decoration: InputDecoration(labelText: 'Name'),
-                        keyboardType: TextInputType.emailAddress,
-                        style: TextStyle(
-                            fontSize:
-                                MediaQuery.of(context).textScaleFactor * 15),
-                        controller: _userName,
+                    if (_authMode == AuthMode.Signup)
+                      SizedBox(
+                        height: constrains.maxHeight * 0.2,
+                        child: TextFormField(
+                          decoration: InputDecoration(labelText: 'Name'),
+                          keyboardType: TextInputType.emailAddress,
+                          style: TextStyle(
+                              fontSize:
+                                  MediaQuery.of(context).textScaleFactor * 15),
+                          controller: _userName,
+                        ),
                       ),
-                    ),
                     SizedBox(
                       height: constrains.maxHeight * 0.2,
                       child: TextFormField(
