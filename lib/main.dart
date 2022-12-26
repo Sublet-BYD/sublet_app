@@ -25,14 +25,14 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   Owner_data first = Owner_data('first name', 'first_id');
-  Property property = Property(
-      id: Random().nextInt(999999),
-      name: 'no name',
-      location: ' all locations',
-      owner_id: 'first_id');
+  // Property property = Property(
+  //     id: 'asdf',
+  //     name: 'no name',
+  //     location: ' all locations',
+  //     owner_id: 'first_id');
   print('Connection to firebase established. Running application\n');
-  Firebase_functions.Upload_owner(first);
-  Firebase_functions.Upload_property(property);
+  // Firebase_functions.Upload_owner(first);
+  // Firebase_functions.Upload_property(property);
   // Firebase_functions.Delete_property(0);
   // Firebase_functions.get_avail_properties();
   runApp(const MyApp());
@@ -40,8 +40,8 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  static int property_id =
-      0; // id of a property. since the variable needs to be static to be easily accessible through multiple classes, it is declared in the main class and initialized with a meaningless value (0).
+  static String property_id =
+      '0'; // id of a property. since the variable needs to be static to be easily accessible through multiple classes, it is declared in the main class and initialized with a meaningless value (0).
   // This widget is the root of your application.
   static String uid = '';
   static String uType = ''; // By default, the toggle start from client

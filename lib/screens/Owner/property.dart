@@ -5,7 +5,7 @@ part 'property.g.dart';
 
 @JsonSerializable()
 class Property {
-  late int id;
+  late String id;
   final String owner_id;
   final String name;
   final String location;
@@ -34,7 +34,7 @@ class Property {
     dateAdded = DateTime.now();
   }
 
-  void assign_id(int id) {
+  void assign_id(String id) {
     // This function will be called by Firebase_functions when uploading a new owner to the database.
     this.id = id;
   }
