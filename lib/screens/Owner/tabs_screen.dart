@@ -13,12 +13,17 @@ class TabsScreen extends StatefulWidget {
 class _TabsScreenState extends State<TabsScreen>
     with SingleTickerProviderStateMixin {
   late final _tabController = TabController(length: 2, vsync: this);
+  void refresh(){
+      setState(() {
+        ManageProperties().createState();
+      });
+    }
   var _screenIndex = 0;
   void _startAddNewProperty(BuildContext context) {
     // The half window for adding new property
     showModalBottomSheet(
       context: context,
-      builder: (context) => const NewProperty(),
+      builder: (context) => NewProperty(refresh: refresh),
     );
   }
 

@@ -140,6 +140,18 @@ class Firebase_functions {
     return res;
   }
 
+  static Future<List<Property>> get_properties_of_owner(String owner_id)async{
+    Owner_data owner = await get_owner(owner_id);
+    List<Property> res = [];
+    if(owner.plist == null){
+      return res;
+    }
+    for(String pid in owner.plist!){ // Hard null check is safe as we confirmed owner.plist is not null 
+        res.add(await get_property(pid));
+    }
+    return res;
+  }
+
   //Users functions:
 
   static Future<bool> Add_user(String uid, String name, String type) async {
