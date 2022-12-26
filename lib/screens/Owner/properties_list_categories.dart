@@ -19,6 +19,10 @@ class PropertiesListCategories extends StatelessWidget {
     );
   }
 
+  List<Property> get_properties() {
+    return this._properties;
+  }
+
   final List<Property> _properties = [];
   final u =
       FirebaseFirestore.instance.collection('owners').doc('id').get().then(

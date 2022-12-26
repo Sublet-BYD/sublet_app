@@ -57,7 +57,8 @@ class Firebase_functions {
     return res;
   }
 
-  static Future<bool> Remove_Property(Owner_data owner, String property_id) async {
+  static Future<bool> Remove_Property(
+      Owner_data owner, String property_id) async {
     bool res = true;
     var owner_document = db.collection('owners').doc(owner.id.toString());
     owner.Remove_Property(property_id);
@@ -83,13 +84,12 @@ class Firebase_functions {
     //   property.assign_id(Random().nextInt(999999));
     //   cond = await property_exists(property.id) || property.id == 0;
     // }
-    DocumentReference prop = db
-        .collection('properties')
-        .doc();
-      property.assign_id(prop.id);
-      prop.set(property.toJson())
+    DocumentReference prop = db.collection('properties').doc();
+    property.assign_id(prop.id);
+    prop
+        .set(property.toJson())
         .onError((error, stackTrace) => {print('$stackTrace\n'), res = false});
-    await Add_Property(await get_owner(property.owner_id), property.id);
+    await Add_Property(await get_owner(property.owner_id), property.id!);
     return res;
   }
 
@@ -152,7 +152,7 @@ class Firebase_functions {
     return res;
   }
 
-  static Future<String> get_user_type(String uid)async{
+  static Future<String> get_user_type(String uid) async {
     var res = await db.collection('users').doc(uid).get();
     return res['type'];
   }

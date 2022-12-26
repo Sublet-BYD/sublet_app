@@ -95,7 +95,7 @@ class _AssetlistState extends State<Assetlist> {
                 itemBuilder: (ctx, index) {
                   return GestureDetector(
                       onTap: () async {
-                        onPress(context, (await list)[index].id);
+                        onPress(context, (await list)[index].id!);
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
