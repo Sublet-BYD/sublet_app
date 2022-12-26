@@ -6,6 +6,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:sublet_app/main.dart';
 import '../models/http_exception.dart';
 
 class Auth with ChangeNotifier {
@@ -96,6 +97,8 @@ class Auth with ChangeNotifier {
     _token = '';
     _userId = '';
     _expiryDate = null;
+    MyApp.uid = '';
+    MyApp.uType = '';
     notifyListeners();
   }
 }

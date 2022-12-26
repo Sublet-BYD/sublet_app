@@ -44,6 +44,7 @@ class MyApp extends StatelessWidget {
       0; // id of a property. since the variable needs to be static to be easily accessible through multiple classes, it is declared in the main class and initialized with a meaningless value (0).
   // This widget is the root of your application.
   static String uid = '';
+  static String uType = ''; // By default, the toggle start from client
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -62,8 +63,8 @@ class MyApp extends StatelessWidget {
               accentColor: Colors.deepOrange,
               fontFamily: 'Lato',
             ),
-            home: auth.isAuth
-                ? (uid == 'client' ? Renter_Screen() : TabsScreen())
+            home: (auth.isAuth)
+                ? (uType == 'client' ? Renter_Screen() : TabsScreen())
                 : HomeScreen(),
             // home: const HomeScreen(),
             routes: {

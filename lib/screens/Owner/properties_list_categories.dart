@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -17,53 +19,19 @@ class PropertiesListCategories extends StatelessWidget {
     );
   }
 
-  final List<Property> _properties = [
-    Property(
-      id: 1,
-        owner_id: 656329,
-        name: 'name',
-        location: 'location'),
-    Property(
-        id: 2,
-        owner_id: 656329,
-        name: 'name',
-        location: 'location'),
-    Property(
-        id: 3,
-        owner_id: 656329,
-        name: 'name',
-        location: 'location'),
-    Property(
-        id: 4,
-        owner_id: 656329,
-        name: 'name',
-        location: 'location'),
-    Property(
-        id: 5,
-        owner_id: 656329,
-        name: 'name',
-        location: 'location'),
-    Property(
-        id: 6,
-        owner_id: 656329,
-        name: 'name',
-        location: 'location'),
-    Property(
-        id: 7,
-        owner_id: 656329,
-        name: 'name',
-        location: 'location'),
-    Property(
-        id: 8,
-        owner_id: 656329,
-        name: 'name',
-        location: 'location'),
-    Property(
-        id: 9,
-        owner_id: 656329,
-        name: 'name',
-        location: 'location'),
-  ];
+  final List<Property> _properties = [];
+  final u =
+      FirebaseFirestore.instance.collection('owners').doc('id').get().then(
+    (doc) {
+      if (doc.exists) {
+        // Document data is available
+        print(doc.data()!['plist']);
+      } else {
+        // Document is not found
+        print("No such document!");
+      }
+    },
+  );
 
   @override
   Widget build(BuildContext context) {
