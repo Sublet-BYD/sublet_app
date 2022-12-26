@@ -3,17 +3,16 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sublet_app/main.dart';
 import 'package:sublet_app/widgets/chat/message_bubble.dart';
 
 class Messages extends StatelessWidget {
   const Messages({
     super.key,
-    required this.owner_id,
-    required this.client_id,
   });
 
-  final owner_id;
-  final client_id;
+  // final owner_id;
+  // final client_id;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +21,7 @@ class Messages extends StatelessWidget {
     return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection('conversation')
-          .where('owner_id' == '1' && 'client_id' == '2')
+          .where('owner_id' == MyApp.user_id && 'client_id' == '2')
           .limit(1)
           .
           // .

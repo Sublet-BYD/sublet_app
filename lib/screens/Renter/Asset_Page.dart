@@ -29,9 +29,10 @@ class _Asset_PageState extends State<Asset_Page> {
           208512); // Will be taken from firebase according to the given key
   late Owner_data owner;
   void get_owner_data() async {
-    owner = await Firebase_functions.get_owner(property.owner_id).whenComplete(() => setState(() {
-      
-    },));
+    owner = await Firebase_functions.get_owner(property.owner_id)
+        .whenComplete(() => setState(
+              () {},
+            ));
     // setState(() {});
   }
 
@@ -165,8 +166,7 @@ class _Asset_PageState extends State<Asset_Page> {
                               'assets/Empty_profile_pic.jpg'), // Commented out: owner.profile_pic
                           radius: 40,
                         ),
-                        title: Text(
-                            'Meet your host, ${owner.name}',
+                        title: Text('Meet your host, ${owner.name}',
                             style: TextStyle(
                                 fontFamily: 'OpenSans',
                                 fontWeight: FontWeight.bold)),
@@ -220,8 +220,8 @@ class _Asset_PageState extends State<Asset_Page> {
                       print('Redirecting to chat\n');
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                            builder: (context) => ChatScreen('',
-                                '')), // need to feel with owner and client - id
+                          builder: (context) => ChatScreen(),
+                        ), // need to feel with owner and client - id
                       );
                     },
                     child: Card(

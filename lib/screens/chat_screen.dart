@@ -9,18 +9,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatScreen extends StatelessWidget {
   // const ChatScreen({super.key});
-  // static final ChatScreen _singleton = ChatScreen._internal();
+  static final ChatScreen _singleton = ChatScreen._internal();
 
-  final owner_id;
-  final client_id;
+  factory ChatScreen() {
+    return _singleton;
+  }
 
-  ChatScreen(this.owner_id, this.client_id);
-
-  // factory ChatScreen() {
-  //   return _singleton;
-  // }
-
-  // ChatScreen._internal();
+  ChatScreen._internal();
 
   @override
   Widget build(BuildContext context) {
@@ -30,14 +25,11 @@ class ChatScreen extends StatelessWidget {
       ),
       body: Container(
           child: Column(
-        children: [
+        children: const [
           //with wxpand youe make sure the lisy view only
           // takes as much space as available on the current screen
           Expanded(
-            child: Messages(
-              owner_id: this.owner_id,
-              client_id: this.client_id,
-            ),
+            child: Messages(),
           ),
           NewMessage(),
         ],

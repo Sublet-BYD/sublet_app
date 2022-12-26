@@ -43,6 +43,7 @@ class MyApp extends StatelessWidget {
   static int property_id =
       0; // id of a property. since the variable needs to be static to be easily accessible through multiple classes, it is declared in the main class and initialized with a meaningless value (0).
   // This widget is the root of your application.
+  static int user_id = -1;
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -61,12 +62,12 @@ class MyApp extends StatelessWidget {
               accentColor: Colors.deepOrange,
               fontFamily: 'Lato',
             ),
-             home: auth.isAuth ? Renter_Screen() : HomeScreen(),
-            // home: const TabsScreen(),
+            // home: auth.isAuth ? Renter_Screen() : HomeScreen(),
+            home: const HomeScreen(),
             routes: {
               '/property-screen': ((context) => const PropertyScreen()),
             },
-           // home: Renter_Screen(),
+            // home: Renter_Screen(),
           ),
         ));
   }
