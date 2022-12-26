@@ -6,7 +6,7 @@ part 'property.g.dart';
 @JsonSerializable()
 class Property {
   late int id;
-  final String owner_id;
+  final int owner_id;
   final String name;
   final String location;
   late DateTime? dateAdded, fromdate, tilldate;

@@ -29,6 +29,7 @@ class _NewPropertyState extends State<NewProperty> {
   final propEndDateController = TextEditingController(
     text: DateFormat.yMMMd().format(DateTime.now()).toString(),
   );
+  final mashu = 
 
   // void _PresentDataPicker() {
   //   showDatePicker(
@@ -198,8 +199,12 @@ class _NewPropertyState extends State<NewProperty> {
                       final user = FirebaseAuth.instance.currentUser;
                       Navigator.pop(context);
                       //  _addNewProperty();
+              Property pro = new Property( name: propNameController.text, location: propLocationController.text, owner_id:  MyApp.uid,  
+                                          fromdate: DateTime.tryParse(propStartDateController.text), 
+                       tilldate: DateTime.tryParse(propEndDateController.text),price: int.parse(propPriceController.text), );
                       
-                     // Firebase_functions.Upload_property();
+                      Firebase_functions.Upload_property(pro);
+                      
                     },
                     child: Text("Add"))
               ],
