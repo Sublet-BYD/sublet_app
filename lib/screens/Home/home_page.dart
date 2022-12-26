@@ -130,6 +130,7 @@ class _AuthCardState extends State<AuthCard> {
     'email': '',
     'password': '',
   };
+  final _userName = TextEditingController();
 
   var _isLoading = false;
   final _passwordController = TextEditingController();
@@ -273,6 +274,17 @@ class _AuthCardState extends State<AuthCard> {
                           _authData['email'] = value.toString();
                           // print(_authData);
                         },
+                      ),
+                    ),
+                    SizedBox(
+                      height: constrains.maxHeight * 0.2,
+                      child: TextFormField(
+                        decoration: InputDecoration(labelText: 'Name'),
+                        keyboardType: TextInputType.emailAddress,
+                        style: TextStyle(
+                            fontSize:
+                                MediaQuery.of(context).textScaleFactor * 15),
+                        controller: _userName,
                       ),
                     ),
                     SizedBox(
