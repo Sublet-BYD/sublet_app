@@ -26,7 +26,7 @@ class _Asset_PageState extends State<Asset_Page> {
       name: 'name',
       location: 'location',
       owner_id:
-          208512); // Will be taken from firebase according to the given key
+          '208512'); // Will be taken from firebase according to the given key
   late Future<Owner_data> fut_owner;
   late Owner_data owner;
   void get_owner_data() async {

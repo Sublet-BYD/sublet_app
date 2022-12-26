@@ -8,6 +8,7 @@ import 'package:sublet_app/screens/Authentication/LogIn.dart';
 import 'dart:math';
 import 'package:provider/provider.dart';
 import 'package:sublet_app/models/http_exception.dart';
+import 'package:sublet_app/screens/Owner/Owner_data.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 enum AuthMode { Signup, Login }
@@ -203,8 +204,10 @@ class _AuthCardState extends State<AuthCard> {
         // Sign user up
         MyApp.uid = await Provider.of<Auth>(context, listen: false).signup(
             _authData['email'].toString(), _authData['password'].toString());
-        Firebase_functions.Add_users(MyApp.uid, _userName.text, type);
-        MyApp.uType = type;
+        Firebase_functions.Add_user(MyApp.uid, _userName.text, type);
+        if(type == 'host'){
+          Firebase_functions.Upload_owner(Owner_data(_userName.text, MyApp.uid));
+        }
       }
     }
 

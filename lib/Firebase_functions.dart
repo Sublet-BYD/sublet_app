@@ -13,13 +13,10 @@ class Firebase_functions {
 
   //Owner functions:
 
-  static Future Upload_owner(Owner_data owner) async {
+  static Future<bool> Upload_owner(Owner_data owner) async {
     bool res = true;
-    bool cond = await owner_exists(owner.id) || owner.id == 0;
-    while (cond) {
-      // Assigning new id numbers to owners
-      owner.assign_id(Random().nextInt(999999));
-      cond = await owner_exists(owner.id) || owner.id == 0;
+    if(await owner_exists(owner.id)){
+        return false; // User already exists
     }
     db
         .collection('owners')
@@ -29,18 +26,18 @@ class Firebase_functions {
     return res;
   }
 
-  static Future<bool> owner_exists(int id) async {
+  static Future<bool> owner_exists(String id) async {
     DocumentSnapshot<Map<String, dynamic>> document =
-        await db.collection('owners').doc(id.toString()).get();
+        await db.collection('owners').doc(id).get();
     return document.exists;
   }
 
-  static Future<Owner_data> get_owner(int owner_id) async {
+  static Future<Owner_data> get_owner(String owner_id) async {
     DocumentSnapshot<Map<String, dynamic>> document =
-        await db.collection('owners').doc(owner_id.toString()).get();
+        await db.collection('owners').doc(owner_id).get();
     if (!document.exists) {
       print('Owner does not exist, please check your data\n');
-      return Owner_data('no name');
+      return Owner_data('no name', 'No id');
     }
     Map<String, dynamic> json = document.data() as Map<String, dynamic>;
     // Owner_data owner = Owner_data.fromJson(json['data']); // Using a hard null check because the document must have data, as it exists (we are past that check)
@@ -104,7 +101,7 @@ class Firebase_functions {
     if (!document.exists) {
       print('property does not exist, please check your data\n');
       return Property(
-          id: 0, name: 'No name', location: 'No location', owner_id: 0);
+          id: 0, name: 'No name', location: 'No location', owner_id: 'no id');
     }
     Map<String, dynamic> json = document.data() as Map<String, dynamic>;
     return Property.fromJson(json);
@@ -115,7 +112,7 @@ class Firebase_functions {
       return false;
     }
     bool res = true;
-    int owner_id = (await get_property(property_id)).owner_id;
+    String owner_id = (await get_property(property_id)).owner_id;
     db
         .collection('properties')
         .doc(property_id.toString())
@@ -141,7 +138,7 @@ class Firebase_functions {
 
   //Users functions:
 
-  static Future<bool> Add_users(String uid, String name, String type) async {
+  static Future<bool> Add_user(String uid, String name, String type) async {
     bool res = true;
     db
         .collection('users')
