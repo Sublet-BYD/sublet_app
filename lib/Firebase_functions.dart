@@ -15,8 +15,8 @@ class Firebase_functions {
 
   static Future<bool> Upload_owner(Owner_data owner) async {
     bool res = true;
-    if(await owner_exists(owner.id)){
-        return false; // User already exists
+    if (await owner_exists(owner.id)) {
+      return false; // User already exists
     }
     db
         .collection('owners')
