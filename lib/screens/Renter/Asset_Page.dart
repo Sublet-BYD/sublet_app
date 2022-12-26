@@ -7,6 +7,7 @@ import 'package:sublet_app/screens/Owner/Owner_data.dart';
 import 'package:sublet_app/screens/Owner/property.dart';
 import 'package:sublet_app/screens/Renter/Renter_Screen.dart';
 import 'package:intl/intl.dart';
+import 'package:sublet_app/screens/chat_screen.dart';
 
 class Asset_Page extends StatefulWidget {
   // static final int? property_id;
@@ -149,7 +150,8 @@ class _Asset_PageState extends State<Asset_Page> {
                       padding: EdgeInsets.only(top: 10),
                       child: ListTile(
                         leading: CircleAvatar(
-                          backgroundImage: AssetImage('assets/Empty_profile_pic.jpg'), // Commented out: owner.profile_pic
+                          backgroundImage: AssetImage(
+                              'assets/Empty_profile_pic.jpg'), // Commented out: owner.profile_pic
                           radius: 40,
                         ),
                         title: Text('Meet your host, ${(owner != null) ? owner!.name : 'no name'}',
@@ -203,6 +205,9 @@ class _Asset_PageState extends State<Asset_Page> {
                       //Move to chat with owner
                       print(owner!.toJson());
                       print('Redirecting to chat\n');
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => ChatScreen()),
+                      );
                     },
                     child: Card(
                       elevation: 0,

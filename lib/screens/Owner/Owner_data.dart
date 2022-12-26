@@ -2,12 +2,12 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:json_annotation/json_annotation.dart';
+// import 'package:json_annotation/json_annotation.dart';
 import 'package:sublet_app/screens/Owner/property.dart';
 import 'package:intl/intl.dart';
 part 'Owner_data.g.dart';
 
-@JsonSerializable(explicitToJson: true)
+// @JsonSerializable(explicitToJson: true)
 class Owner_data {
   late int id; // late keyword added in order to initialize the variable later
   late final String name;
