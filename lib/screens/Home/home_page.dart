@@ -184,7 +184,7 @@ class _AuthCardState extends State<AuthCard> {
         // Sign user up
        String uid = await Provider.of<Auth>(context, listen: false).signup(
             _authData['email'].toString(), _authData['password'].toString());
-        Firebase_functions.Add_users(uid, , )
+        Firebase_functions.Add_users(uid, _userName.text, type);
       }
     }
 
