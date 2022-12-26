@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
               fontFamily: 'Lato',
             ),
             home: (auth.isAuth)
-                ? (uType == 'client' ? Renter_Screen() : TabsScreen())
+                ? ((uType.toString() == 'host') ?TabsScreen() : Renter_Screen())
                 : HomeScreen(),
             // home: const HomeScreen(),
             routes: {

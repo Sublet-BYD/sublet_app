@@ -35,8 +35,10 @@ class _ManagePropertiesState extends State<ManageProperties> {
       onRefresh: () async {
         setState(() {
           // PropertiesListCategories().createState();
+          
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) => TabsScreen()));
+              Navigator.pop(context);
         });
       },
       child: Column(

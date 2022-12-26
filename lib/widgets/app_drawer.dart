@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sublet_app/main.dart';
 import 'package:sublet_app/screens/Home/home_page.dart';
 
 import '../providers/auth.dart';
@@ -45,10 +46,12 @@ class AppDrawer extends StatelessWidget {
             leading: Icon(Icons.exit_to_app),
             title: Text('Logout'),
             onTap: () {
+              MyApp.uid = '';
+              MyApp.uType = '';
               Navigator.of(context).pop();
 
-              Navigator.of(context)
-                  .pushReplacement(MaterialPageRoute(builder: ((context) => HomeScreen())));
+              // Navigator.of(context)
+              //     .pushReplacement(MaterialPageRoute(builder: ((context) => HomeScreen())));
               Provider.of<Auth>(context, listen: false).logout();
             },
           ),

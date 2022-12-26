@@ -180,7 +180,10 @@ class _AuthCardState extends State<AuthCard> {
 
     try {
       if (_authMode == AuthMode.Login) {
+        print('Log in');
         // Log user in
+        MyApp.uid = await Provider.of<Auth>(context, listen: false).login(
+            _authData['email'].toString(), _authData['password'].toString());
         if (MyApp.uid != '') {
           FirebaseFirestore.instance
               .collection('users')
@@ -198,8 +201,7 @@ class _AuthCardState extends State<AuthCard> {
             print(MyApp.uType);
           });
         }
-        MyApp.uid = await Provider.of<Auth>(context, listen: false).login(
-            _authData['email'].toString(), _authData['password'].toString());
+        
       } else {
         // Sign user up
         MyApp.uid = await Provider.of<Auth>(context, listen: false).signup(

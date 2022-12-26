@@ -68,15 +68,14 @@ class _PropertiesListCategoriesState extends State<PropertiesListCategories> {
                     padding: EdgeInsets.only(left: 10),
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
-                    //   return InkWell(
-                    //       splashColor: Theme.of(context).primaryColor,
-                    //       borderRadius: BorderRadius.circular(20),
-                    //       onTap: (() =>
-                    //           onPropertyCardPress(context, index)),
-                    //       child: PropertyCard(plist[index]));
-                    // },
-                    return PropertyCard(plist[index]);
+                      return InkWell(
+                          splashColor: Theme.of(context).primaryColor,
+                          borderRadius: BorderRadius.circular(20),
+                          onTap: (() =>
+                              onPropertyCardPress(context, index)),
+                          child: PropertyCard(plist[index]));
                     },
+                    // return PropertyCard(plist[index]);
                     itemCount: plist.length,
                   ),
                 ),

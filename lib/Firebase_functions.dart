@@ -33,6 +33,7 @@ class Firebase_functions {
   }
 
   static Future<Owner_data> get_owner(String owner_id) async {
+    print(owner_id);
     DocumentSnapshot<Map<String, dynamic>> document =
         await db.collection('owners').doc(owner_id).get();
     if (!document.exists) {
