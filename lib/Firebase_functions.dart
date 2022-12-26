@@ -15,8 +15,8 @@ class Firebase_functions {
 
   static Future<bool> Upload_owner(Owner_data owner) async {
     bool res = true;
-    if(await owner_exists(owner.id)){
-        return false; // User already exists
+    if (await owner_exists(owner.id)) {
+      return false; // User already exists
     }
     db
         .collection('owners')
@@ -44,7 +44,7 @@ class Firebase_functions {
     return Owner_data.fromJson(json);
   }
 
-  static Future<bool> Add_Property(Owner_data owner, int property_id) async {
+  static Future<bool> Add_Property(Owner_data owner, String property_id) async {
     bool res = true;
     if (!await property_exists(property_id)) {
       print('Property does not exist.\n');
@@ -57,7 +57,7 @@ class Firebase_functions {
     return res;
   }
 
-  static Future<bool> Remove_Property(Owner_data owner, int property_id) async {
+  static Future<bool> Remove_Property(Owner_data owner, String property_id) async {
     bool res = true;
     var owner_document = db.collection('owners').doc(owner.id.toString());
     owner.Remove_Property(property_id);
@@ -74,40 +74,44 @@ class Firebase_functions {
       print('Error -> owner doesn\'t exist');
       return false;
     }
-    bool cond = await property_exists(property.id) || property.id == 0;
-    while (cond) {
-      // Assigning new id numbers to owners
-      property.assign_id(Random().nextInt(999999));
-      cond = await property_exists(property.id) || property.id == 0;
-    }
-    db
+    // if(await property_exists(property.id)){
+    //   return false; // Property already exists
+    // }
+    // bool cond = await property_exists(property.id) || property.id == 0;
+    // while (cond) {
+    //   // Assigning new id numbers to owners
+    //   property.assign_id(Random().nextInt(999999));
+    //   cond = await property_exists(property.id) || property.id == 0;
+    // }
+    DocumentReference prop = db
         .collection('properties')
-        .doc(property.id.toString())
-        .set(property.toJson())
+        .doc();
+      property.assign_id(prop.id);
+      prop.set(property.toJson())
         .onError((error, stackTrace) => {print('$stackTrace\n'), res = false});
     await Add_Property(await get_owner(property.owner_id), property.id);
     return res;
   }
 
-  static Future<bool> property_exists(int id) async {
+  static Future<bool> property_exists(String id) async {
     DocumentSnapshot<Map<String, dynamic>> document =
         await db.collection('properties').doc(id.toString()).get();
     return document.exists;
   }
 
-  static Future<Property> get_property(int property_id) async {
+  static Future<Property> get_property(String property_id) async {
     DocumentSnapshot<Map<String, dynamic>> document =
         await db.collection('properties').doc(property_id.toString()).get();
     if (!document.exists) {
       print('property does not exist, please check your data\n');
       return Property(
-          id: 0, name: 'No name', location: 'No location', owner_id: 'no id');
+          id: '0', name: 'No name', location: 'No location', owner_id: 'no id');
     }
     Map<String, dynamic> json = document.data() as Map<String, dynamic>;
     return Property.fromJson(json);
   }
 
-  static Future<bool> Delete_property(int property_id) async {
+  static Future<bool> Delete_property(String property_id) async {
     if (property_id == 0) {
       return false;
     }
@@ -146,5 +150,10 @@ class Firebase_functions {
         .set({'id': uid, 'name': name, 'type': type}).onError(
             (error, stackTrace) => {print('$stackTrace\n'), res = false});
     return res;
+  }
+
+  static Future<String> get_user_type(String uid)async{
+    var res = await db.collection('users').doc(uid).get();
+    return res['type'];
   }
 }
