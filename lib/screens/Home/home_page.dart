@@ -1,10 +1,12 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:sublet_app/Firebase_functions.dart';
 import 'package:sublet_app/providers/auth.dart';
 import 'package:sublet_app/screens/Authentication/LogIn.dart';
-import 'package:sublet_app/screens/Authentication/Register.dart';
 import 'dart:math';
 import 'package:provider/provider.dart';
 import 'package:sublet_app/models/http_exception.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 enum AuthMode { Signup, Login }
 
@@ -121,13 +123,14 @@ class AuthCard extends StatefulWidget {
 class _AuthCardState extends State<AuthCard> {
   //what doing ?
   final GlobalKey<FormState> _formKey = GlobalKey();
+  String type = 'client';
 
   AuthMode _authMode = AuthMode.Login;
   Map<String, String> _authData = {
     'email': '',
     'password': '',
   };
-  late String? _userName;
+  final _userName = TextEditingController();
 
   var _isLoading = false;
   final _passwordController = TextEditingController();
@@ -145,7 +148,7 @@ class _AuthCardState extends State<AuthCard> {
                 // colse that dialog
                 Navigator.of(ctx).pop();
               },
-              child: Text('Okey')),
+              child: Text('Okay')),
         ],
       ),
     );
@@ -165,7 +168,7 @@ class _AuthCardState extends State<AuthCard> {
     //valtion succeeced
     //save all input
     _formKey.currentState!.save();
-    print('SECCED!!');
+    print('Success!!');
 
     // set the loading spinner
     setState(() {
@@ -175,12 +178,13 @@ class _AuthCardState extends State<AuthCard> {
     try {
       if (_authMode == AuthMode.Login) {
         // Log user in
-        await Provider.of<Auth>(context, listen: false).login(
+        String uid = await Provider.of<Auth>(context, listen: false).login(
             _authData['email'].toString(), _authData['password'].toString());
       } else {
         // Sign user up
-        await Provider.of<Auth>(context, listen: false).signup(
+        String uid = await Provider.of<Auth>(context, listen: false).signup(
             _authData['email'].toString(), _authData['password'].toString());
+        Firebase_functions.Add_users(uid, _userName.text, type);
       }
     }
 
@@ -188,7 +192,7 @@ class _AuthCardState extends State<AuthCard> {
 
     // check for specific kind of error
     on HttpException catch (error) {
-      print("erorr is : ${error.toString()} ");
+      print("error is : ${error.toString()} ");
       var errorMessage = 'Authentication faild';
 
       if (error.toString().contains('EMAIL_EXISTS')) {
@@ -237,10 +241,10 @@ class _AuthCardState extends State<AuthCard> {
       ),
       elevation: 8.0,
       child: Container(
-        height: _authMode == AuthMode.Signup ? 320 : 260,
+        height: _authMode == AuthMode.Signup ? 500 : 260,
         //defend on the mode, sign up ask for extra
         constraints:
-            BoxConstraints(minHeight: _authMode == AuthMode.Signup ? 320 : 260),
+            BoxConstraints(minHeight: _authMode == AuthMode.Signup ? 500 : 260),
         width: deviceSize.width * 0.75,
         padding: EdgeInsets.all(16.0),
         child: Form(
@@ -249,105 +253,134 @@ class _AuthCardState extends State<AuthCard> {
             builder: (ctx, constrains) => Container(
               height: constrains.maxHeight,
               width: constrains.maxWidth,
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: constrains.maxHeight * 0.2,
-                    child: TextFormField(
-                      decoration: InputDecoration(labelText: 'E-Mail'),
-                      keyboardType: TextInputType.emailAddress,
-                      validator: (value) {
-                        if (value!.isEmpty || !value.contains('@')) {
-                          return 'Invalid email!';
-                        }
-                        return null;
-                      },
-                      style: TextStyle(
-                          fontSize:
-                              MediaQuery.of(context).textScaleFactor * 15),
-                      onSaved: (value) {
-                        _authData['email'] = value.toString();
-                        // print(_authData);
-                      },
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: constrains.maxHeight * 0.2,
+                      child: TextFormField(
+                        decoration: InputDecoration(labelText: 'E-Mail'),
+                        keyboardType: TextInputType.emailAddress,
+                        validator: (value) {
+                          if (value!.isEmpty || !value.contains('@')) {
+                            return 'Invalid email!';
+                          }
+                          return null;
+                        },
+                        style: TextStyle(
+                            fontSize:
+                                MediaQuery.of(context).textScaleFactor * 15),
+                        onSaved: (value) {
+                          _authData['email'] = value.toString();
+                          // print(_authData);
+                        },
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: constrains.maxHeight * 0.2,
-                    child: TextFormField(
-                      style: TextStyle(
-                          fontSize:
-                              MediaQuery.of(context).textScaleFactor * 15),
-                      controller: _passwordController,
-                      decoration: InputDecoration(labelText: 'Password'),
-                      // make sure input show to the user
-                      obscureText: true,
-                      validator: (value) {
-                        if (value!.isEmpty || value.length < 5) {
-                          return 'Password is too short!';
-                        }
-                      },
-                      onSaved: (value) {
-                        _authData['password'] = value.toString();
-                        print(value);
-                      },
+                    SizedBox(
+                      height: constrains.maxHeight * 0.2,
+                      child: TextFormField(
+                        decoration: InputDecoration(labelText: 'Name'),
+                        keyboardType: TextInputType.emailAddress,
+                        style: TextStyle(
+                            fontSize:
+                                MediaQuery.of(context).textScaleFactor * 15),
+                        controller: _userName,
+                      ),
                     ),
-                  ),
-                  if (_authMode == AuthMode.Signup)
                     SizedBox(
                       height: constrains.maxHeight * 0.2,
                       child: TextFormField(
                         style: TextStyle(
                             fontSize:
                                 MediaQuery.of(context).textScaleFactor * 15),
-                        enabled: _authMode == AuthMode.Signup,
-                        decoration:
-                            InputDecoration(labelText: 'Confirm Password'),
+                        controller: _passwordController,
+                        decoration: InputDecoration(labelText: 'Password'),
+                        // make sure input show to the user
                         obscureText: true,
-                        validator: _authMode == AuthMode.Signup
-                            //check the password match
-                            ? (value) {
-                                if (value != _passwordController.text) {
-                                  print("dbug");
-                                  print("value ${value}");
-                                  print(_passwordController.text);
-                                  return 'Passwords do not match!';
-                                }
-                              }
-                            : null,
+                        validator: (value) {
+                          if (value!.isEmpty || value.length < 5) {
+                            return 'Password is too short!';
+                          }
+                        },
+                        onSaved: (value) {
+                          _authData['password'] = value.toString();
+                          print(value);
+                        },
                       ),
                     ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  if (_isLoading)
-                    CircularProgressIndicator()
-                  else
-                    ElevatedButton(
-                      onPressed: _submit,
+                    if (_authMode == AuthMode.Signup)
+                      SizedBox(
+                        height: constrains.maxHeight * 0.2,
+                        child: TextFormField(
+                          style: TextStyle(
+                              fontSize:
+                                  MediaQuery.of(context).textScaleFactor * 15),
+                          enabled: _authMode == AuthMode.Signup,
+                          decoration:
+                              InputDecoration(labelText: 'Confirm Password'),
+                          obscureText: true,
+                          validator: _authMode == AuthMode.Signup
+                              //check the password match
+                              ? (value) {
+                                  if (value != _passwordController.text) {
+                                    print("dbug");
+                                    print("value ${value}");
+                                    print(_passwordController.text);
+                                    return 'Passwords do not match!';
+                                  }
+                                }
+                              : null,
+                        ),
+                      ),
+                    if (_authMode == AuthMode.Signup)
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ToggleSwitch(
+                          initialLabelIndex: 0,
+                          totalSwitches: 2,
+                          labels: ['Client', 'Host'],
+                          onToggle: (index) {
+                            if (index == 0) {
+                              type = 'client';
+                            } else {
+                              type = 'host';
+                            }
+                          },
+                        ),
+                      ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    if (_isLoading)
+                      CircularProgressIndicator()
+                    else
+                      ElevatedButton(
+                        onPressed: _submit,
+                        child: Text(
+                            _authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP'),
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 30.0, vertical: 8.0),
+                            backgroundColor: Color.fromRGBO(215, 117, 255, 1)
+                                .withOpacity(
+                                    0.5) //Theme.of(context).primaryColor,
+                            ),
+                      ),
+                    TextButton(
+                      onPressed: _switchAuthMode,
                       child: Text(
-                          _authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP'),
-                      style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0),
-                          ),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 30.0, vertical: 8.0),
-                          backgroundColor: Color.fromRGBO(215, 117, 255, 1)
-                              .withOpacity(
-                                  0.5) //Theme.of(context).primaryColor,
-                          ),
+                          '${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'} INSTEAD'),
+                      style: TextButton.styleFrom(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
+                        primary: Color.fromRGBO(215, 117, 255, 1),
+                      ),
                     ),
-                  TextButton(
-                    onPressed: _switchAuthMode,
-                    child: Text(
-                        '${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'} INSTEAD'),
-                    style: TextButton.styleFrom(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
-                      primary: Color.fromRGBO(215, 117, 255, 1),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
