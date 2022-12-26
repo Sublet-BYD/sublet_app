@@ -14,19 +14,16 @@ class Messages extends StatelessWidget {
   // final owner_id;
   // final client_id;
 
-
-
-
-
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
 
     return StreamBuilder(
       stream: FirebaseFirestore.instance
-          .collection('conversation')
-          .where('owner_id' == MyApp.uid && 'client_id' == '2')
-          .limit(1)
+          // .collection('conversation')
+          // .where('owner_id' == MyApp.uid && 'client_id' == '2')
+          // .limit(1)
+          .collection('chat')
           .
           // .
           // // //oreder of the chat by time and fix the view
