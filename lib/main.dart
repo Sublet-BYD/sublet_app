@@ -63,11 +63,11 @@ class MyApp extends StatelessWidget {
               fontFamily: 'Lato',
             ),
             // home: auth.isAuth ? Renter_Screen() : HomeScreen(),
-            home: const HomeScreen(),
+            // home: const HomeScreen(),
             routes: {
               '/property-screen': ((context) => const PropertyScreen()),
             },
-            // home: Renter_Screen(),
+            home: Renter_Screen(),
           ),
         ));
   }

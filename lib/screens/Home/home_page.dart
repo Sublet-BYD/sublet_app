@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:sublet_app/Firebase_functions.dart';
 import 'package:sublet_app/providers/auth.dart';
 import 'package:sublet_app/screens/Authentication/LogIn.dart';
 import 'dart:math';
@@ -129,7 +130,6 @@ class _AuthCardState extends State<AuthCard> {
     'email': '',
     'password': '',
   };
-  late String? _userName;
 
   var _isLoading = false;
   final _passwordController = TextEditingController();
@@ -147,7 +147,7 @@ class _AuthCardState extends State<AuthCard> {
                 // colse that dialog
                 Navigator.of(ctx).pop();
               },
-              child: Text('Okey')),
+              child: Text('Okay')),
         ],
       ),
     );
@@ -167,8 +167,7 @@ class _AuthCardState extends State<AuthCard> {
     //valtion succeeced
     //save all input
     _formKey.currentState!.save();
-
-    print('SECCED!!');
+    print('Success!!');
 
     // set the loading spinner
     setState(() {
@@ -178,12 +177,13 @@ class _AuthCardState extends State<AuthCard> {
     try {
       if (_authMode == AuthMode.Login) {
         // Log user in
-        await Provider.of<Auth>(context, listen: false).login(
+        String uid = await Provider.of<Auth>(context, listen: false).login(
             _authData['email'].toString(), _authData['password'].toString());
       } else {
         // Sign user up
-        var userKey = await Provider.of<Auth>(context, listen: false).signup(
+       String uid = await Provider.of<Auth>(context, listen: false).signup(
             _authData['email'].toString(), _authData['password'].toString());
+        Firebase_functions.Add_users(uid, , )
       }
     }
 
@@ -191,7 +191,7 @@ class _AuthCardState extends State<AuthCard> {
 
     // check for specific kind of error
     on HttpException catch (error) {
-      print("erorr is : ${error.toString()} ");
+      print("error is : ${error.toString()} ");
       var errorMessage = 'Authentication faild';
 
       if (error.toString().contains('EMAIL_EXISTS')) {
