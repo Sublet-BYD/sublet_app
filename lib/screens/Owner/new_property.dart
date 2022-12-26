@@ -10,6 +10,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sublet_app/Firebase_functions.dart';
 import 'package:sublet_app/main.dart';
+import 'package:sublet_app/screens/Owner/manage_properties.dart';
+import 'package:sublet_app/screens/Owner/properties_list_categories.dart';
 import './property.dart';
 
 class NewProperty extends StatefulWidget {
@@ -85,9 +87,8 @@ class _NewPropertyState extends State<NewProperty> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: ,
-      builder: (context, snapshot) {
+    return  FutureBuilder(builder:(context, snapshot) {
+
         SingleChildScrollView(
           child: Card(
             elevation: 5,
@@ -111,8 +112,7 @@ class _NewPropertyState extends State<NewProperty> {
                       }), // TODO
                     ),
                     TextField(
-                      decoration:
-                          InputDecoration(labelText: 'Property Location'),
+                      decoration: InputDecoration(labelText: 'Property Location'),
                       controller: propLocationController,
                       onSubmitted: ((value) {
                         FocusScope.of(context).unfocus();
@@ -135,8 +135,7 @@ class _NewPropertyState extends State<NewProperty> {
                           controller: propStartDateController,
                           //editing controller of this TextField
                           decoration: InputDecoration(
-                              icon: Icon(
-                                  Icons.calendar_today), //icon of text field
+                              icon: Icon(Icons.calendar_today), //icon of text field
                               labelText: "From" //label text of field
                               ),
                           readOnly: true,
@@ -170,8 +169,7 @@ class _NewPropertyState extends State<NewProperty> {
                           controller: propEndDateController,
                           //editing controller of this TextField
                           decoration: InputDecoration(
-                              icon: Icon(
-                                  Icons.calendar_today), //icon of text field
+                              icon: Icon(Icons.calendar_today), //icon of text field
                               labelText: "To" //label text of field
                               ),
                           readOnly: true,
@@ -211,12 +209,12 @@ class _NewPropertyState extends State<NewProperty> {
                             owner_id: MyApp.uid,
                             fromdate:
                                 DateTime.tryParse(propStartDateController.text),
-                            tilldate:
-                                DateTime.tryParse(propEndDateController.text),
+                            tilldate: DateTime.tryParse(propEndDateController.text),
                             price: int.parse(propPriceController.text),
                           );
 
                           Firebase_functions.Upload_property(pro);
+                          
                         },
                         child: Text("Add"))
                   ],
@@ -225,7 +223,7 @@ class _NewPropertyState extends State<NewProperty> {
             ),
           ),
         );
-      },
+      }
     );
   }
 }
