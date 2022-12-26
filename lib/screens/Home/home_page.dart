@@ -123,7 +123,7 @@ class AuthCard extends StatefulWidget {
 class _AuthCardState extends State<AuthCard> {
   //what doing ?
   final GlobalKey<FormState> _formKey = GlobalKey();
-  String type = '';
+  String type = 'client';
 
   AuthMode _authMode = AuthMode.Login;
   Map<String, String> _authData = {
@@ -182,7 +182,7 @@ class _AuthCardState extends State<AuthCard> {
             _authData['email'].toString(), _authData['password'].toString());
       } else {
         // Sign user up
-       String uid = await Provider.of<Auth>(context, listen: false).signup(
+        String uid = await Provider.of<Auth>(context, listen: false).signup(
             _authData['email'].toString(), _authData['password'].toString());
         Firebase_functions.Add_users(uid, _userName.text, type);
       }
