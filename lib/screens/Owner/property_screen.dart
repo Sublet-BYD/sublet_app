@@ -36,9 +36,7 @@ class PropertyScreen extends StatelessWidget {
                   MediaQuery.of(context).padding.top) *
               0.3,
           width: MediaQuery.of(context).size.width,
-          child: (_property.image != null)
-              ? _property.image as Widget
-              : Image.asset('assets/Apartment_example.jpg', fit: BoxFit.cover),
+          child:  Image.asset('assets/Apartment_example.jpg', fit: BoxFit.cover), // (_property.image != null)? _property.image as Widget :
         ),
         Container(
           // Name of Property

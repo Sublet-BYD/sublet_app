@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:sublet_app/screens/Home/home_page.dart';
@@ -14,6 +16,7 @@ import 'Firebase_functions.dart';
 import './providers/auth.dart';
 import './widgets/app_drawer.dart';
 import './screens/chat_screen.dart';
+import 'screens/Owner/property.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,15 +24,24 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  Owner_data first = Owner_data('Different name');
+  Owner_data first = Owner_data('first name');
+  Property property = Property(
+      id: Random().nextInt(999999),
+      name: 'name',
+      location: 'location',
+      owner_id: 208512);
   print('Connection to firebase established. Running application\n');
-  Firebase_functions.Upload_owner(first);
+  // Firebase_functions.Upload_owner(first);
+  // Firebase_functions.Upload_property(property);
+  // Firebase_functions.Delete_property(0);
+  // Firebase_functions.get_avail_properties();
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  static int property_id = 0; // id of a property. since the variable needs to be static to be easily accessible through multiple classes, it is declared in the main class and initialized with a meaningless value (0).
+  static int property_id =
+      0; // id of a property. since the variable needs to be static to be easily accessible through multiple classes, it is declared in the main class and initialized with a meaningless value (0).
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -54,7 +66,7 @@ class MyApp extends StatelessWidget {
             routes: {
               '/property-screen': ((context) => const PropertyScreen()),
             },
-            home: TabsScreen(),
+            home: Renter_Screen(),
           ),
         ));
   }

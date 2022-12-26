@@ -19,14 +19,12 @@ class Owner_data {
     this.id = (id != null)? id : Random().nextInt(999999); //Flutter has no int.maxvalue function. Because of course it doesn't.
     this.joined_at = (joined_at != null) ? joined_at : int.parse(DateFormat('yyyy').format(DateTime.now()));
   }
-  void Add_Property(int new_property){
+  void Add_Property(int new_property){ // This function should only be called via Firebase_functions.Add_Property (IMPORTANT)
     plist!.add(new_property);
   }
-  void Remove_Property(int old_property){
+  void Remove_Property(int old_property){ // This function should only be called via Firebase_functions.Remove_Property (IMPORTANT)
     if(plist!.contains(old_property)){
-      plist!.remove(old_property);
-      //Update firestore
-      
+      plist!.remove(old_property);   
     }
     else{
       print('property not in list');
@@ -56,7 +54,6 @@ class Owner_data {
   // }
 
   factory Owner_data.fromJson(Map<String, dynamic> json){
-  print('$json, from owner data\n');
    return _$Owner_dataFromJson(json);
   }
   Map<String, dynamic> toJson() => _$Owner_dataToJson(this);
