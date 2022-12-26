@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sublet_app/providers/auth.dart';
 import 'package:sublet_app/screens/Authentication/LogIn.dart';
@@ -121,6 +122,7 @@ class AuthCard extends StatefulWidget {
 class _AuthCardState extends State<AuthCard> {
   //what doing ?
   final GlobalKey<FormState> _formKey = GlobalKey();
+  String type = '';
 
   AuthMode _authMode = AuthMode.Login;
   Map<String, String> _authData = {
@@ -165,6 +167,7 @@ class _AuthCardState extends State<AuthCard> {
     //valtion succeeced
     //save all input
     _formKey.currentState!.save();
+
     print('SECCED!!');
 
     // set the loading spinner
@@ -179,7 +182,7 @@ class _AuthCardState extends State<AuthCard> {
             _authData['email'].toString(), _authData['password'].toString());
       } else {
         // Sign user up
-        await Provider.of<Auth>(context, listen: false).signup(
+        var userKey = await Provider.of<Auth>(context, listen: false).signup(
             _authData['email'].toString(), _authData['password'].toString());
       }
     }
@@ -325,7 +328,11 @@ class _AuthCardState extends State<AuthCard> {
                           totalSwitches: 2,
                           labels: ['Client', 'Host'],
                           onToggle: (index) {
-                            print('switched to: $index');
+                            if (index == 0) {
+                              type = 'client';
+                            } else {
+                              type = 'host';
+                            }
                           },
                         ),
                       ),
