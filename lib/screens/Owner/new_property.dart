@@ -10,7 +10,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sublet_app/Firebase_functions.dart';
 import 'package:sublet_app/main.dart';
+import 'package:sublet_app/screens/Owner/properties_list_categories.dart';
 import './property.dart';
+
 class NewProperty extends StatefulWidget {
   const NewProperty({super.key});
 
@@ -41,46 +43,46 @@ class _NewPropertyState extends State<NewProperty> {
 
   // Get a reference to the Firestore database
 
-  final _db = FirebaseFirestore.instance;
+  // final _db = FirebaseFirestore.instance;
 
-  Future<DocumentSnapshot> getOwnerDocument(String id) async {
-    DocumentSnapshot doc = await _db.collection('owners').doc(id).get();
-    if (doc.exists) {
-      // Document data is available
-      return doc;
-    } else {
-      // Document is not found, return an error
-      return Future.error('Document not found');
-    }
-  }
+  // Future<DocumentSnapshot> getOwnerDocument(String id) async {
+  //   DocumentSnapshot doc = await _db.collection('owners').doc(id).get();
+  //   if (doc.exists) {
+  //     // Document data is available
+  //     return doc;
+  //   } else {
+  //     // Document is not found, return an error
+  //     return Future.error('Document not found');
+  //   }
+  // }
 
-  void _addNewProperty() async {
-    // Add the new property to the 'properties' collection
-    DocumentReference newPropertyRef = await _db.collection('properties').add({
-      'name': propNameController.text,
-      'location': propLocationController.text,
-      'price': propPriceController.text,
-      'startDate': propStartDateController.text,
-      'endDate': propEndDateController.text,
-      'status': propStatusController.text
-    });
+  // void _addNewProperty() async {
+  //   // Add the new property to the 'properties' collection
+  //   DocumentReference newPropertyRef = await _db.collection('properties').add({
+  //     'name': propNameController.text,
+  //     'location': propLocationController.text,
+  //     'price': propPriceController.text,
+  //     'startDate': propStartDateController.text,
+  //     'endDate': propEndDateController.text,
+  //     'status': propStatusController.text
+  //   });
 
-    // // Get the ID of the new property
-    // String newPropertyId = newPropertyRef.id;
+  // // Get the ID of the new property
+  // String newPropertyId = newPropertyRef.id;
 
-    // // Get the current user ID from Firebase Authentication
-    // final currentUserId = FirebaseAuth.instance.currentUser;
-    // print(MyApp.uid);
+  // // Get the current user ID from Firebase Authentication
+  // final currentUserId = FirebaseAuth.instance.currentUser;
+  // print(MyApp.uid);
 
-    // // Update the owner's plist field with the new property ID
-    // await _db.collection('owners').doc(MyApp.uid).update({
-    //   'plist': FieldValue.arrayUnion([newPropertyId])
-    // });
+  // // Update the owner's plist field with the new property ID
+  // await _db.collection('owners').doc(MyApp.uid).update({
+  //   'plist': FieldValue.arrayUnion([newPropertyId])
+  // });
 
-    setState(() {});
+  //   setState(() {});
 
-    print('was add');
-  }
+  //   print('was add');
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -198,8 +200,21 @@ class _NewPropertyState extends State<NewProperty> {
                       final user = FirebaseAuth.instance.currentUser;
                       Navigator.pop(context);
                       //  _addNewProperty();
-                      
-                     // Firebase_functions.Upload_property();
+                      Property pro = new Property(
+                        name: propNameController.text,
+                        location: propLocationController.text,
+                        owner_id: MyApp.uid,
+                        fromdate:
+                            DateTime.tryParse(propStartDateController.text),
+                        tilldate: DateTime.tryParse(propEndDateController.text),
+                        price: int.parse(propPriceController.text),
+                      );
+
+                      Firebase_functions.Upload_property(pro);
+                      // PropertiesListCategories.setState()
+                      setState(() {
+                        
+                      });
                     },
                     child: Text("Add"))
               ],

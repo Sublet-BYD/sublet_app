@@ -95,7 +95,7 @@ class _AssetlistState extends State<Assetlist> {
                 itemBuilder: (ctx, index) {
                   return GestureDetector(
                       onTap: () async {
-                        onPress(context, (await list)[index].id);
+                        onPress(context, (await list)[index].id!);
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
@@ -141,7 +141,7 @@ class _AssetlistState extends State<Assetlist> {
     );
   }
 
-  void onPress(BuildContext context, int asset_id) {
+  void onPress(BuildContext context, String asset_id) {
     MyApp.property_id = asset_id;
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => Asset_Page()));
