@@ -147,4 +147,9 @@ class Firebase_functions {
             (error, stackTrace) => {print('$stackTrace\n'), res = false});
     return res;
   }
+
+  static Future<String> get_user_type(String uid)async{
+    var res = await db.collection('users').doc(uid).get();
+    return res['type'];
+  }
 }
