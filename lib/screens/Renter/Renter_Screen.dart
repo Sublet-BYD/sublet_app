@@ -24,34 +24,36 @@ class _Renter_ScreenState extends State<Renter_Screen> {
     return Scaffold(
       resizeToAvoidBottomInset: false, // Preventing pixel overflow warnings
       drawer: AppDrawer(),
-      appBar: appBar,
-      body: Column(
-        children: [
-          Container(
-            // Temporary, will be changed into sort/search using multiple variables in the future.
-            height: (MediaQuery.of(context).size.height -
-                    appBar.preferredSize.height -
-                    MediaQuery.of(context).padding.top) *
-                0.15,
-            padding: EdgeInsets.only(top: 20, left: 40, right: 40),
-            child: TextFormField(
-              decoration: InputDecoration(
-                labelText: 'Search',
-                prefixIcon: Icon(Icons.search),
-                contentPadding: EdgeInsets.all(8.0),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-              ),
-            ),
-          ),
-          Container(
+      // appBar: appBar,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              // Temporary, will be changed into sort/search using multiple variables in the future.
               height: (MediaQuery.of(context).size.height -
                       appBar.preferredSize.height -
                       MediaQuery.of(context).padding.top) *
-                  0.85,
-              child: Assetlist()),
-        ],
+                  0.15,
+              padding: EdgeInsets.only(top: 20, left: 40, right: 40),
+              child: TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Search',
+                  prefixIcon: Icon(Icons.search),
+                  contentPadding: EdgeInsets.all(8.0),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height -
+                        MediaQuery.of(context).padding.top) *
+                    0.85,
+                child: Assetlist()),
+          ],
+        ),
       ),
     );
   }
@@ -91,6 +93,7 @@ class _AssetlistState extends State<Assetlist> {
               (BuildContext build, AsyncSnapshot<List<Property>> snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               return ListView.builder(
+                padding: const EdgeInsets.only(bottom: 70),
                 physics: BouncingScrollPhysics(),
                 itemBuilder: (ctx, index) {
                   return GestureDetector(
