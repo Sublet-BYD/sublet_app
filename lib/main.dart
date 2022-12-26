@@ -49,12 +49,12 @@ class MyApp extends StatelessWidget {
               accentColor: Colors.deepOrange,
               fontFamily: 'Lato',
             ),
-            // home: auth.isAuth ? ManageProperties() : HomeScreen(),
+             home: auth.isAuth ? Renter_Screen() : HomeScreen(),
             // home: const TabsScreen(),
             routes: {
               '/property-screen': ((context) => const PropertyScreen()),
             },
-            home: Renter_Screen(),
+           // home: Renter_Screen(),
           ),
         ));
   }

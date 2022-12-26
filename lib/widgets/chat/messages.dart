@@ -6,7 +6,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sublet_app/widgets/chat/message_bubble.dart';
 
 class Messages extends StatelessWidget {
-  const Messages({super.key});
+  const Messages({
+    super.key,
+    required this.owner_id,
+    required this.client_id,
+  });
+
+  final owner_id;
+  final client_id;
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +21,12 @@ class Messages extends StatelessWidget {
 
     return StreamBuilder(
       stream: FirebaseFirestore.instance
-          .collection('chat')
+          .collection('conversation')
+          .where('owner_id' == '1' && 'client_id' == '2')
+          .limit(1)
           .
-          // //oreder of the chat by time and fix the view
+          // .
+          // // //oreder of the chat by time and fix the view
           orderBy('createdAt', descending: true)
           .snapshots(),
       builder: (context, chatSnapshot) {
@@ -32,6 +42,7 @@ class Messages extends StatelessWidget {
           itemCount: chatSnapshot.data!.docs.length, //how many item we need
           itemBuilder: (context, index) => MessageBubble(
             chatDocs[index].data()['text'],
+            // chatDocs[index].data()['messages']
             chatDocs[index].data()['userId'] == user?.uid,
             key: ValueKey(chatDocs[index].id),
             // chatDocs[index].data()['username'],

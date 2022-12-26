@@ -211,7 +211,9 @@ class _Asset_PageState extends State<Asset_Page> {
                       print(owner.Prepare_upload_to_firestore());
                       print('Redirecting to chat\n');
                       Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => ChatScreen()),
+                        MaterialPageRoute(
+                            builder: (context) => ChatScreen('',
+                                '')), // need to feel with owner and client - id
                       );
                     },
                     child: Card(
