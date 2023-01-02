@@ -18,6 +18,7 @@ import './providers/auth.dart';
 import './widgets/app_drawer.dart';
 import './screens/chat_screen.dart';
 import 'screens/Owner/property.dart';
+// import 'package:dcdg/dcdg.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -65,7 +66,9 @@ class MyApp extends StatelessWidget {
               fontFamily: 'Lato',
             ),
             home: (auth.isAuth)
-                ? ((uType == 'host') ?TabsScreen() : Renter_Screen())
+                ? ((uType.toString() == 'host')
+                    ? TabsScreen()
+                    : Renter_Screen())
                 : HomeScreen(),
             // home: const HomeScreen(),
             routes: {
