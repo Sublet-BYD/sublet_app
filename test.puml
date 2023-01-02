@@ -1,101 +1,57 @@
 @startuml
+scale 2
 set namespaceSeparator ::
 
-class "sublet_app::Firebase_functions.dart::Firebase_functions" {
-  {static} +FirebaseFirestore db
-  {static} +Future<bool> Upload_owner()
-  {static} +Future<bool> owner_exists()
-  {static} +Future<Owner_data> get_owner()
-  {static} +Future<bool> Add_Property()
-  {static} +Future<bool> Remove_Property()
-  {static} +Future<bool> Upload_property()
-  {static} +Future<bool> property_exists()
-  {static} +Future<Property> get_property()
-  {static} +Future<bool> Delete_property()
-  {static} +Future<List<Property>> get_avail_properties()
-  {static} +Future<List<Property>> get_properties_of_owner()
-  {static} +Future<bool> Add_user()
-  {static} +Future<String> get_user_type()
-}
+' class "sublet_app::Firebase_functions.dart::Firebase_functions" {
+'   {static} +FirebaseFirestore db
+'   {static} +Future<bool> Upload_owner()
+'   {static} +Future<bool> owner_exists()
+'   {static} +Future<Owner_data> get_owner()
+'   {static} +Future<bool> Add_Property()
+'   {static} +Future<bool> Remove_Property()
+'   {static} +Future<bool> Upload_property()
+'   {static} +Future<bool> property_exists()
+'   {static} +Future<Property> get_property()
+'   {static} +Future<bool> Delete_property()
+'   {static} +Future<List<Property>> get_avail_properties()
+'   {static} +Future<List<Property>> get_properties_of_owner()
+'   {static} +Future<bool> Add_user()
+'   {static} +Future<String> get_user_type()
+' }
 
-"sublet_app::Firebase_functions.dart::Firebase_functions" o-- "cloud_firestore::cloud_firestore.dart::FirebaseFirestore"
+' "sublet_app::Firebase_functions.dart::Firebase_functions" o-- "cloud_firestore::cloud_firestore.dart::FirebaseFirestore"
 
-class "sublet_app::firebase_options.dart::DefaultFirebaseOptions" {
-  {static} +FirebaseOptions android
-  {static} +FirebaseOptions currentPlatform
-}
+' class "sublet_app::firebase_options.dart::DefaultFirebaseOptions" {
+'   {static} +FirebaseOptions android
+'   {static} +FirebaseOptions currentPlatform
+' }
 
-"sublet_app::firebase_options.dart::DefaultFirebaseOptions" o-- "firebase_core_platform_interface::firebase_core_platform_interface.dart::FirebaseOptions"
+' "sublet_app::firebase_options.dart::DefaultFirebaseOptions" o-- "firebase_core_platform_interface::firebase_core_platform_interface.dart::FirebaseOptions"
 
-class "sublet_app::main.dart::MyApp" {
-  {static} +String property_id
-  {static} +String uid
-  {static} +String uType
-  +Widget build()
-}
+' class "sublet_app::main.dart::MyApp" {
+'   {static} +String property_id
+'   {static} +String uid
+'   {static} +String uType
+'   +Widget build()
+' }
 
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "sublet_app::main.dart::MyApp"
 
-class "sublet_app::models::http_exception.dart::HttpException" {
-  +String message
-  +String toString()
-}
+' class "sublet_app::models::http_exception.dart::HttpException" {
+'   +String message
+'   +String toString()
+' }
 
-"dart::core::Exception" <|-- "sublet_app::models::http_exception.dart::HttpException"
-
-class "sublet_app::providers::auth.dart::Auth" {
-  -String _token
-  -DateTime? _expiryDate
-  -String _userId
-  +bool isAuth
-  +String token
-  -Future<String> _authentication()
-  +Future<String> signup()
-  +Future<String> login()
-  +void logout()
-}
-
-"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "sublet_app::providers::auth.dart::Auth"
-
-class "sublet_app::screens::Authentication::LogIn.dart::LogIn" {
-  +Widget build()
-}
-
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "sublet_app::screens::Authentication::LogIn.dart::LogIn"
-
-class "sublet_app::screens::Authentication::LogIn.dart::LoginForm" {
-  +State<LoginForm> createState()
-}
-
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "sublet_app::screens::Authentication::LogIn.dart::LoginForm"
-
-class "sublet_app::screens::Authentication::LogIn.dart::_LoginFormState" {
-  -GlobalKey<FormState> _formKey
-  +Widget build()
-  +void OnSubmit()
-}
-
-"sublet_app::screens::Authentication::LogIn.dart::_LoginFormState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
-"flutter::src::widgets::framework.dart::State" <|-- "sublet_app::screens::Authentication::LogIn.dart::_LoginFormState"
-
-class "sublet_app::screens::Authentication::Register.dart::Register" {
-  +State<Register> createState()
-}
-
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "sublet_app::screens::Authentication::Register.dart::Register"
-
-class "sublet_app::screens::Authentication::Register.dart::_RegisterState" {
-  +String title
-  +TextEditingController emailController
-  +TextEditingController nameController
-  +TextEditingController passwordController
-  +TextEditingController passwordVerifyController
-  +TextEditingController authType
-  +Widget build()
-}
-
-"sublet_app::screens::Authentication::Register.dart::_RegisterState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
-"flutter::src::widgets::framework.dart::State" <|-- "sublet_app::screens::Authentication::Register.dart::_RegisterState"
+' class "sublet_app::providers::auth.dart::Auth" {
+'   -String _token
+'   -DateTime? _expiryDate
+'   -String _userId
+'   +bool isAuth
+'   +String token
+'   -Future<String> _authentication()
+'   +Future<String> signup()
+'   +Future<String> login()
+'   +void logout()
+' }
 
 class "sublet_app::screens::chat_screen.dart::ChatScreen" {
   {static} -ChatScreen _singleton
@@ -103,27 +59,22 @@ class "sublet_app::screens::chat_screen.dart::ChatScreen" {
 }
 
 "sublet_app::screens::chat_screen.dart::ChatScreen" o-- "sublet_app::screens::chat_screen.dart::ChatScreen"
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "sublet_app::screens::chat_screen.dart::ChatScreen"
 
 class "sublet_app::screens::Home::home_page.dart::HomeScreen" {
   +State<HomeScreen> createState()
 }
 
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "sublet_app::screens::Home::home_page.dart::HomeScreen"
 
-class "sublet_app::screens::Home::home_page.dart::_HomeScreenState" {
-  -GlobalKey<FormState> _formKey
-  +Widget build()
-}
+' class "sublet_app::screens::Home::home_page.dart::_HomeScreenState" {
+'   -GlobalKey<FormState> _formKey
+'   +Widget build()
+' }
 
-"sublet_app::screens::Home::home_page.dart::_HomeScreenState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
-"flutter::src::widgets::framework.dart::State" <|-- "sublet_app::screens::Home::home_page.dart::_HomeScreenState"
 
-class "sublet_app::screens::Home::home_page.dart::AuthCard" {
-  +State<AuthCard> createState()
-}
+' class "sublet_app::screens::Home::home_page.dart::AuthCard" {
+'   +State<AuthCard> createState()
+' }
 
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "sublet_app::screens::Home::home_page.dart::AuthCard"
 
 class "sublet_app::screens::Home::home_page.dart::_AuthCardState" {
   -GlobalKey<FormState> _formKey
@@ -139,10 +90,7 @@ class "sublet_app::screens::Home::home_page.dart::_AuthCardState" {
   +Widget build()
 }
 
-"sublet_app::screens::Home::home_page.dart::_AuthCardState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
 "sublet_app::screens::Home::home_page.dart::_AuthCardState" o-- "sublet_app::screens::Home::home_page.dart::AuthMode"
-"sublet_app::screens::Home::home_page.dart::_AuthCardState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
-"flutter::src::widgets::framework.dart::State" <|-- "sublet_app::screens::Home::home_page.dart::_AuthCardState"
 
 class "sublet_app::screens::Home::home_page.dart::AuthMode" {
   +int index
@@ -152,25 +100,21 @@ class "sublet_app::screens::Home::home_page.dart::AuthMode" {
 }
 
 "sublet_app::screens::Home::home_page.dart::AuthMode" o-- "sublet_app::screens::Home::home_page.dart::AuthMode"
-"dart::core::Enum" <|-- "sublet_app::screens::Home::home_page.dart::AuthMode"
 
 class "sublet_app::screens::Owner::manage_customers.dart::ManageCustomers" {
   +State<ManageCustomers> createState()
 }
 
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "sublet_app::screens::Owner::manage_customers.dart::ManageCustomers"
 
 class "sublet_app::screens::Owner::manage_customers.dart::_ManageCustomersState" {
   +Widget build()
 }
 
-"flutter::src::widgets::framework.dart::State" <|-- "sublet_app::screens::Owner::manage_customers.dart::_ManageCustomersState"
 
 class "sublet_app::screens::Owner::manage_properties.dart::ManageProperties" {
   +State<ManageProperties> createState()
 }
 
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "sublet_app::screens::Owner::manage_properties.dart::ManageProperties"
 
 class "sublet_app::screens::Owner::manage_properties.dart::_ManagePropertiesState" {
   -String _recently
@@ -179,14 +123,12 @@ class "sublet_app::screens::Owner::manage_properties.dart::_ManagePropertiesStat
   +Widget build()
 }
 
-"flutter::src::widgets::framework.dart::State" <|-- "sublet_app::screens::Owner::manage_properties.dart::_ManagePropertiesState"
 
 class "sublet_app::screens::Owner::new_property.dart::NewProperty" {
   +Function refresh
   +State<NewProperty> createState()
 }
 
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "sublet_app::screens::Owner::new_property.dart::NewProperty"
 
 class "sublet_app::screens::Owner::new_property.dart::_NewPropertyState" {
   +TextEditingController propNameController
@@ -198,8 +140,6 @@ class "sublet_app::screens::Owner::new_property.dart::_NewPropertyState" {
   +Widget build()
 }
 
-"sublet_app::screens::Owner::new_property.dart::_NewPropertyState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
-"flutter::src::widgets::framework.dart::State" <|-- "sublet_app::screens::Owner::new_property.dart::_NewPropertyState"
 
 class "sublet_app::screens::Owner::Owner_data.dart::Owner_data" {
   +String id
@@ -216,7 +156,6 @@ class "sublet_app::screens::Owner::properties_list_categories.dart::PropertiesLi
   +State<PropertiesListCategories> createState()
 }
 
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "sublet_app::screens::Owner::properties_list_categories.dart::PropertiesListCategories"
 
 class "sublet_app::screens::Owner::properties_list_categories.dart::_PropertiesListCategoriesState" {
   -Future<List<Property>> _properties
@@ -228,7 +167,6 @@ class "sublet_app::screens::Owner::properties_list_categories.dart::_PropertiesL
   +Widget build()
 }
 
-"flutter::src::widgets::framework.dart::State" <|-- "sublet_app::screens::Owner::properties_list_categories.dart::_PropertiesListCategoriesState"
 
 class "sublet_app::screens::Owner::property.dart::Property" {
   +String? id
@@ -251,14 +189,12 @@ class "sublet_app::screens::Owner::property_card.dart::PropertyCard" {
 }
 
 "sublet_app::screens::Owner::property_card.dart::PropertyCard" o-- "sublet_app::screens::Owner::property.dart::Property"
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "sublet_app::screens::Owner::property_card.dart::PropertyCard"
 
 class "sublet_app::screens::Owner::property_screen.dart::PropertyScreen" {
   -void _startEditProperty()
   +Widget build()
 }
 
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "sublet_app::screens::Owner::property_screen.dart::PropertyScreen"
 
 class "sublet_app::screens::Owner::property_screen.dart::EditProperty" {
   -Property _property
@@ -266,7 +202,6 @@ class "sublet_app::screens::Owner::property_screen.dart::EditProperty" {
 }
 
 "sublet_app::screens::Owner::property_screen.dart::EditProperty" o-- "sublet_app::screens::Owner::property.dart::Property"
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "sublet_app::screens::Owner::property_screen.dart::EditProperty"
 
 class "sublet_app::screens::Owner::property_screen.dart::_EditPropertyState" {
   +String name
@@ -276,14 +211,12 @@ class "sublet_app::screens::Owner::property_screen.dart::_EditPropertyState" {
   +Widget build()
 }
 
-"sublet_app::screens::Owner::property_screen.dart::_EditPropertyState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
-"flutter::src::widgets::framework.dart::State" <|-- "sublet_app::screens::Owner::property_screen.dart::_EditPropertyState"
+' "sublet_app::screens::Owner::property_screen.dart::_EditPropertyState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
 
 class "sublet_app::screens::Owner::tabs_screen.dart::TabsScreen" {
   +State<TabsScreen> createState()
 }
 
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "sublet_app::screens::Owner::tabs_screen.dart::TabsScreen"
 
 class "sublet_app::screens::Owner::tabs_screen.dart::_TabsScreenState" {
   -TabController _tabController
@@ -298,11 +231,6 @@ class "sublet_app::screens::Owner::tabs_screen.dart::_TabsScreenState" {
   +Widget build()
 }
 
-"sublet_app::screens::Owner::tabs_screen.dart::_TabsScreenState" o-- "flutter::src::material::tab_controller.dart::TabController"
-"sublet_app::screens::Owner::tabs_screen.dart::_TabsScreenState" o-- "flutter::src::material::app_bar.dart::AppBar"
-"flutter::src::widgets::framework.dart::State" <|-- "sublet_app::screens::Owner::tabs_screen.dart::_TabsScreenState"
-"flutter::src::widgets::ticker_provider.dart::SingleTickerProviderStateMixin" <|-- "sublet_app::screens::Owner::tabs_screen.dart::_TabsScreenState"
-
 class "sublet_app::screens::Owner::tabs_screen.dart::CustomTabItem" {
   +String label
   +Icon icon
@@ -310,15 +238,11 @@ class "sublet_app::screens::Owner::tabs_screen.dart::CustomTabItem" {
   +FloatingActionButton? floatingActionButton
 }
 
-"sublet_app::screens::Owner::tabs_screen.dart::CustomTabItem" o-- "flutter::src::widgets::icon.dart::Icon"
-"sublet_app::screens::Owner::tabs_screen.dart::CustomTabItem" o-- "flutter::src::widgets::framework.dart::Widget"
-"sublet_app::screens::Owner::tabs_screen.dart::CustomTabItem" o-- "flutter::src::material::floating_action_button.dart::FloatingActionButton"
 
 class "sublet_app::screens::Renter::Asset_Page.dart::Asset_Page" {
   +State<Asset_Page> createState()
 }
 
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "sublet_app::screens::Renter::Asset_Page.dart::Asset_Page"
 
 class "sublet_app::screens::Renter::Asset_Page.dart::_Asset_PageState" {
   +Color contact_color
@@ -333,26 +257,22 @@ class "sublet_app::screens::Renter::Asset_Page.dart::_Asset_PageState" {
 "sublet_app::screens::Renter::Asset_Page.dart::_Asset_PageState" o-- "dart::ui::Color"
 "sublet_app::screens::Renter::Asset_Page.dart::_Asset_PageState" o-- "sublet_app::screens::Owner::property.dart::Property"
 "sublet_app::screens::Renter::Asset_Page.dart::_Asset_PageState" o-- "sublet_app::screens::Owner::Owner_data.dart::Owner_data"
-"flutter::src::widgets::framework.dart::State" <|-- "sublet_app::screens::Renter::Asset_Page.dart::_Asset_PageState"
 
 class "sublet_app::screens::Renter::Renter_Screen.dart::Renter_Screen" {
   +State<Renter_Screen> createState()
 }
 
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "sublet_app::screens::Renter::Renter_Screen.dart::Renter_Screen"
 
 class "sublet_app::screens::Renter::Renter_Screen.dart::_Renter_ScreenState" {
   +String uname
   +Widget build()
 }
 
-"flutter::src::widgets::framework.dart::State" <|-- "sublet_app::screens::Renter::Renter_Screen.dart::_Renter_ScreenState"
 
 class "sublet_app::screens::Renter::Renter_Screen.dart::Assetlist" {
   +State<Assetlist> createState()
 }
 
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "sublet_app::screens::Renter::Renter_Screen.dart::Assetlist"
 
 class "sublet_app::screens::Renter::Renter_Screen.dart::_AssetlistState" {
   +Future<List<Property>> list
@@ -365,13 +285,11 @@ class "sublet_app::screens::Renter::Renter_Screen.dart::_AssetlistState" {
   +void onPress()
 }
 
-"flutter::src::widgets::framework.dart::State" <|-- "sublet_app::screens::Renter::Renter_Screen.dart::_AssetlistState"
 
 class "sublet_app::screens::Renter::renter_tab_screen.dart::RenterTabsScreen" {
   +State<RenterTabsScreen> createState()
 }
 
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "sublet_app::screens::Renter::renter_tab_screen.dart::RenterTabsScreen"
 
 class "sublet_app::screens::Renter::renter_tab_screen.dart::_RenterTabsScreenState" {
   -TabController _tabController
@@ -386,11 +304,6 @@ class "sublet_app::screens::Renter::renter_tab_screen.dart::_RenterTabsScreenSta
   +Widget build()
 }
 
-"sublet_app::screens::Renter::renter_tab_screen.dart::_RenterTabsScreenState" o-- "flutter::src::material::tab_controller.dart::TabController"
-"sublet_app::screens::Renter::renter_tab_screen.dart::_RenterTabsScreenState" o-- "flutter::src::material::app_bar.dart::AppBar"
-"flutter::src::widgets::framework.dart::State" <|-- "sublet_app::screens::Renter::renter_tab_screen.dart::_RenterTabsScreenState"
-"flutter::src::widgets::ticker_provider.dart::SingleTickerProviderStateMixin" <|-- "sublet_app::screens::Renter::renter_tab_screen.dart::_RenterTabsScreenState"
-
 class "sublet_app::screens::Renter::renter_tab_screen.dart::CustomTabItem" {
   +String label
   +Icon icon
@@ -398,21 +311,12 @@ class "sublet_app::screens::Renter::renter_tab_screen.dart::CustomTabItem" {
   +FloatingActionButton? floatingActionButton
 }
 
-"sublet_app::screens::Renter::renter_tab_screen.dart::CustomTabItem" o-- "flutter::src::widgets::icon.dart::Icon"
-"sublet_app::screens::Renter::renter_tab_screen.dart::CustomTabItem" o-- "flutter::src::widgets::framework.dart::Widget"
-"sublet_app::screens::Renter::renter_tab_screen.dart::CustomTabItem" o-- "flutter::src::material::floating_action_button.dart::FloatingActionButton"
 
-class "sublet_app::widgets::app_drawer.dart::AppDrawer" {
-  +Widget build()
-}
-
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "sublet_app::widgets::app_drawer.dart::AppDrawer"
 
 class "sublet_app::widgets::chat::messages.dart::Messages" {
   +Widget build()
 }
 
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "sublet_app::widgets::chat::messages.dart::Messages"
 
 class "sublet_app::widgets::chat::message_bubble.dart::MessageBubble" {
   +Key key
@@ -421,14 +325,11 @@ class "sublet_app::widgets::chat::message_bubble.dart::MessageBubble" {
   +Widget build()
 }
 
-"sublet_app::widgets::chat::message_bubble.dart::MessageBubble" o-- "flutter::src::foundation::key.dart::Key"
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "sublet_app::widgets::chat::message_bubble.dart::MessageBubble"
 
 class "sublet_app::widgets::chat::new_message.dart::NewMessage" {
   +State<NewMessage> createState()
 }
 
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "sublet_app::widgets::chat::new_message.dart::NewMessage"
 
 class "sublet_app::widgets::chat::new_message.dart::_NewMessageState" {
   -String _entryMessage
@@ -436,9 +337,6 @@ class "sublet_app::widgets::chat::new_message.dart::_NewMessageState" {
   -void _sendMessage()
   +Widget build()
 }
-
-"sublet_app::widgets::chat::new_message.dart::_NewMessageState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
-"flutter::src::widgets::framework.dart::State" <|-- "sublet_app::widgets::chat::new_message.dart::_NewMessageState"
 
 
 @enduml

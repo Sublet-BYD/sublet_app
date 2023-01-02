@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:sublet_app/Firebase_functions.dart';
 import 'package:sublet_app/main.dart';
 import 'package:sublet_app/providers/auth.dart';
-import 'package:sublet_app/screens/Authentication/LogIn.dart';
 import 'dart:math';
 import 'package:provider/provider.dart';
 import 'package:sublet_app/models/http_exception.dart';
@@ -201,14 +200,14 @@ class _AuthCardState extends State<AuthCard> {
             print(MyApp.uType);
           });
         }
-        
       } else {
         // Sign user up
         MyApp.uid = await Provider.of<Auth>(context, listen: false).signup(
             _authData['email'].toString(), _authData['password'].toString());
         Firebase_functions.Add_user(MyApp.uid, _userName.text, type);
-        if(type == 'host'){
-          Firebase_functions.Upload_owner(Owner_data(_userName.text, MyApp.uid));
+        if (type == 'host') {
+          Firebase_functions.Upload_owner(
+              Owner_data(_userName.text, MyApp.uid));
         }
       }
     }
