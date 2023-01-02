@@ -20,9 +20,10 @@ class Messages extends StatelessWidget {
 
     return StreamBuilder(
       stream: FirebaseFirestore.instance
-          .collection('conversation')
-          .where('owner_id' == MyApp.user_id && 'client_id' == '2')
-          .limit(1)
+          // .collection('conversation')
+          // .where('owner_id' == MyApp.uid && 'client_id' == '2')
+          // .limit(1)
+          .collection('chat')
           .
           // .
           // // //oreder of the chat by time and fix the view

@@ -6,6 +6,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:sublet_app/main.dart';
 import '../models/http_exception.dart';
 
 class Auth with ChangeNotifier {
@@ -38,7 +39,7 @@ class Auth with ChangeNotifier {
     return isAuth ? _token : '';
   }
 
-  Future<void> _authentication(
+  Future<String> _authentication(
       String email, String password, String UrlSegment) async {
     try {
       final url = Uri.parse(
@@ -66,6 +67,8 @@ class Auth with ChangeNotifier {
       }
       _token = responseData['idToken'];
       _userId = responseData['localId'];
+      print("USERID: ");
+      print(_userId);
       _expiryDate = DateTime.now().add(
         Duration(
           seconds: int.parse(
@@ -77,15 +80,16 @@ class Auth with ChangeNotifier {
     } catch (error) {
       throw error;
     }
+    return _userId;
   }
 
-  Future<void> signup(String email, String password) async {
+  Future<String> signup(String email, String password) async {
     return _authentication(email, password, 'signUp');
   }
 
-  Future<void> login(String email, String password) async {
-    print(email);
-    print(password);
+  Future<String> login(String email, String password) async {
+    // print(email);
+    // print(password);
     return _authentication(email, password, 'signInWithPassword');
   }
 
@@ -93,6 +97,10 @@ class Auth with ChangeNotifier {
     _token = '';
     _userId = '';
     _expiryDate = null;
+    MyApp.uid = '';
+    MyApp.uType = '';
     notifyListeners();
+
+    print(_userId);
   }
 }

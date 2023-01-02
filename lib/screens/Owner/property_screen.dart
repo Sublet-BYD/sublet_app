@@ -30,28 +30,26 @@ class PropertyScreen extends StatelessWidget {
       extendBodyBehindAppBar: true,
       appBar: appBar,
       resizeToAvoidBottomInset: false,
-      body: Column(children: <Widget>[
-        Container(
-          height: (MediaQuery.of(context).size.height -
-                  MediaQuery.of(context).padding.top) *
-              0.3,
-          width: MediaQuery.of(context).size.width,
-          child:  Image.asset('assets/Apartment_example.jpg', fit: BoxFit.cover), // (_property.image != null)? _property.image as Widget :
-        ),
-        Container(
-          // Name of Property
-          height: (MediaQuery.of(context).size.height -
-                  MediaQuery.of(context).padding.top) *
-              0.4,
-          // width: MediaQuery.of(context).size.width,
-          child: LayoutBuilder(builder: (context, constrains) {
-            return Column(children: [
+      body: SingleChildScrollView(
+        child: Column(children: <Widget>[
+          Container(
+            height: (MediaQuery.of(context).size.height -
+                    MediaQuery.of(context).padding.top) *
+                0.3,
+            width: MediaQuery.of(context).size.width,
+            child: Image.asset('assets/Apartment_example.jpg',
+                fit: BoxFit
+                    .cover), // (_property.image != null)? _property.image as Widget :
+          ),
+          Column(
+            children: [
               Container(
+                // TITLE
                 margin: EdgeInsets.only(left: 15, right: 15, top: 10),
                 // padding: EdgeInsets.only(left: 15, right: 15, top: 10),
                 alignment: Alignment
                     .topLeft, // require for the title to begin from left
-                height: constrains.maxHeight * 0.2,
+                // height: constrains.maxHeight * 0.2,
                 // width: double.infinity,
                 child: FittedBox(
                   child: Text(
@@ -59,8 +57,9 @@ class PropertyScreen extends StatelessWidget {
                     _property.name,
                     style: TextStyle(
                       fontFamily: 'OpenSans',
-                      fontSize: constrains.maxHeight * 0.2,
+                      // fontSize: constrains.maxHeight * 0.2,
                       fontWeight: FontWeight.bold,
+                      fontSize: 50,
                     ),
                   ),
                 ),
@@ -71,7 +70,7 @@ class PropertyScreen extends StatelessWidget {
                 // padding: EdgeInsets.only(left: 15),
                 alignment: Alignment
                     .topLeft, // require for the title to begin from left
-                height: constrains.maxHeight * 0.2,
+                // height: constrains.maxHeight * 0.2,
                 // width: double.infinity,
                 child: Row(
                   children: [
@@ -79,27 +78,35 @@ class PropertyScreen extends StatelessWidget {
                     SizedBox(
                       width: 5,
                     ),
-                    FittedBox(
-                      child: Text(
-                        // textAlign: TextAlign.left,
-                        _property.location,
-                        style: TextStyle(
-                          fontFamily: 'OpenSans',
-                          color: Colors.grey[700],
-                          fontWeight: FontWeight.bold,
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 20),
+                      child: SizedBox(
+                        // LOCATION
+                        height: 20,
+                        child: FittedBox(
+                          child: Text(
+                            // textAlign: TextAlign.left,
+                            _property.location,
+                            style: TextStyle(
+                              fontFamily: 'OpenSans',
+                              color: Colors.grey[700],
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
-              //Chats with renters
+              // Chats with renters
               GestureDetector(
                 onTap: () {
                   //Move to chat page for this property
                   print('Moving to chats page\n');
                 },
                 child: Container(
+                  height: 50,
                   decoration: BoxDecoration(
                     color: Colors.amber[600],
                     border: Border.all(
@@ -107,26 +114,31 @@ class PropertyScreen extends StatelessWidget {
                         width:
                             3), //Exclamation mark added to assure null safety
                   ),
-                  margin: EdgeInsets.only(top: 10),
+                  // margin: EdgeInsets.only(top: 5),
                   alignment: Alignment
                       .topLeft, // require for the title to begin from left
-                  height: constrains.maxHeight * 0.2,
+                  // height: constrains.maxHeight * 0.2,
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
+                          padding: EdgeInsets.only(top: 13),
                           child: Icon(Icons.message),
                           margin: EdgeInsets.only(left: 15)),
                       SizedBox(
                         width: 5,
                       ),
-                      FittedBox(
+                      Padding(
+                        padding: EdgeInsets.only(top: 10),
                         child: Text(
+                          textAlign: TextAlign.center,
                           // textAlign: TextAlign.left,
                           'Contact your renters',
                           style: TextStyle(
                             fontFamily: 'OpenSans',
                             color: Colors.grey[700],
                             fontWeight: FontWeight.bold,
+                            fontSize: 18,
                           ),
                         ),
                       ),
@@ -138,38 +150,32 @@ class PropertyScreen extends StatelessWidget {
               Container(
                 color: Color(available_color),
                 margin: EdgeInsets.only(top: 10),
+                padding: EdgeInsets.symmetric(vertical: 15),
                 alignment: Alignment
                     .topLeft, // require for the title to begin from left
-                height: constrains.maxHeight * 0.2,
-                child: Row(
-                  children: [
-                    Container(
-                        child: Icon(Icons.message),
-                        margin: EdgeInsets.only(left: 15)),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    FittedBox(
-                      child: Text(
-                        // textAlign: TextAlign.left,
-                        (_property.occupied!)
-                            ? 'This Property is now occupied'
-                            : 'This property is not occupied',
-                        style: TextStyle(
-                          fontFamily: 'OpenSans',
-                          color: Colors.grey[700],
-                          fontWeight: FontWeight.bold,
-                        ),
+                // height: constrains.maxHeight * 0.2,
+                child: Center(
+                  child: FittedBox(
+                    child: Text(
+                      // textAlign: TextAlign.left,
+                      (_property.occupied!)
+                          ? 'This Property is now occupied'
+                          : 'This property is not occupied',
+                      style: TextStyle(
+                        fontFamily: 'OpenSans',
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
                       ),
                     ),
-                  ],
+                  ),
                 ),
               ),
               //Empty container as a placeholder
-              Container(
-                margin: EdgeInsets.only(top: 10),
-                height: constrains.maxHeight * 0.2,
-              ),
+              SizedBox(
+                  // margin: EdgeInsets.only(top: 10),
+                  // height: constrains.maxHeight * 0.2,
+                  ),
               //Remove this property -> will be fully implemented in the future
               GestureDetector(
                 onTap: () {
@@ -181,7 +187,7 @@ class PropertyScreen extends StatelessWidget {
                 child: Container(
                   color: Colors.red[800],
                   margin: EdgeInsets.only(top: 10),
-                  height: constrains.maxHeight * 0.2,
+                  // height: constrains.maxHeight * 0.2,
                   child: ListTile(
                     leading: Icon(Icons.delete),
                     title: Text('Delete this property',
@@ -191,10 +197,10 @@ class PropertyScreen extends StatelessWidget {
                   ),
                 ),
               ),
-            ]);
-          }),
-        ),
-      ]),
+            ],
+          ),
+        ]),
+      ),
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterFloat,
       floatingActionButton: FloatingActionButton(

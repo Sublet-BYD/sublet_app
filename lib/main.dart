@@ -10,6 +10,7 @@ import 'package:sublet_app/screens/Owner/tabs_screen.dart';
 import 'package:sublet_app/screens/Renter/Asset_Page.dart';
 import 'package:sublet_app/screens/Renter/Renter_Screen.dart';
 import 'package:sublet_app/screens/Owner/property_screen.dart';
+import 'package:sublet_app/screens/Renter/renter_tab_screen.dart';
 import 'firebase_options.dart';
 import 'package:provider/provider.dart';
 import 'Firebase_functions.dart';
@@ -24,12 +25,12 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  Owner_data first = Owner_data('first name');
-  Property property = Property(
-      id: Random().nextInt(999999),
-      name: 'name',
-      location: 'location',
-      owner_id: 208512);
+  Owner_data first = Owner_data('first name', 'first_id');
+  // Property property = Property(
+  //     id: 'asdf',
+  //     name: 'no name',
+  //     location: ' all locations',
+  //     owner_id: 'first_id');
   print('Connection to firebase established. Running application\n');
   // Firebase_functions.Upload_owner(first);
   // Firebase_functions.Upload_property(property);
@@ -40,10 +41,11 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  static int property_id =
-      0; // id of a property. since the variable needs to be static to be easily accessible through multiple classes, it is declared in the main class and initialized with a meaningless value (0).
+  static String property_id =
+      '0'; // id of a property. since the variable needs to be static to be easily accessible through multiple classes, it is declared in the main class and initialized with a meaningless value (0).
   // This widget is the root of your application.
-  static int user_id = -1;
+  static String uid = '';
+  static String uType = ''; // By default, the toggle start from client
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -62,12 +64,14 @@ class MyApp extends StatelessWidget {
               accentColor: Colors.deepOrange,
               fontFamily: 'Lato',
             ),
-            // home: auth.isAuth ? Renter_Screen() : HomeScreen(),
-            home: const HomeScreen(),
+            home: (auth.isAuth)
+                ? ((uType.toString() == 'host') ?TabsScreen() : Renter_Screen())
+                : HomeScreen(),
+            // home: const HomeScreen(),
             routes: {
               '/property-screen': ((context) => const PropertyScreen()),
             },
-            // home: Renter_Screen(),
+            home: RenterTabsScreen(),
           ),
         ));
   }

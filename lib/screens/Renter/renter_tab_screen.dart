@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:sublet_app/screens/Owner/manage_properties.dart';
 import 'package:sublet_app/screens/Owner/new_property.dart';
+import 'package:sublet_app/screens/Renter/Renter_Screen.dart';
 import 'package:sublet_app/widgets/app_drawer.dart';
 
-class TabsScreen extends StatefulWidget {
-  const TabsScreen({super.key});
+class RenterTabsScreen extends StatefulWidget {
+  const RenterTabsScreen({super.key});
 
   @override
-  State<TabsScreen> createState() => _TabsScreenState();
+  State<RenterTabsScreen> createState() => _RenterTabsScreenState();
 }
 
-class _TabsScreenState extends State<TabsScreen>
+class _RenterTabsScreenState extends State<RenterTabsScreen>
     with SingleTickerProviderStateMixin {
   late final _tabController = TabController(length: 2, vsync: this);
-  void refresh(){
-      setState(() {
-        ManageProperties().createState();
-      });
-    }
+  void refresh() {
+    setState(() {
+      ManageProperties().createState();
+    });
+  }
+
   var _screenIndex = 0;
   void _startAddNewProperty(BuildContext context) {
     // The half window for adding new property
@@ -55,16 +57,12 @@ class _TabsScreenState extends State<TabsScreen>
   _init() {
     _tabs = [
       CustomTabItem(
-        label: 'Manage Properties',
+        label: 'Apartments',
         icon: const Icon(Icons.holiday_village),
-        screen: const ManageProperties(),
-        floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.add),
-          onPressed: () => _startAddNewProperty(context),
-        ),
+        screen: const Renter_Screen(),
       ),
       CustomTabItem(
-        label: 'Customers',
+        label: 'Hosts',
         icon: const Icon(Icons.contact_mail_rounded),
         screen: Container(),
       ),
@@ -88,13 +86,11 @@ class _TabsScreenState extends State<TabsScreen>
     return Scaffold(
       appBar: appBar,
       drawer: AppDrawer(),
-      resizeToAvoidBottomInset: false,
       body: TabBarView(
         physics: const NeverScrollableScrollPhysics(),
         controller: _tabController,
         children: _tabs.map((e) => e.screen).toList(),
       ),
-      floatingActionButton: _tabs[_screenIndex].floatingActionButton,
     );
   }
 }

@@ -4,18 +4,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:sublet_app/screens/Owner/new_property.dart';
+import 'package:sublet_app/screens/Owner/tabs_screen.dart';
 import 'properties_list_categories.dart';
 import 'package:sublet_app/widgets/app_drawer.dart';
 
-class ManageProperties extends StatelessWidget {
+class ManageProperties extends StatefulWidget {
   const ManageProperties({super.key});
 
+  @override
+  State<ManageProperties> createState() => _ManagePropertiesState();
+}
+
+class _ManagePropertiesState extends State<ManageProperties> {
   final String _recently = 'Recently Added';
+
   final String _occupied = 'Occupied Properties';
+
   final String _unoccupied = 'Unoccupied Properties';
+
+  // void refresh(){
+  //     setState(() {
+
+  //     });
+  //   }
 
   @override
   Widget build(BuildContext context) {
+    final curScaleFactor = MediaQuery.of(context).textScaleFactor;
     return Column(
       children: [
         Padding(
@@ -40,33 +55,54 @@ class ManageProperties extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             child: Column(
               children: <Widget>[
-                PropertiesListCategories(_recently),
-                PropertiesListCategories(_occupied),
-                PropertiesListCategories(_unoccupied),
-                ElevatedButton(
-                  // onPressed: () => Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //       builder: (context) => Scaffold(
-                  //         body: Center(
-                  //           child: ElevatedButton(
-                  //             onPressed: () {
-                  //               if (Navigator.canPop(context)) {
-                  //                 Navigator.pop(context);
-                  //               }
-                  //             },
-                  //             child: const Text('POP'),
-                  //           ),
-                  //         ),
-                  //       ),
-                  //     )),
-                  onPressed: () {
-                    if (Navigator.canPop(context)) {
-                      Navigator.pop(context);
-                    }
-                  },
-                  child: const Text('PUSH'),
-                )
+                Column(
+                  children: [
+                    Container(
+                      child: Text(
+                        'Recently Added',
+                        style: TextStyle(
+                          fontSize: 30 * curScaleFactor,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'OpenSans',
+                        ),
+                      ),
+                      margin: EdgeInsets.only(bottom: 15.0, left: 20),
+                    ),
+                    PropertiesListCategories(),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Container(
+                      child: Text(
+                        'Recently Added',
+                        style: TextStyle(
+                          fontSize: 30 * curScaleFactor,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'OpenSans',
+                        ),
+                      ),
+                      margin: EdgeInsets.only(bottom: 15.0, left: 20),
+                    ),
+                    PropertiesListCategories(),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Container(
+                      child: Text(
+                        'Recently Added',
+                        style: TextStyle(
+                          fontSize: 30 * curScaleFactor,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'OpenSans',
+                        ),
+                      ),
+                      margin: EdgeInsets.only(bottom: 15.0, left: 20),
+                    ),
+                    PropertiesListCategories(),
+                  ],
+                ),
               ],
             ),
           ),
