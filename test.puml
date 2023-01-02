@@ -254,7 +254,7 @@ class "sublet_app::screens::Renter::Asset_Page.dart::_Asset_PageState" {
   +Widget build()
 }
 
-"sublet_app::screens::Renter::Asset_Page.dart::_Asset_PageState" o-- "dart::ui::Color"
+' "sublet_app::screens::Renter::Asset_Page.dart::_Asset_PageState" o-- "dart::ui::Color"
 "sublet_app::screens::Renter::Asset_Page.dart::_Asset_PageState" o-- "sublet_app::screens::Owner::property.dart::Property"
 "sublet_app::screens::Renter::Asset_Page.dart::_Asset_PageState" o-- "sublet_app::screens::Owner::Owner_data.dart::Owner_data"
 
