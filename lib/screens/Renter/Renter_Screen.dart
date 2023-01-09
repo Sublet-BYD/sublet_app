@@ -86,6 +86,7 @@ class _AssetlistState extends State<Assetlist> {
     get_avail_properties();
     // setState(() =>{} );
     return Container(
+      
       padding: EdgeInsets.symmetric(horizontal: 5),
       alignment: Alignment.bottomCenter,
       child: FutureBuilder(

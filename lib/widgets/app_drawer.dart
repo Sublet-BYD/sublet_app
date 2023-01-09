@@ -21,6 +21,7 @@ class AppDrawer extends StatelessWidget {
             title: Text('Logout'),
             onTap: () {
               MyApp.uid = '';
+              
               MyApp.uType = '';
               Navigator.of(context).pop();
 

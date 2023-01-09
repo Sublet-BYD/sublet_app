@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:sublet_app/models/http_exception.dart';
 import 'package:sublet_app/screens/Owner/Owner_data.dart';
 import 'package:toggle_switch/toggle_switch.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 enum AuthMode { Signup, Login }
 
@@ -188,12 +189,21 @@ class _AuthCardState extends State<AuthCard> {
               .collection('users')
               .doc(MyApp.uid)
               .get()
-              .then((doc) {
+              .then((doc) async {
+            print("doc ${doc}");
             if (doc.exists) {
               // Document data is available
-              MyApp.uType = doc.data()!['type'];
+              print("--------------------------");
+
+              String utype = doc.data()!['type'];
+              print(utype);
+              // To write a value
+              Provider.of<Auth>(context, listen: false).Utype(utype);
+
+              // MyApp.uType = doc.data()!['type'];
             } else {
               // Document is not found
+              print(" this no such ");
               print("No such document!");
             }
             print("HERE");
@@ -204,12 +214,22 @@ class _AuthCardState extends State<AuthCard> {
         // Sign user up
         MyApp.uid = await Provider.of<Auth>(context, listen: false).signup(
             _authData['email'].toString(), _authData['password'].toString());
+
         Firebase_functions.Add_user(MyApp.uid, _userName.text, type);
+        print("type ${type} ");
         if (type == 'host') {
           Firebase_functions.Upload_owner(
               Owner_data(_userName.text, MyApp.uid));
         }
+        Provider.of<Auth>(context, listen: false).Utype(type);
       }
+    } catch (error) {
+      print(error);
+      setState(() {
+        _isLoading = false;
+        var _errorMessage = error.toString();
+        _showErrorDiallog(_errorMessage);
+      });
     }
 
     //TODO: change the securing.
