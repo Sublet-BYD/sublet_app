@@ -8,7 +8,7 @@ import 'property.dart';
 class PropertyCard extends StatelessWidget {
   final Property _property;
 
-  PropertyCard(this._property);
+  const PropertyCard(this._property);
 
   @override
   Widget build(BuildContext context) {

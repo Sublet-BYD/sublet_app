@@ -9,7 +9,7 @@ import 'package:sublet_app/providers/Session_details.dart';
 
 class NewProperty extends StatefulWidget {
   final Function refresh;
-  const NewProperty({required this.refresh,super.key});
+  const NewProperty({required this.refresh, super.key});
 
   @override
   State<NewProperty> createState() => _NewPropertyState();
@@ -140,12 +140,12 @@ class _NewPropertyState extends State<NewProperty> {
                 TextButton(
                     onPressed: () {
                       FocusScope.of(context).unfocus();
-                      final user = FirebaseAuth.instance.currentUser;
                       //  _addNewProperty();
                       Property pro = new Property(
                         name: propNameController.text,
                         location: propLocationController.text,
-                        owner_id: context.read<Session_details>().host_id,
+                        owner_id:
+                            context.read<Session_details>().UserId.toString(),
                         fromdate:
                             DateTime.tryParse(propStartDateController.text),
                         tilldate: DateTime.tryParse(propEndDateController.text),
@@ -157,8 +157,8 @@ class _NewPropertyState extends State<NewProperty> {
                       setState(() {
                         Navigator.pop(context);
                         widget.refresh();
-              //           Navigator.pushReplacement(context,
-              // MaterialPageRoute(builder: (context) => TabsScreen()));
+                        //           Navigator.pushReplacement(context,
+                        // MaterialPageRoute(builder: (context) => TabsScreen()));
                       });
                     },
                     child: Text("Add"))
