@@ -79,7 +79,7 @@ class MyApp extends StatelessWidget {
 
             home: (auth.isAuth) ? choosePage(context.read<Session_details>().utype) : HomeScreen(),
 
-            home: const HomeScreen(),
+            // home: const HomeScreen(),
             routes: {
               '/property-screen': ((context) => const PropertyScreen()),
             },
