@@ -80,9 +80,9 @@ class MyApp extends StatelessWidget {
               fontFamily: 'Lato',
             ),
 
-            home: (auth.isAuth) ? choosePage(uType) : HomeScreen(),
+            // home: (auth.isAuth) ? choosePage(uType) : HomeScreen(),
 
-            // home: const HomeScreen(),
+            home: const HomeScreen(),
             routes: {
               '/property-screen': ((context) => const PropertyScreen()),
             },
