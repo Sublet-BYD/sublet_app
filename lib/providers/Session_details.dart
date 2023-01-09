@@ -5,11 +5,13 @@ class Session_details with ChangeNotifier{ // This class contains all informatio
   String utype = " ";
   String property_id = " ";
   String host_id = " ";
+  String uname = " ";
 
   String get UserId => uid;
   String get UserType => utype;
   String get PropertyId => property_id;
   String get HostId => host_id;
+  String get UserName => uname;
 
   void UpdateUid(String uid){
     this.uid = uid;
@@ -26,5 +28,15 @@ class Session_details with ChangeNotifier{ // This class contains all informatio
   void UpdateHostId(String host_id){
     this.host_id = host_id;
     notifyListeners();
+  }
+  void UpdateName(String uname){
+    this.uname = uname;
+  }
+  void Logout(){
+    host_id = " ";
+    uid = " ";
+    utype = " ";
+    property_id = " ";
+    uname = " ";
   }
 }

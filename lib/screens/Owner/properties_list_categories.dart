@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:provider/provider.dart';
 import 'package:sublet_app/Firebase_functions.dart';
-import 'package:sublet_app/main.dart';
-import 'package:sublet_app/screens/Owner/property_screen.dart';
+import 'package:sublet_app/providers/Session_details.dart';
 import '/screens/Owner/property_card.dart';
 import '/screens/Owner/property.dart';
 
@@ -26,27 +25,13 @@ class _PropertiesListCategoriesState extends State<PropertiesListCategories> {
 
   late Future<List<Property>> _properties;
   late List<Property> plist;
-  final u =
-      FirebaseFirestore.instance.collection('owners').doc('id').get().then(
-    (doc) {
-      if (doc.exists) {
-        // Document data is available
-        print(doc.data()!['plist']);
-      } else {
-        // Document is not found
-        print("No such document!");
-      }
-    },
-  );
   @override
   void initState() {
-    _properties = Firebase_functions.get_properties_of_owner(MyApp.uid);
-    
+    _properties = Firebase_functions.get_properties_of_owner(Provider.of<Session_details>(context).uid);
   }
   void update_plist() async{
     plist = await _properties;
   }
-
 
   @override
   Widget build(BuildContext context) {

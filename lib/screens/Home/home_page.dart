@@ -10,7 +10,6 @@ import 'package:provider/provider.dart';
 import 'package:sublet_app/models/http_exception.dart';
 import 'package:sublet_app/screens/Owner/Owner_data.dart';
 import 'package:toggle_switch/toggle_switch.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 enum AuthMode { Signup, Login }
 
@@ -172,7 +171,7 @@ class _AuthCardState extends State<AuthCard> {
     //valtion succeeced
     //save all input
     _formKey.currentState!.save();
-    print('Success!!');
+    // print('Success!!');
 
     // set the loading spinner
     setState(() {
@@ -200,8 +199,7 @@ class _AuthCardState extends State<AuthCard> {
               String utype = doc.data()!['type'];
               print(utype);
               // To write a value
-              Provider.of<Auth>(context, listen: false).Utype(utype);
-
+              context.read<Session_details>().UpdateUtype(utype);
               // MyApp.uType = doc.data()!['type'];
             } else {
               // Document is not found
@@ -222,7 +220,7 @@ class _AuthCardState extends State<AuthCard> {
           Firebase_functions.Upload_owner(
               Owner_data(_userName.text, context.read<Session_details>().uid));
         }
-        Provider.of<Auth>(context, listen: false).Utype(type);
+        context.read<Session_details>().UpdateUtype(type);
       }
     } catch (error) {
       print(error);
@@ -239,7 +237,6 @@ class _AuthCardState extends State<AuthCard> {
     // on HttpException catch (error) {
     //   print("error is : ${error.toString()} ");
     //   var errorMessage = 'Authentication faild';
-
     //   if (error.toString().contains('EMAIL_EXISTS')) {
     //     errorMessage = 'This email address is already in use.';
     //   } else if (error.toString().contains('INVALID_EMAIL')) {
