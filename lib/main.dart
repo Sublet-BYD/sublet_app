@@ -19,6 +19,7 @@ import './widgets/app_drawer.dart';
 import './screens/chat_screen.dart';
 import 'screens/Owner/property.dart';
 // import 'package:dcdg/dcdg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,6 +27,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   Owner_data first = Owner_data('first name', 'first_id');
   // Property property = Property(
   //     id: 'asdf',
@@ -47,6 +49,22 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   static String uid = '';
   static String uType = ''; // By default, the toggle start from client
+
+  choosePage(String type) {
+    print("we are here");
+    print(type);
+
+    if (type == 'host') {
+      return TabsScreen();
+    } else if (type == 'client') {
+      print("in");
+      return Renter_Screen();
+    } else {
+      print("emptyy");
+      return HomeScreen();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -54,6 +72,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider.value(
             value: Auth(),
           ),
+          
         ],
         //rebuild this part of the tree
         //this ensure whenever that outh object changes
@@ -65,15 +84,14 @@ class MyApp extends StatelessWidget {
               accentColor: Colors.deepOrange,
               fontFamily: 'Lato',
             ),
-            home: (auth.isAuth)
-                ? ((uType.toString() == 'host')
-                    ? TabsScreen()
-                    : Renter_Screen())
-                : HomeScreen(),
+
+            home: (auth.isAuth) ? choosePage(uType) : HomeScreen(),
+
             // home: const HomeScreen(),
             routes: {
               '/property-screen': ((context) => const PropertyScreen()),
             },
+
             // home: RenterTabsScreen(),
           ),
         ));

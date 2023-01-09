@@ -87,6 +87,13 @@ class Auth with ChangeNotifier {
     return _authentication(email, password, 'signUp');
   }
 
+  void Utype(String type) {
+    print("from auttht");
+    print(type);
+    MyApp.uType = type;
+    notifyListeners();
+  }
+
   Future<String> login(String email, String password) async {
     // print(email);
     // print(password);
