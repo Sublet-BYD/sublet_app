@@ -6,7 +6,6 @@ import 'package:sublet_app/main.dart';
 import 'package:sublet_app/screens/Owner/property.dart';
 import 'package:sublet_app/screens/Renter/Asset_Page.dart';
 import 'package:sublet_app/widgets/app_drawer.dart';
-import 'package:sublet_app/widgets/sort_DropDown.dart';
 
 class Renter_Screen extends StatefulWidget {
   const Renter_Screen({super.key});
@@ -46,7 +45,7 @@ class _Renter_ScreenState extends State<Renter_Screen> {
               //     ),
               //   ),
               // ),
-              child: sort_DropDown(),
+              child: Text('hi'),
             ),
             Container(
                 height: (MediaQuery.of(context).size.height -
