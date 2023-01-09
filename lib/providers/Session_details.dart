@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class Session_details with ChangeNotifier{ // This class contains all information related to the current session. It is a provider, meaning it will be used to "transfer" data between classes.
-  String uid = " ";
-  String utype = " ";
-  String property_id = " ";
-  String host_id = " ";
-  String uname = " ";
+  String uid = "";
+  String utype = "";
+  String property_id = "";
+  String host_id = "";
+  String uname = "";
 
   String get UserId => uid;
   String get UserType => utype;
@@ -33,10 +33,10 @@ class Session_details with ChangeNotifier{ // This class contains all informatio
     this.uname = uname;
   }
   void Logout(){
-    host_id = " ";
-    uid = " ";
-    utype = " ";
-    property_id = " ";
-    uname = " ";
+    host_id = "";
+    uid = "";
+    utype = "";
+    property_id = "";
+    uname = "";
   }
 }
