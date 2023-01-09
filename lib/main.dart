@@ -20,7 +20,6 @@ import './widgets/app_drawer.dart';
 import './screens/chat_screen.dart';
 import 'screens/Owner/property.dart';
 // import 'package:dcdg/dcdg.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
