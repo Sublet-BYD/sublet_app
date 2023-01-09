@@ -6,6 +6,7 @@ import 'package:sublet_app/main.dart';
 import 'package:sublet_app/screens/Owner/property.dart';
 import 'package:sublet_app/screens/Renter/Asset_Page.dart';
 import 'package:sublet_app/widgets/app_drawer.dart';
+import 'package:sublet_app/widgets/sort_DropDown.dart';
 
 class Renter_Screen extends StatefulWidget {
   const Renter_Screen({super.key});
@@ -35,16 +36,17 @@ class _Renter_ScreenState extends State<Renter_Screen> {
                       MediaQuery.of(context).padding.top) *
                   0.15,
               padding: EdgeInsets.only(top: 20, left: 40, right: 40),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Search',
-                  prefixIcon: Icon(Icons.search),
-                  contentPadding: EdgeInsets.all(8.0),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-              ),
+              // child: TextFormField(
+              //   decoration: InputDecoration(
+              //     labelText: 'Search',
+              //     prefixIcon: Icon(Icons.search),
+              //     contentPadding: EdgeInsets.all(8.0),
+              //     border: OutlineInputBorder(
+              //       borderRadius: BorderRadius.circular(30),
+              //     ),
+              //   ),
+              // ),
+              child: sort_DropDown(),
             ),
             Container(
                 height: (MediaQuery.of(context).size.height -

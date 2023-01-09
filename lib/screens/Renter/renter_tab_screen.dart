@@ -16,18 +16,19 @@ class _RenterTabsScreenState extends State<RenterTabsScreen>
   late final _tabController = TabController(length: 2, vsync: this);
   void refresh() {
     setState(() {
-      ManageProperties().createState();
+      Renter_Screen().createState();
     });
   }
 
   var _screenIndex = 0;
-  void _startAddNewProperty(BuildContext context) {
-    // The half window for adding new property
-    showModalBottomSheet(
-      context: context,
-      builder: (context) => NewProperty(refresh: refresh),
-    );
-  }
+  //Completely redundant; why is this even here?
+  // void _startAddNewProperty(BuildContext context) {
+  //   // The half window for adding new property
+  //   showModalBottomSheet(
+  //     context: context,
+  //     builder: (context) => NewProperty(refresh: refresh),
+  //   );
+  // }
 
   late final List<CustomTabItem> _tabs;
 
