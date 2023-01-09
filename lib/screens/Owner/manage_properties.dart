@@ -16,11 +16,6 @@ class ManageProperties extends StatefulWidget {
 }
 
 class _ManagePropertiesState extends State<ManageProperties> {
-  final String _recently = 'Recently Added';
-
-  final String _occupied = 'Occupied Properties';
-
-  final String _unoccupied = 'Unoccupied Properties';
 
   // void refresh(){
   //     setState(() {
@@ -75,7 +70,7 @@ class _ManagePropertiesState extends State<ManageProperties> {
                   children: [
                     Container(
                       child: Text(
-                        'Recently Added',
+                        'Occupied Properties',
                         style: TextStyle(
                           fontSize: 30 * curScaleFactor,
                           fontWeight: FontWeight.bold,
@@ -91,7 +86,7 @@ class _ManagePropertiesState extends State<ManageProperties> {
                   children: [
                     Container(
                       child: Text(
-                        'Recently Added',
+                        'Unoccupied Properties',
                         style: TextStyle(
                           fontSize: 30 * curScaleFactor,
                           fontWeight: FontWeight.bold,

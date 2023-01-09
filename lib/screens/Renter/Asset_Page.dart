@@ -3,8 +3,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sublet_app/Firebase_functions.dart';
 import 'package:sublet_app/main.dart';
+import 'package:sublet_app/providers/Session_details.dart';
 import 'package:sublet_app/screens/Owner/Owner_data.dart';
 import 'package:sublet_app/screens/Owner/property.dart';
 import 'package:sublet_app/screens/Renter/Renter_Screen.dart';
@@ -33,12 +35,9 @@ class _Asset_PageState extends State<Asset_Page> {
 
   @override
   void initState() {
-    print('asdasd\n');
-    fut_owner = Firebase_functions.get_owner(property.owner_id);
-    print('object\n');
-    fut_property = Firebase_functions.get_property(MyApp.property_id);
+    fut_owner = Firebase_functions.get_owner(Provider.of<Session_details>(context).host_id);
+    fut_property = Firebase_functions.get_property(Provider.of<Session_details>(context).property_id);
   }
-
   @override
   Widget build(BuildContext context) {
     get_owner_data();

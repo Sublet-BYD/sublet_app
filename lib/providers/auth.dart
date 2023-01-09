@@ -1,22 +1,16 @@
-//this clas mange all out user logic (sign up ,loggin, loggout ,and also make sure when the app restart
-// we try loggin in user again)
+//this class manages all out user logic (sign up ,login, logout ,and also makes sure when the app restarts
+// we try login in user again)
 //Firebase Auth REST API
 
 import 'dart:convert';
-import 'dart:js';
-
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-import 'package:sublet_app/main.dart';
-import 'package:sublet_app/providers/Session_details.dart';
 import '../models/http_exception.dart';
-import 'Session_details.dart';
 
 class Auth with ChangeNotifier {
   String _token = ''; // expire at some point of the time
   DateTime? _expiryDate;
   String _userId = '';
-  Session_details session_details;
 
 // //if we have a token and the token didnt expire then then user is authenticated
   // bool get isAuth {
@@ -91,12 +85,12 @@ class Auth with ChangeNotifier {
     return _authentication(email, password, 'signUp');
   }
 
-  void Utype(String type) {
-    print("from auttht");
-    print(type);
-    MyApp.uType = type;
-    notifyListeners();
-  }
+  // void Utype(String type) {
+  //   print("from auttht");
+  //   print(type);
+  //   MyApp.uType = type;
+  //   notifyListeners();
+  // }
 
   Future<String> login(String email, String password) async {
     // print(email);
@@ -108,12 +102,7 @@ class Auth with ChangeNotifier {
     _token = '';
     _userId = '';
     _expiryDate = null;
-    context.read<Session_details>()
-    
-    MyApp.uid = '';
-    MyApp.uType = '';
     notifyListeners();
-
-    print(_userId);
+    // print(_userId);
   }
 }

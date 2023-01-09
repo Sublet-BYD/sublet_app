@@ -20,7 +20,6 @@ import './widgets/app_drawer.dart';
 import './screens/chat_screen.dart';
 import 'screens/Owner/property.dart';
 // import 'package:dcdg/dcdg.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,9 +46,6 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   choosePage(String type) {
-    // print("we are here");
-    // print(type);
-
     if (type == 'host') {
       return TabsScreen();
     } else if (type == 'client') {
@@ -68,7 +64,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider.value(
             value: Auth(),
           ),
-          ChangeNotifierProvider(create: (_) => Session_details()), // Defining Session_details as a provider for the app.
+          ChangeNotifierProvider.value(value: Session_details()) // Defining Session_details as a provider for the app.
         ],
         //rebuild this part of the tree
         //this ensure whenever that outh object changes
@@ -81,7 +77,7 @@ class MyApp extends StatelessWidget {
               fontFamily: 'Lato',
             ),
 
-            home: (auth.isAuth) ? choosePage(uType) : HomeScreen(),
+            home: (auth.isAuth) ? choosePage(context.read<Session_details>().utype) : HomeScreen(),
 
             // home: const HomeScreen(),
             routes: {
