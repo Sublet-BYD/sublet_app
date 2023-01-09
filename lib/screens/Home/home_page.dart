@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sublet_app/Firebase_functions.dart';
 import 'package:sublet_app/main.dart';
+import 'package:sublet_app/providers/Session_details.dart';
 import 'package:sublet_app/providers/auth.dart';
 import 'dart:math';
 import 'package:provider/provider.dart';
@@ -182,15 +183,16 @@ class _AuthCardState extends State<AuthCard> {
       if (_authMode == AuthMode.Login) {
         print('Log in');
         // Log user in
-        MyApp.uid = await Provider.of<Auth>(context, listen: false).login(
-            _authData['email'].toString(), _authData['password'].toString());
-        if (MyApp.uid != '') {
+        context.read<Session_details>().UpdateUtype(await Provider.of<Auth>(context, listen: false).login(
+            _authData['email'].toString(), _authData['password'].toString()));
+        context.read<Session_details>().UpdateUid(await Provider.of<Auth>(context, listen: false).login(
+            _authData['email'].toString(), _authData['password'].toString()));
+        if (context.read<Session_details>().uid != '') {
           FirebaseFirestore.instance
               .collection('users')
-              .doc(MyApp.uid)
+              .doc(context.read<Session_details>().uid)
               .get()
               .then((doc) async {
-            print("doc ${doc}");
             if (doc.exists) {
               // Document data is available
               print("--------------------------");
@@ -207,19 +209,18 @@ class _AuthCardState extends State<AuthCard> {
               print("No such document!");
             }
             print("HERE");
-            print(MyApp.uType);
+            print(context.read<Session_details>().utype);
           });
         }
       } else {
         // Sign user up
-        MyApp.uid = await Provider.of<Auth>(context, listen: false).signup(
-            _authData['email'].toString(), _authData['password'].toString());
-
-        Firebase_functions.Add_user(MyApp.uid, _userName.text, type);
+        context.read<Session_details>().UpdateUid(await Provider.of<Auth>(context, listen: false).signup(
+            _authData['email'].toString(), _authData['password'].toString())); // Signing the new user up and keeping the unique id assigned to them by firebase
+        Firebase_functions.Add_user(context.read<Session_details>().uid, _userName.text, type);
         print("type ${type} ");
         if (type == 'host') {
           Firebase_functions.Upload_owner(
-              Owner_data(_userName.text, MyApp.uid));
+              Owner_data(_userName.text, context.read<Session_details>().uid));
         }
         Provider.of<Auth>(context, listen: false).Utype(type);
       }
@@ -232,31 +233,31 @@ class _AuthCardState extends State<AuthCard> {
       });
     }
 
-    //TODO: change the securing.
+    //The following code is dead code and redundant
 
     // check for specific kind of error
-    on HttpException catch (error) {
-      print("error is : ${error.toString()} ");
-      var errorMessage = 'Authentication faild';
+    // on HttpException catch (error) {
+    //   print("error is : ${error.toString()} ");
+    //   var errorMessage = 'Authentication faild';
 
-      if (error.toString().contains('EMAIL_EXISTS')) {
-        errorMessage = 'This email address is already in use.';
-      } else if (error.toString().contains('INVALID_EMAIL')) {
-        errorMessage = 'This is not a valid email address.';
-      } else if (error.toString().contains('WEAK_PASSWORD')) {
-        errorMessage = 'This password is too weak.';
-      } else if (error.toString().contains('EMAIL_NOT_FOUND')) {
-        errorMessage = 'Could not find a user with that email.';
-      } else if (error.toString().contains('INVALID_PASSWORD')) {
-        errorMessage = 'Incorrect email or password.';
-      }
-      _showErrorDiallog(errorMessage);
-    } catch (error) {
-      print(error.toString());
-      const errorMessage =
-          'Could not authenticate you. Please try again later.';
-      _showErrorDiallog(errorMessage);
-    }
+    //   if (error.toString().contains('EMAIL_EXISTS')) {
+    //     errorMessage = 'This email address is already in use.';
+    //   } else if (error.toString().contains('INVALID_EMAIL')) {
+    //     errorMessage = 'This is not a valid email address.';
+    //   } else if (error.toString().contains('WEAK_PASSWORD')) {
+    //     errorMessage = 'This password is too weak.';
+    //   } else if (error.toString().contains('EMAIL_NOT_FOUND')) {
+    //     errorMessage = 'Could not find a user with that email.';
+    //   } else if (error.toString().contains('INVALID_PASSWORD')) {
+    //     errorMessage = 'Incorrect email or password.';
+    //   }
+    //   _showErrorDiallog(errorMessage);
+    // } catch (error) {
+    //   print(error.toString());
+    //   const errorMessage =
+    //       'Could not authenticate you. Please try again later.';
+    //   _showErrorDiallog(errorMessage);
+    // }
     setState(() {
       _isLoading = false;
     });

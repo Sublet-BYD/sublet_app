@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:sublet_app/providers/Session_details.dart';
 import 'package:sublet_app/screens/Home/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:sublet_app/screens/Owner/Owner_data.dart';
@@ -44,15 +45,10 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  static String property_id =
-      '0'; // id of a property. since the variable needs to be static to be easily accessible through multiple classes, it is declared in the main class and initialized with a meaningless value (0).
-  // This widget is the root of your application.
-  static String uid = '';
-  static String uType = ''; // By default, the toggle start from client
 
   choosePage(String type) {
-    print("we are here");
-    print(type);
+    // print("we are here");
+    // print(type);
 
     if (type == 'host') {
       return TabsScreen();
@@ -72,7 +68,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider.value(
             value: Auth(),
           ),
-          
+          ChangeNotifierProvider(create: (_) => Session_details()), // Defining Session_details as a provider for the app.
         ],
         //rebuild this part of the tree
         //this ensure whenever that outh object changes

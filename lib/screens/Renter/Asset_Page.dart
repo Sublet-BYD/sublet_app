@@ -22,17 +22,21 @@ class Asset_Page extends StatefulWidget {
 
 class _Asset_PageState extends State<Asset_Page> {
   Color contact_color = (Colors.amber[600]!);
-  late Property property; // Will be taken from firebase according to the given key
+  late Future<Property> fut_property; // Will be taken from firebase according to the given key
+  late Property property; 
   late Future<Owner_data> fut_owner;
   late Owner_data owner;
   void get_owner_data() async {
-    property = await Firebase_functions.get_property(MyApp.property_id);
+    property = await fut_property;
     owner = await fut_owner;
   }
 
   @override
   void initState() {
+    print('asdasd\n');
     fut_owner = Firebase_functions.get_owner(property.owner_id);
+    print('object\n');
+    fut_property = Firebase_functions.get_property(MyApp.property_id);
   }
 
   @override
@@ -40,8 +44,8 @@ class _Asset_PageState extends State<Asset_Page> {
     get_owner_data();
     // print(owner.name);
     return FutureBuilder(
-        future: fut_owner,
-        builder: (context, AsyncSnapshot<Owner_data> snapshot) {
+        future: fut_property,
+        builder: (context, AsyncSnapshot<Property> snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return Container(
               child: ListView(
