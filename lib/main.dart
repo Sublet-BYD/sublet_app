@@ -64,27 +64,31 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider.value(
             value: Auth(),
           ),
-          ChangeNotifierProvider.value(value: Session_details()) // Defining Session_details as a provider for the app.
+          ChangeNotifierProvider.value(
+              value:
+                  Session_details()) // Defining Session_details as a provider for the app.
         ],
         //rebuild this part of the tree
         //this ensure whenever that outh object changes
         child: Consumer<Auth>(
-          builder: (ctx, auth, _) => MaterialApp(
-            title: 'Sublet',
-            theme: ThemeData(
-              primarySwatch: Colors.deepPurple,
-              accentColor: Colors.deepOrange,
-              fontFamily: 'Lato',
+          builder: (ctx, auth, _) => Consumer<Session_details>(
+            builder: (ctx, session, _) => MaterialApp(
+              title: 'Sublet',
+              theme: ThemeData(
+                primarySwatch: Colors.deepPurple,
+                accentColor: Colors.deepOrange,
+                fontFamily: 'Lato',
+              ),
+
+              home: (auth.isAuth) ? choosePage(session.utype) : HomeScreen(),
+
+              // home: const HomeScreen(),
+              routes: {
+                '/property-screen': ((context) => const PropertyScreen()),
+              },
+
+              // home: RenterTabsScreen(),
             ),
-
-            home: (auth.isAuth) ? choosePage(context.read<Session_details>().utype) : HomeScreen(),
-
-            // home: const HomeScreen(),
-            routes: {
-              '/property-screen': ((context) => const PropertyScreen()),
-            },
-
-            // home: RenterTabsScreen(),
           ),
         ));
   }
