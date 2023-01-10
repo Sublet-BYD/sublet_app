@@ -79,13 +79,14 @@ class MyApp extends StatelessWidget {
                 fontFamily: 'Lato',
               ),
 
-              // home: (auth.isAuth) ? choosePage(session.utype) : HomeScreen(),
+              home: (auth.isAuth) ? choosePage(session.utype) : HomeScreen(),
 
               // home: const HomeScreen(),
               routes: {
                 '/property-screen': ((context) => const PropertyScreen()),
               },
-              home: TabsScreen(userType: 'client'),
+
+              // home: RenterTabsScreen(),
             ),
           ),
         ));
