@@ -141,7 +141,7 @@ class _NewPropertyState extends State<NewProperty> {
                     onPressed: () {
                       FocusScope.of(context).unfocus();
                       //  _addNewProperty();
-                      Property pro = new Property(
+                      Property pro = Property(
                         name: propNameController.text,
                         location: propLocationController.text,
                         owner_id:
