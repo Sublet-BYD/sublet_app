@@ -30,7 +30,6 @@ class _Renter_ScreenState extends State<Renter_Screen> {
             return Sort_Menu();
           }));
     }
-
     return Scaffold(
       resizeToAvoidBottomInset: false, // Preventing pixel overflow warnings
       drawer: AppDrawer(),
@@ -44,6 +43,7 @@ class _Renter_ScreenState extends State<Renter_Screen> {
                       appBar.preferredSize.height -
                       MediaQuery.of(context).padding.top) *
                   0.1,
+              width: (MediaQuery.of(context).size.width),
               padding: EdgeInsets.only(top: 20, left: 40, right: 40),
               child: ElevatedButton(
                 onPressed: showSortPanel,
