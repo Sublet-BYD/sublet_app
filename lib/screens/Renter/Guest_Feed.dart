@@ -21,6 +21,11 @@ class _Renter_ScreenState extends State<Renter_Screen> {
     final appBar = AppBar(
       title: Text('Welcome, $uname'),
     );
+    void showSortPanel(){
+      showModalBottomSheet(context: context, builder: ((context) {
+        return Container();
+      }));
+    }
     return Scaffold(
       resizeToAvoidBottomInset: false, // Preventing pixel overflow warnings
       drawer: AppDrawer(),
@@ -33,19 +38,18 @@ class _Renter_ScreenState extends State<Renter_Screen> {
               height: (MediaQuery.of(context).size.height -
                       appBar.preferredSize.height -
                       MediaQuery.of(context).padding.top) *
-                  0.15,
+                  0.1,
               padding: EdgeInsets.only(top: 20, left: 40, right: 40),
-              // child: TextFormField(
-              //   decoration: InputDecoration(
-              //     labelText: 'Search',
-              //     prefixIcon: Icon(Icons.search),
-              //     contentPadding: EdgeInsets.all(8.0),
-              //     border: OutlineInputBorder(
-              //       borderRadius: BorderRadius.circular(30),
-              //     ),
-              //   ),
-              // ),
-              child: Text('hi'),
+              child: ElevatedButton(
+                onPressed: showSortPanel,
+                child: Text('Search', style: TextStyle(
+                  fontSize: 15, 
+                ),),
+                style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  shadowColor: Colors.transparent,
+                ),
+              ),
             ),
             Container(
                 height: (MediaQuery.of(context).size.height -
@@ -84,7 +88,6 @@ class _AssetlistState extends State<Assetlist> {
   @override
   Widget build(BuildContext context) {
     get_avail_properties();
-    // setState(() =>{} );
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 5),
       alignment: Alignment.bottomCenter,
