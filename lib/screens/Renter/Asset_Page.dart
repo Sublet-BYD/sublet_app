@@ -45,10 +45,10 @@ class _Asset_PageState extends State<Asset_Page> {
               property = snapshot.data!.obj1;
               owner = snapshot.data!.obj2;
             }
-            else{
-              print(data.toString());
+            else if(snapshot.hasError){
+              print('${snapshot.error}');
               return Container(
-                child: Center(child: Text('${snapshot.data}')),
+                child: Center(child: Text('An unexpected error occurred')),
               );
             }
             return ListView(
@@ -220,16 +220,10 @@ class _Asset_PageState extends State<Asset_Page> {
                         ),
                         //Contact
                         GestureDetector(
-                          //Changing the field's colour when pressed
-                          // onTapDown: (details) {
-                          //   setState(() {
-                          //     contact_color = (Colors.amber[700]!);
-                          //   });
-                          // },
                           onTap: () {
                             //Move to chat with owner
-                            print(owner.toJson());
-                            print('Redirecting to chat\n');
+                            // print(owner.toJson());
+                            // print('Redirecting to chat\n');
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) => ChatScreen(),

@@ -99,7 +99,7 @@ class _AssetlistState extends State<Assetlist> {
                 itemBuilder: (ctx, index) {
                   return GestureDetector(
                       onTap: () async {
-                        onPress(context, (await list)[index].id!);
+                        onPress(context, (await list)[index].id!, (await list)[index].owner_id);
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
@@ -145,9 +145,9 @@ class _AssetlistState extends State<Assetlist> {
     );
   }
 
-  void onPress(BuildContext context, String asset_id) {
+  void onPress(BuildContext context, String asset_id, String host_id) {
     context.read<Session_details>().UpdatePropertyId(asset_id);
-    // context.read<Session_details>().UpdateHostId(asset_id);
+    context.read<Session_details>().UpdateHostId(host_id);
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => Asset_Page()));
   }
