@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:sublet_app/Firebase_functions.dart';
 import 'package:sublet_app/models/data/property.dart';
+import 'package:sublet_app/models/sort_menu.dart';
 import 'package:sublet_app/screens/Renter/Asset_Page.dart';
 import 'package:sublet_app/widgets/app_drawer.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +24,7 @@ class _Renter_ScreenState extends State<Renter_Screen> {
     );
     void showSortPanel(){
       showModalBottomSheet(context: context, builder: ((context) {
-        return Container();
+        return Sort_Menu();
       }));
     }
     return Scaffold(

@@ -9,7 +9,7 @@ import 'package:sublet_app/models/data/host_data.dart';
 import 'package:sublet_app/widgets/host_widgets/manage_properties.dart';
 import 'package:sublet_app/screens/Owner/tabs_screen.dart';
 import 'package:sublet_app/screens/Renter/Asset_Page.dart';
-import 'package:sublet_app/screens/Renter/Renter_Screen.dart';
+import 'package:sublet_app/screens/Renter/Guest_Feed.dart';
 import 'package:sublet_app/screens/Owner/property_screen.dart';
 import 'package:sublet_app/screens/Renter/renter_tab_screen.dart';
 import 'firebase_options.dart';
@@ -85,8 +85,7 @@ class MyApp extends StatelessWidget {
               routes: {
                 '/property-screen': ((context) => const PropertyScreen()),
               },
-
-              home: RenterTabsScreen(),
+              home: TabsScreen(userType: 'client'),
             ),
           ),
         ));

@@ -20,15 +20,15 @@
 //     });
 //   }
 
-//   var _screenIndex = 0;
-//   //Completely redundant; why is this even here?
-//   // void _startAddNewProperty(BuildContext context) {
-//   //   // The half window for adding new property
-//   //   showModalBottomSheet(
-//   //     context: context,
-//   //     builder: (context) => NewProperty(refresh: refresh),
-//   //   );
-//   // }
+  // var _screenIndex = 0;
+  //Completely redundant; why is this even here?
+  // void _startAddNewProperty(BuildContext context) {
+  //   // The half window for adding new property
+  //   showModalBottomSheet(
+  //     context: context,
+  //     builder: (context) => NewProperty(refresh: refresh),
+  //   );
+  // }
 
 //   late final List<CustomTabItem> _tabs;
 
