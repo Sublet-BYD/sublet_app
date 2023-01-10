@@ -40,7 +40,6 @@ class _PropertiesListCategoriesState extends State<PropertiesListCategories> {
         .where("owner_id",
             isEqualTo: Provider.of<Session_details>(context).UserId.toString())
         .snapshots();
-    print("LENTGHHHHHHHHHHHHHHHHHHHHH ${proStream.length.toString()}");
     setState(() {});
     return StreamBuilder(
         stream: proStream,
