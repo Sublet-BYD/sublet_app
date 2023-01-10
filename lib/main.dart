@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:sublet_app/providers/Session_details.dart';
+import 'package:sublet_app/providers/firestore_properties.dart';
 import 'package:sublet_app/screens/Home/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:sublet_app/models/data/host_data.dart';
@@ -64,8 +65,11 @@ class MyApp extends StatelessWidget {
             value: Auth(),
           ),
           ChangeNotifierProvider.value(
-              value:
-                  Session_details()) // Defining Session_details as a provider for the app.
+            value: Session_details(),
+          ),
+          ChangeNotifierProvider(
+              create: ((context) =>
+                  FirestoreProperties())) // Defining Session_details as a provider for the app.
         ],
         //rebuild this part of the tree
         //this ensure whenever that outh object changes
