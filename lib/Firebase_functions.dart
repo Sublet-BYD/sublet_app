@@ -5,8 +5,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'screens/Owner/Owner_data.dart';
-import 'screens/Owner/property.dart';
+import 'models/data/host_data.dart';
+import 'models/data/property.dart';
+import './models/data/host_data.dart';
 
 class Firebase_functions {
   static var db = FirebaseFirestore.instance;
@@ -141,14 +142,15 @@ class Firebase_functions {
     return res;
   }
 
-  static Future<List<Property>> get_properties_of_owner(String owner_id)async{
+  static Future<List<Property>> get_properties_of_owner(String owner_id) async {
     Owner_data owner = await get_owner(owner_id);
     List<Property> res = [];
-    if(owner.plist == null){
+    if (owner.plist == null) {
       return res;
     }
-    for(String pid in owner.plist!){ // Hard null check is safe as we confirmed owner.plist is not null 
-        res.add(await get_property(pid));
+    for (String pid in owner.plist!) {
+      // Hard null check is safe as we confirmed owner.plist is not null
+      res.add(await get_property(pid));
     }
     return res;
   }

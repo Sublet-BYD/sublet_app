@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:sublet_app/screens/Owner/manage_properties.dart';
+import 'package:provider/provider.dart';
+import 'package:sublet_app/screens/Renter/Renter_Screen.dart';
+import 'package:sublet_app/widgets/host_widgets/manage_properties.dart';
 import 'package:sublet_app/screens/Owner/new_property.dart';
 import 'package:sublet_app/widgets/app_drawer.dart';
 
+import '../../providers/Session_details.dart';
+
 class TabsScreen extends StatefulWidget {
-  const TabsScreen({super.key});
+  final userType;
+  const TabsScreen({super.key, @required this.userType});
 
   @override
   State<TabsScreen> createState() => _TabsScreenState();
@@ -13,11 +18,16 @@ class TabsScreen extends StatefulWidget {
 class _TabsScreenState extends State<TabsScreen>
     with SingleTickerProviderStateMixin {
   late final _tabController = TabController(length: 2, vsync: this);
-  void refresh(){
-      setState(() {
-        ManageProperties().createState();
-      });
-    }
+  void refresh() {
+    setState(() {
+      print(
+          "CHECK ${Provider.of<Session_details>(context).UserType.toString()}");
+      Provider.of<Session_details>(context).UserType.toString() == 'host'
+          ? ManageProperties().createState()
+          : Renter_Screen().createState();
+    });
+  }
+
   var _screenIndex = 0;
   void _startAddNewProperty(BuildContext context) {
     // The half window for adding new property
@@ -57,11 +67,14 @@ class _TabsScreenState extends State<TabsScreen>
       CustomTabItem(
         label: 'Manage Properties',
         icon: const Icon(Icons.holiday_village),
-        screen: const ManageProperties(),
-        floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.add),
-          onPressed: () => _startAddNewProperty(context),
-        ),
+        screen:
+            widget.userType == 'host' ? ManageProperties() : Renter_Screen(),
+        floatingActionButton: widget.userType == 'host'
+            ? FloatingActionButton(
+                child: const Icon(Icons.add),
+                onPressed: () => _startAddNewProperty(context),
+              )
+            : null,
       ),
       CustomTabItem(
         label: 'Customers',

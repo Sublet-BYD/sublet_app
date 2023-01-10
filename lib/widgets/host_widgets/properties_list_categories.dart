@@ -5,8 +5,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 import 'package:sublet_app/Firebase_functions.dart';
 import 'package:sublet_app/providers/Session_details.dart';
-import '/screens/Owner/property_card.dart';
-import '/screens/Owner/property.dart';
+import 'property_card.dart';
+import '../../models/data/property.dart';
 
 class PropertiesListCategories extends StatefulWidget {
   const PropertiesListCategories({super.key});

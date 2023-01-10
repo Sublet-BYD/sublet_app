@@ -7,8 +7,8 @@ import 'package:sublet_app/providers/Session_details.dart';
 import 'package:sublet_app/providers/auth.dart';
 import 'dart:math';
 import 'package:provider/provider.dart';
-import 'package:sublet_app/models/http_exception.dart';
-import 'package:sublet_app/screens/Owner/Owner_data.dart';
+import 'package:sublet_app/models/Exceptions/http_exception.dart';
+import 'package:sublet_app/models/data/host_data.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 enum AuthMode { Signup, Login }
@@ -182,10 +182,14 @@ class _AuthCardState extends State<AuthCard> {
       if (_authMode == AuthMode.Login) {
         print('Log in');
         // Log user in
-        context.read<Session_details>().UpdateUtype(await Provider.of<Auth>(context, listen: false).login(
-            _authData['email'].toString(), _authData['password'].toString()));
-        context.read<Session_details>().UpdateUid(await Provider.of<Auth>(context, listen: false).login(
-            _authData['email'].toString(), _authData['password'].toString()));
+        context.read<Session_details>().UpdateUtype(
+            await Provider.of<Auth>(context, listen: false).login(
+                _authData['email'].toString(),
+                _authData['password'].toString()));
+        context.read<Session_details>().UpdateUid(
+            await Provider.of<Auth>(context, listen: false).login(
+                _authData['email'].toString(),
+                _authData['password'].toString()));
         if (context.read<Session_details>().uid != '') {
           FirebaseFirestore.instance
               .collection('users')
@@ -212,9 +216,13 @@ class _AuthCardState extends State<AuthCard> {
         }
       } else {
         // Sign user up
-        context.read<Session_details>().UpdateUid(await Provider.of<Auth>(context, listen: false).signup(
-            _authData['email'].toString(), _authData['password'].toString())); // Signing the new user up and keeping the unique id assigned to them by firebase
-        Firebase_functions.Add_user(context.read<Session_details>().uid, _userName.text, type);
+        context.read<Session_details>().UpdateUid(
+            await Provider.of<Auth>(context, listen: false).signup(
+                _authData['email'].toString(),
+                _authData['password']
+                    .toString())); // Signing the new user up and keeping the unique id assigned to them by firebase
+        Firebase_functions.Add_user(
+            context.read<Session_details>().uid, _userName.text, type);
         print("type ${type} ");
         if (type == 'host') {
           Firebase_functions.Upload_owner(

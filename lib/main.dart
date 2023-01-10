@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:sublet_app/providers/Session_details.dart';
 import 'package:sublet_app/screens/Home/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:sublet_app/screens/Owner/Owner_data.dart';
-import 'package:sublet_app/screens/Owner/manage_properties.dart';
+import 'package:sublet_app/models/data/host_data.dart';
+import 'package:sublet_app/widgets/host_widgets/manage_properties.dart';
 import 'package:sublet_app/screens/Owner/tabs_screen.dart';
 import 'package:sublet_app/screens/Renter/Asset_Page.dart';
 import 'package:sublet_app/screens/Renter/Renter_Screen.dart';
@@ -18,7 +18,7 @@ import 'Firebase_functions.dart';
 import './providers/auth.dart';
 import './widgets/app_drawer.dart';
 import './screens/chat_screen.dart';
-import 'screens/Owner/property.dart';
+import 'models/data/property.dart';
 // import 'package:dcdg/dcdg.dart';
 
 void main() async {
@@ -46,11 +46,10 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   choosePage(String type) {
-    if (type == 'host') {
-      return TabsScreen();
-    } else if (type == 'client') {
-      print("in");
-      return Renter_Screen();
+    if (type == 'host' || type == 'client') {
+      return TabsScreen(
+        userType: type,
+      );
     } else {
       print("emptyy");
       return HomeScreen();

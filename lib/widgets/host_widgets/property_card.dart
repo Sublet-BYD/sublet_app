@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:sublet_app/screens/Owner/properties_list_categories.dart';
+import 'package:sublet_app/widgets/host_widgets/properties_list_categories.dart';
 
-import 'property.dart';
+import '../../models/data/property.dart';
 
 class PropertyCard extends StatelessWidget {
   final Property _property;

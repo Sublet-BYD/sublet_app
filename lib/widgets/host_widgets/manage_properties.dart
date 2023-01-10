@@ -16,7 +16,6 @@ class ManageProperties extends StatefulWidget {
 }
 
 class _ManagePropertiesState extends State<ManageProperties> {
-
   // void refresh(){
   //     setState(() {
 

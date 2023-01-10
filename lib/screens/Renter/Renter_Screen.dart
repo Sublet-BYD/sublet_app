@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
 import 'package:sublet_app/Firebase_functions.dart';
-import 'package:sublet_app/screens/Owner/property.dart';
+import 'package:sublet_app/models/data/property.dart';
 import 'package:sublet_app/screens/Renter/Asset_Page.dart';
 import 'package:sublet_app/widgets/app_drawer.dart';
 import 'package:provider/provider.dart';
@@ -86,7 +86,6 @@ class _AssetlistState extends State<Assetlist> {
     get_avail_properties();
     // setState(() =>{} );
     return Container(
-      
       padding: EdgeInsets.symmetric(horizontal: 5),
       alignment: Alignment.bottomCenter,
       child: FutureBuilder(

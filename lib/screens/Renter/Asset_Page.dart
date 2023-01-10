@@ -7,8 +7,8 @@ import 'package:provider/provider.dart';
 import 'package:sublet_app/Firebase_functions.dart';
 import 'package:sublet_app/main.dart';
 import 'package:sublet_app/providers/Session_details.dart';
-import 'package:sublet_app/screens/Owner/Owner_data.dart';
-import 'package:sublet_app/screens/Owner/property.dart';
+import 'package:sublet_app/models/data/host_data.dart';
+import 'package:sublet_app/models/data/property.dart';
 import 'package:sublet_app/screens/Renter/Renter_Screen.dart';
 import 'package:intl/intl.dart';
 import 'package:sublet_app/screens/Renter/renter_tab_screen.dart';
@@ -24,8 +24,9 @@ class Asset_Page extends StatefulWidget {
 
 class _Asset_PageState extends State<Asset_Page> {
   Color contact_color = (Colors.amber[600]!);
-  late Future<Property> fut_property; // Will be taken from firebase according to the given key
-  late Property property; 
+  late Future<Property>
+      fut_property; // Will be taken from firebase according to the given key
+  late Property property;
   late Future<Owner_data> fut_owner;
   late Owner_data owner;
   void get_owner_data() async {
@@ -35,9 +36,12 @@ class _Asset_PageState extends State<Asset_Page> {
 
   @override
   void initState() {
-    fut_owner = Firebase_functions.get_owner(Provider.of<Session_details>(context).host_id);
-    fut_property = Firebase_functions.get_property(Provider.of<Session_details>(context).property_id);
+    fut_owner = Firebase_functions.get_owner(
+        Provider.of<Session_details>(context).host_id);
+    fut_property = Firebase_functions.get_property(
+        Provider.of<Session_details>(context).property_id);
   }
+
   @override
   Widget build(BuildContext context) {
     get_owner_data();
