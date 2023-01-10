@@ -31,9 +31,14 @@ class _TabsScreenState extends State<TabsScreen>
   var _screenIndex = 0;
   void _startAddNewProperty(BuildContext context) {
     // The half window for adding new property
-    showModalBottomSheet(
-      context: context,
-      builder: (context) => NewProperty(refresh: refresh),
+    // showModalBottomSheet(
+    //   context: context,
+    //   builder: (context) => NewProperty(refresh: refresh),
+    // );
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => NewProperty(refresh: refresh)),
     );
   }
 
