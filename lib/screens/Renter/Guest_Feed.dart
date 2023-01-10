@@ -29,15 +29,7 @@ class _Renter_ScreenState extends State<Renter_Screen> {
           builder: ((context) {
             return Sort_Menu();
           }));
-    void showSortPanel() {
-      showModalBottomSheet(
-          context: context,
-          builder: ((context) {
-            return Sort_Menu();
-          }));
     }
-
-
     return Scaffold(
       resizeToAvoidBottomInset: false, // Preventing pixel overflow warnings
       drawer: AppDrawer(),
@@ -55,12 +47,6 @@ class _Renter_ScreenState extends State<Renter_Screen> {
               padding: EdgeInsets.only(top: 20, left: 40, right: 40),
               child: ElevatedButton(
                 onPressed: showSortPanel,
-                child: Text(
-                  'Search',
-                  style: TextStyle(
-                    fontSize: 15,
-                  ),
-                ),
                 child: Text(
                   'Search',
                   style: TextStyle(
