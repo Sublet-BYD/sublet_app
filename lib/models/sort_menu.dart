@@ -100,6 +100,35 @@ class _Sort_MenuState extends State<Sort_Menu> {
               }
             }),
           ),
+          TextField(
+            controller: propEndDateController,
+            //editing controller of this TextField
+            decoration: InputDecoration(
+                icon: Icon(Icons.calendar_today), //icon of text field
+                labelText: "To" //label text of field
+                ),
+            readOnly: true,
+            onTap: (() async {
+              DateTime? pickedDate = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(1950),
+                  //DateTime.now() - not to allow to choose before today.
+                  lastDate: DateTime(2100));
+              if (pickedDate != null) {
+                print(
+                    pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                String formattedDate = DateFormat.yMMMd().format(pickedDate);
+                print(formattedDate);
+                setState(
+                  () {
+                    propEndDateController.text =
+                        formattedDate; //set output date to TextField value.
+                  },
+                );
+              } else {}
+            }),
+          ),
         ],
       ),
     );
