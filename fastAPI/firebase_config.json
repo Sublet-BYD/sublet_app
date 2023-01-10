@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "41748031074",
+    "project_id": "sublet-34e39",
+    "storage_bucket": "sublet-34e39.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:41748031074:android:23ea21d28eaeb489d0133b",
+        "android_client_info": {
+          "package_name": "com.example.sublet_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "41748031074-jnufcls00mpfmrk3mrl6shgrv19af1ra.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4LGeN_A0MAJEeJON5Azv5UVCdUoRiAIU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "41748031074-jnufcls00mpfmrk3mrl6shgrv19af1ra.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "41748031074-n5jihkil15km8bs7vvu5ls8lt62i9td7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.subletApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

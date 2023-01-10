@@ -1,12 +1,11 @@
 // ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:sublet_app/Firebase_functions.dart';
-import 'package:sublet_app/main.dart';
-import 'package:sublet_app/screens/Owner/property.dart';
+import 'package:sublet_app/models/data/property.dart';
 import 'package:sublet_app/screens/Renter/Asset_Page.dart';
 import 'package:sublet_app/widgets/app_drawer.dart';
-import 'package:sublet_app/widgets/sort_DropDown.dart';
+import 'package:provider/provider.dart';
+import 'package:sublet_app/providers/Session_details.dart';
 
 class Renter_Screen extends StatefulWidget {
   const Renter_Screen({super.key});
@@ -46,7 +45,7 @@ class _Renter_ScreenState extends State<Renter_Screen> {
               //     ),
               //   ),
               // ),
-              child: sort_DropDown(),
+              child: Text('hi'),
             ),
             Container(
                 height: (MediaQuery.of(context).size.height -
@@ -147,7 +146,8 @@ class _AssetlistState extends State<Assetlist> {
   }
 
   void onPress(BuildContext context, String asset_id) {
-    MyApp.property_id = asset_id;
+    context.read<Session_details>().UpdatePropertyId(asset_id);
+    // context.read<Session_details>().UpdateHostId(asset_id);
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => Asset_Page()));
   }

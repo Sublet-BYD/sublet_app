@@ -37,7 +37,7 @@ dependencies:
   provider: ^6.0.5
   http: any
   # dcdg: ^4.1.0
-  
+
  
 
 
@@ -47,7 +47,6 @@ dependencies:
   firebase_core: ^2.4.0
   json_annotation: ^4.7.0
   toggle_switch: ^2.0.1
-  dropdown_formfield: ^0.1.4
 
 dev_dependencies:
   flutter_test:

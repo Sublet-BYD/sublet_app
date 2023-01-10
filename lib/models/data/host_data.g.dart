@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'Owner_data.dart';
+part of 'host_data.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

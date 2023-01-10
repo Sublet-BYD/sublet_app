@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sublet_app/screens/Owner/manage_properties.dart';
+import 'package:sublet_app/widgets/host_widgets/manage_properties.dart';
 import 'package:sublet_app/screens/Owner/new_property.dart';
 import 'package:sublet_app/screens/Renter/Renter_Screen.dart';
 import 'package:sublet_app/widgets/app_drawer.dart';
