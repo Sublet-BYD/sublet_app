@@ -7,6 +7,7 @@ import 'package:sublet_app/providers/Session_details.dart';
 import 'package:sublet_app/models/data/host_data.dart';
 import 'package:sublet_app/models/data/property.dart';
 import 'package:intl/intl.dart';
+import 'package:sublet_app/screens/Owner/tabs_screen.dart';
 import 'package:sublet_app/screens/Renter/renter_tab_screen.dart';
 import 'package:sublet_app/screens/chat_screen.dart';
 
@@ -27,10 +28,11 @@ class _Asset_PageState extends State<Asset_Page> {
   @override
   void initState() {
     super.initState();
-    
+
     // print(data.toString());
   }
-  Future<Pair<Property, Owner_data>> getData() async{
+
+  Future<Pair<Property, Owner_data>> getData() async {
     data = Provider.of<Session_details>(context, listen: false).GetProp_Host();
     return data;
   }
@@ -41,11 +43,10 @@ class _Asset_PageState extends State<Asset_Page> {
         future: getData(),
         builder: (context, AsyncSnapshot<Pair<Property, Owner_data>> snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            if(snapshot.hasData){
+            if (snapshot.hasData) {
               property = snapshot.data!.obj1;
               owner = snapshot.data!.obj2;
-            }
-            else if(snapshot.hasError){
+            } else if (snapshot.hasError) {
               print('${snapshot.error}');
               return Container(
                 child: Center(child: Text('An unexpected error occurred')),
@@ -80,8 +81,7 @@ class _Asset_PageState extends State<Asset_Page> {
                           backgroundColor: Colors.transparent,
                           child: Icon(Icons.arrow_back),
                           onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => RenterTabsScreen()));
+                            Navigator.of(context).pop();
                           },
                         ),
                       ),
@@ -136,8 +136,7 @@ class _Asset_PageState extends State<Asset_Page> {
                                 ),
                                 title: Text(property.location,
                                     style: TextStyle(
-                                        fontFamily: 'OpenSans',
-                                        fontSize: 15)),
+                                        fontFamily: 'OpenSans', fontSize: 15)),
                               ),
                             ),
                           ),
