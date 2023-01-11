@@ -19,6 +19,7 @@ class Property {
       description; // Short paragraph about the property which would be provided by the owner
   var image;
   var imageUrl;
+  List<String>? imageUrls;
 
   Property({
     this.id,
@@ -34,6 +35,7 @@ class Property {
     // this.image,
     this.description,
     this.image,
+    this.imageUrls,
   }) {
     dateAdded = DateTime.now();
   }

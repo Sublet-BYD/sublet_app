@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:sublet_app/models/data/property.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class PropertyScreen extends StatelessWidget {
   const PropertyScreen({super.key});
@@ -37,9 +38,19 @@ class PropertyScreen extends StatelessWidget {
                     MediaQuery.of(context).padding.top) *
                 0.3,
             width: MediaQuery.of(context).size.width,
-            child: Image.asset('assets/Apartment_example.jpg',
-                fit: BoxFit
-                    .cover), // (_property.image != null)? _property.image as Widget :
+            child: CarouselSlider.builder(
+              options: CarouselOptions(autoPlay: true),
+              itemCount: _property.imageUrls!.length,
+              itemBuilder: ((context, index, realIndex) => 
+              final urlImage= [index]) ,
+
+
+        
+            ),
+
+            //  Image.asset('assets/Apartment_example.jpg',
+            //     fit: BoxFit
+            //         .cover), // (_property.image != null)? _property.image as Widget :
           ),
           Column(
             children: [
