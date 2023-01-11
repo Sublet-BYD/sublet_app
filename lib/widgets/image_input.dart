@@ -78,27 +78,27 @@ class _ImageInputState extends State<ImageInput> {
               width: 1,
               color: Colors.grey,
             ),
+            image: const DecorationImage(
+                image: AssetImage('assets/Images/home-placeholder-profile.jpg'),
+                fit: BoxFit.cover),
           ),
+          alignment: Alignment.center,
           child: _storedImage != null
               ? Image.file(
                   _storedImage,
                   fit: BoxFit.cover,
                   width: double.infinity,
                 )
-              : Text(
-                  'No Image Taken',
-                  textAlign: TextAlign.center,
-                ),
-          alignment: Alignment.center,
+              : null,
         ),
-        SizedBox(
+        const SizedBox(
           width: 10,
         ),
         Expanded(
             child: TextButton.icon(
           onPressed: _pickImage,
-          icon: Icon(Icons.camera),
-          label: Text('Take Picture'),
+          icon: const Icon(Icons.camera),
+          label: const Text('Take Picture'),
         ))
       ],
     );
