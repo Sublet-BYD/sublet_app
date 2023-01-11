@@ -165,6 +165,7 @@ class _NewPropertyState extends State<NewProperty> {
                     fromdate: DateTime.tryParse(propStartDateController.text),
                     tilldate: DateTime.tryParse(propEndDateController.text),
                     price: int.parse(propPriceController.text),
+                    image: _pickedImaged,
                   );
 
                   Firebase_functions.Upload_property(pro);

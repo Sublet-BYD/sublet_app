@@ -1,13 +1,16 @@
 //This file will handle any and all interactions with the firebase firestore database.
+
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'models/data/host_data.dart';
 import 'models/data/property.dart';
 import './models/data/host_data.dart';
+import 'dart:io';
 
 class Firebase_functions {
   static var db = FirebaseFirestore.instance;
@@ -46,7 +49,7 @@ class Firebase_functions {
     return Owner_data.fromJson(json);
   }
 
-  static Future<bool> Add_Property(Owner_data owner, String property_id) async {
+  static Future<bool> qAdd_Property(Owner_data owner, String property_id) async {
     bool res = true;
     if (!await property_exists(property_id)) {
       print('Property does not exist.\n');
@@ -92,6 +95,18 @@ class Firebase_functions {
         .set(property.toJson())
         .onError((error, stackTrace) => {print('$stackTrace\n'), res = false});
     await Add_Property(await get_owner(property.owner_id), property.id!);
+    //ref gives us access to our route cloud storag bucket
+    //child allows to control where we want to store\read our file
+    // Create a reference to the storage bucket
+    final ref = FirebaseStorage.instance.ref().child("${property.id}.jpg");
+    //upload the file
+    final task = ref.putFile(property.image);
+
+    final url = await ref.getDownloadURL();
+    property.imageUrl = url;
+    print("===========");
+    print(property.imageUrl);
+    await prop.set(property.toJson());
     return res;
   }
 

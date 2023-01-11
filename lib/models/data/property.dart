@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -16,6 +18,8 @@ class Property {
   // final ImageProvider? image;
   final String?
       description; // Short paragraph about the property which would be provided by the owner
+  var image;
+  var imageUrl;
 
   Property({
     this.id,
@@ -30,6 +34,7 @@ class Property {
     this.occupied = false, // any property would be available on default
     // this.image,
     this.description,
+    this.image,
   }) {
     dateAdded = DateTime.now();
   }
