@@ -25,15 +25,15 @@ class _PropertiesListCategoriesState extends State<PropertiesListCategories> {
     );
   }
 
-  late Future<List<Property>> _properties;
-  late List<Property> plist;
+  // late Future<List<Property>> _properties;
+  // late List<Property> plist;
   // @override
   // void initState() {
   //   // _properties = Firebase_functions.get_properties_of_owner(Provider.of<Session_details>(context).uid);
   // }
-  void update_plist() async {
-    plist = await _properties;
-  }
+  // void update_plist() async {
+  //   plist = await _properties;
+  // }
 
   @override
   Widget build(BuildContext context) {
