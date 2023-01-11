@@ -21,6 +21,7 @@ class FirestoreProperties with ChangeNotifier {
     return FirebaseFirestore.instance
         .collection('properties')
         .where("owner_id", isEqualTo: hostId)
+        .where("occupied", isEqualTo: false)
         .snapshots();
   }
 
@@ -29,6 +30,7 @@ class FirestoreProperties with ChangeNotifier {
     return FirebaseFirestore.instance
         .collection('properties')
         .where("owner_id", isEqualTo: hostId)
+        .where("occupied", isEqualTo: true)
         .snapshots();
   }
 }
