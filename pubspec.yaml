@@ -40,6 +40,7 @@ dependencies:
   image_picker: ^0.8.6
   path_provider: ^2.0.11
   # dcdg: ^4.1.0
+  location: ^4.4.0
 
  
 

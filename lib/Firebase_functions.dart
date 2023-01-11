@@ -49,7 +49,7 @@ class Firebase_functions {
     return Owner_data.fromJson(json);
   }
 
-  static Future<bool> qAdd_Property(Owner_data owner, String property_id) async {
+  static Future<bool> Add_Property(Owner_data owner, String property_id) async {
     bool res = true;
     if (!await property_exists(property_id)) {
       print('Property does not exist.\n');
