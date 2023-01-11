@@ -17,7 +17,8 @@ Owner_data _$Owner_dataFromJson(Map<String, dynamic> json) => Owner_data(
               ?.map((e) => e as String)
               .toList() ??
           const [],
-    );
+      image: json['image'],
+    )..imageUrl = json['imageUrl'];
 
 Map<String, dynamic> _$Owner_dataToJson(Owner_data instance) =>
     <String, dynamic>{
@@ -26,4 +27,6 @@ Map<String, dynamic> _$Owner_dataToJson(Owner_data instance) =>
       'plist': instance.plist,
       'joined_at': instance.joined_at,
       'chat_id_list': instance.chat_id_list,
+      'image': instance.image,
+      'imageUrl': instance.imageUrl,
     };
