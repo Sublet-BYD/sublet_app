@@ -32,22 +32,22 @@ class _ManagePropertiesState extends State<ManageProperties> {
         builder: (context, firestoreProperties, child) {
       return Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 8.0),
-            child: TextFormField(
-              decoration: InputDecoration(
-                labelText: 'Search',
-                prefixIcon: Icon(
-                  Icons.search,
-                  // color: Colors.white,
-                ),
-                contentPadding: EdgeInsets.all(8.0),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 8.0),
+          //   child: TextFormField(
+          //     decoration: InputDecoration(
+          //       labelText: 'Search',
+          //       prefixIcon: const Icon(
+          //         Icons.search,
+          //         // color: Colors.white,
+          //       ),
+          //       contentPadding: EdgeInsets.all(8.0),
+          //       border: OutlineInputBorder(
+          //         borderRadius: BorderRadius.circular(30),
+          //       ),
+          //     ),
+          //   ),
+          // ),
           Expanded(
             child: SingleChildScrollView(
               padding: const EdgeInsets.only(bottom: 60),
