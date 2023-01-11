@@ -23,7 +23,7 @@ class Firebase_functions {
       return false; // User already exists
     }
     db
-        .collection('owners')
+        .collection('hosts')
         .doc(owner.id.toString())
         .set(owner.toJson())
         .onError((error, stackTrace) => {print('$stackTrace\n'), res = false});
@@ -32,14 +32,14 @@ class Firebase_functions {
 
   static Future<bool> owner_exists(String id) async {
     DocumentSnapshot<Map<String, dynamic>> document =
-        await db.collection('owners').doc(id).get();
+        await db.collection('hosts').doc(id).get();
     return document.exists;
   }
 
   static Future<Owner_data> get_owner(String owner_id) async {
     // print(owner_id);
     DocumentSnapshot<Map<String, dynamic>> document =
-        await db.collection('owners').doc(owner_id).get();
+        await db.collection('hosts').doc(owner_id).get();
     if (!document.exists) {
       print('Owner does not exist, please check your data\n');
       return Owner_data('no name', 'No id');
@@ -55,7 +55,7 @@ class Firebase_functions {
       print('Property does not exist.\n');
       return false;
     }
-    var owner_document = db.collection('owners').doc(owner.id.toString());
+    var owner_document = db.collection('hosts').doc(owner.id.toString());
     owner.Add_Property(property_id);
     owner_document.update({'plist': owner.plist}).onError(
         (error, stackTrace) => res = false);
@@ -65,9 +65,21 @@ class Firebase_functions {
   static Future<bool> Remove_Property(
       Owner_data owner, String property_id) async {
     bool res = true;
-    var owner_document = db.collection('owners').doc(owner.id.toString());
+    var owner_document = db.collection('hosts').doc(owner.id.toString());
     owner.Remove_Property(property_id);
     owner_document.update({'plist': owner.plist}).onError(
+        (error, stackTrace) => res = false);
+    return res;
+  }
+
+  static Future<bool> Update_host_image(Owner_data owner, var image) async{
+    bool res = true;
+    final ref = FirebaseStorage.instance.ref().child("${owner.id}.jpg");
+    final task = ref.putFile(image);
+    final url = await ref.getDownloadURL();
+    owner.Update_Image(image, url);
+    var owner_document = db.collection('hosts').doc(owner.id.toString());
+    owner_document.update({'imageUrl': owner.imageUrl}).onError(
         (error, stackTrace) => res = false);
     return res;
   }
@@ -80,33 +92,33 @@ class Firebase_functions {
       print('Error -> owner doesn\'t exist');
       return false;
     }
-    // if(await property_exists(property.id)){
-    //   return false; // Property already exists
-    // }
-    // bool cond = await property_exists(property.id) || property.id == 0;
-    // while (cond) {
-    //   // Assigning new id numbers to owners
-    //   property.assign_id(Random().nextInt(999999));
-    //   cond = await property_exists(property.id) || property.id == 0;
-    // }
+    print('Owner exists\n');
+    if(property.id != null && await property_exists(property.id!)){
+      print('Error -> Property already exists\n');
+      return false;
+    }
     DocumentReference prop = db.collection('properties').doc();
     property.assign_id(prop.id);
-    prop
-        .set(property.toJson())
-        .onError((error, stackTrace) => {print('$stackTrace\n'), res = false});
-    await Add_Property(await get_owner(property.owner_id), property.id!);
-    //ref gives us access to our route cloud storag bucket
+    print('Assigned id\n');
+    //ref gives us access to our route cloud storage bucket
     //child allows to control where we want to store\read our file
     // Create a reference to the storage bucket
     final ref = FirebaseStorage.instance.ref().child("${property.id}.jpg");
     //upload the file
     final task = ref.putFile(property.image);
-
-    final url = await ref.getDownloadURL();
-    property.imageUrls!.add(url);
-    print("===========");
-    print(property.imageUrls);
-    await prop.set(property.toJson());
+    print('Uploaded image\n');
+    final url = ref.getDownloadURL();
+    print('Got url of image\n');
+    // property.imageUrl = url;
+    property.image = null;
+    prop
+        .set(property.toJson())
+        .onError((error, stackTrace) => {print('$stackTrace\n'), res = false});
+    prop.update({'dateAdded' : Timestamp.fromDate(DateTime.now())});
+    await Add_Property(await get_owner(property.owner_id), property.id!);
+    // print("===========");
+    // print(property.imageUrl);
+    // await prop.set(property.toJson());
     return res;
   }
 
@@ -128,8 +140,19 @@ class Firebase_functions {
     return Property.fromJson(json);
   }
 
+  static Future<bool> Edit_Property(String property_id, Map<String, Object> updates) async{
+    bool res = true;
+    if(!await property_exists(property_id)){
+      return false;
+    }
+    var property_document = db.collection('properties').doc(property_id);
+    updates.forEach((key, value) {
+        property_document.update({key : value}).onError((error, stackTrace) => res = false);
+    });
+    return res;
+  }
   static Future<bool> Delete_property(String property_id) async {
-    if (property_id == 0) {
+    if (property_id == '0') {
       return false;
     }
     bool res = true;
