@@ -1,4 +1,5 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:toggle_switch/toggle_switch.dart';
@@ -17,10 +18,8 @@ class _Sort_MenuState extends State<Sort_Menu> {
   final propEndDateController = TextEditingController(
     text: DateFormat.yMMMd().format(DateTime.now()).toString(),
   );
-  DateTimeRange range = DateTimeRange(
-      start: DateTime.now(),
-      end: DateTime(
-          2030)); // Will be selected by the user; Defualt values are from today till an arbitrarily long away date.
+  DateTime from = DateTime.now(); // Will be selected by the user; Defualt value is now.
+  late DateTime till; // Will be selected by the user; No defualt value.
   String search_res = ''; // Will be inputed by the user; No defualt location.
   bool sort_asc =
       true; // Will be selected by the user; Defualt value means sorting by ascending prices.
@@ -72,6 +71,7 @@ class _Sort_MenuState extends State<Sort_Menu> {
               }
             },
           ),
+          // First date (from):
           TextField(
             controller: propStartDateController,
             decoration: InputDecoration(
@@ -84,22 +84,33 @@ class _Sort_MenuState extends State<Sort_Menu> {
                   context: context,
                   initialDate: DateTime.now(),
                   firstDate: DateTime(1950),
-                  //DateTime.now() - not to allow to choose before today.
                   lastDate: DateTime(2100));
               if (pickedDate != null && pickedDate.isAfter(DateTime.now())) {
-                print(
-                    pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
                 String formattedDate = DateFormat.yMMMd().format(pickedDate);
-                print(formattedDate);
+                from = pickedDate;
                 setState(() {
                   propStartDateController.text =
-                      formattedDate; //set output date to TextField value.
+                      formattedDate;
                 });
               } else {
-                print('incorrect date\n');
+                // print('incorrect date\n');
+                showDialog(context: context, builder: (BuildContext ctx) =>
+                AlertDialog(
+                  title: Text('Wrong date'),
+                  content: Text('The date you have selected has already passed.'),
+                  actions: [
+                    ElevatedButton(onPressed:() {
+                      Navigator.pop(context);
+                    }, 
+                    child: Text('OK'),
+                    )
+                  ],
+
+                ),);
               }
             }),
           ),
+          // Second date (till):
           TextField(
             controller: propEndDateController,
             //editing controller of this TextField
@@ -113,20 +124,31 @@ class _Sort_MenuState extends State<Sort_Menu> {
                   context: context,
                   initialDate: DateTime.now(),
                   firstDate: DateTime(1950),
-                  //DateTime.now() - not to allow to choose before today.
                   lastDate: DateTime(2100));
-              if (pickedDate != null) {
-                print(
-                    pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+              if (pickedDate != null && pickedDate.isAfter(from)) {
+                till = pickedDate;
                 String formattedDate = DateFormat.yMMMd().format(pickedDate);
-                print(formattedDate);
                 setState(
                   () {
                     propEndDateController.text =
-                        formattedDate; //set output date to TextField value.
+                        formattedDate; 
                   },
                 );
-              } else {}
+              } else {
+                showDialog(context: context, builder: (BuildContext ctx) =>
+                AlertDialog(
+                  title: Text('Wrong date'),
+                  content: Text('The date you have selected has already passed or is before the first selected date.'),
+                  actions: [
+                    ElevatedButton(onPressed:() {
+                      Navigator.pop(context);
+                    }, 
+                    child: Text('OK'),
+                    )
+                  ],
+
+                ),);
+              }
             }),
           ),
         ],
