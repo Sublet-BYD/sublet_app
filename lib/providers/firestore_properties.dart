@@ -6,20 +6,8 @@ import 'package:provider/provider.dart';
 import 'Session_details.dart';
 
 class FirestoreProperties with ChangeNotifier {
-  // final String _userID;
-  Stream<QuerySnapshot<Map<String, dynamic>>> properties = FirebaseFirestore
-      .instance
-      .collection('properties')
-      .where("owner_id", isEqualTo: '')
-      .snapshots();
-
-  // FirestoreProperties() {
-  //   // properties = FirebaseFirestore.instance
-  //   //     .collection('properties')
-  //   //     .where("owner_id", isEqualTo: _userID)
-  //   //     .snapshots();
-  // }
-
+  // This methods is used to get STREAMS for the StreamBuilder widgets of properties
+  // If you implement any StreamBuilder for peoperty UI add methods here:
   Stream<QuerySnapshot<Map<String, dynamic>>> getRecentHostProperties(
       var hostId) {
     return FirebaseFirestore.instance
