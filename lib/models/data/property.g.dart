@@ -7,7 +7,7 @@ part of 'property.dart';
 // **************************************************************************
 
 Property _$PropertyFromJson(Map<String, dynamic> json) => Property(
-      id: json['id'] as String,
+      id: json['id'] as String?,
       name: json['name'] as String,
       location: json['location'] as String,
       owner_id: json['owner_id'] as String,
@@ -23,7 +23,8 @@ Property _$PropertyFromJson(Map<String, dynamic> json) => Property(
           : DateTime.parse(json['dateAdded'] as String),
       occupied: json['occupied'] as bool? ?? false,
       description: json['description'] as String?,
-    );
+      image: json['image'],
+    )..imageUrl = json['imageUrl'];
 
 Map<String, dynamic> _$PropertyToJson(Property instance) => <String, dynamic>{
       'id': instance.id,
@@ -36,4 +37,6 @@ Map<String, dynamic> _$PropertyToJson(Property instance) => <String, dynamic>{
       'occupied': instance.occupied,
       'price': instance.price,
       'description': instance.description,
+      'image': instance.image,
+      'imageUrl': instance.imageUrl,
     };
