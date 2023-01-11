@@ -103,9 +103,9 @@ class Firebase_functions {
     final task = ref.putFile(property.image);
 
     final url = await ref.getDownloadURL();
-    property.imageUrl = url;
+    property.imageUrls!.add(url);
     print("===========");
-    print(property.imageUrl);
+    print(property.imageUrls);
     await prop.set(property.toJson());
     return res;
   }
