@@ -39,8 +39,10 @@ class Owner_data {
     }
   }
 
-  void Update_Image(var image){
+  void Update_Image(var image, var imageUrl){
     // This function should only be called via Firebase_functions.update_host_image (IMPORTANT)
+    this.image = image;
+    this.imageUrl = imageUrl;
   }
   //Obsolete function for id assigning as we now use firestore auth to generate id:
 

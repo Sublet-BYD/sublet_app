@@ -72,6 +72,18 @@ class Firebase_functions {
     return res;
   }
 
+  static Future<bool> Update_host_image(Owner_data owner, var image) async{
+    bool res = true;
+    final ref = FirebaseStorage.instance.ref().child("${owner.id}.jpg");
+    final task = ref.putFile(image);
+    final url = await ref.getDownloadURL();
+    owner.Update_Image(image, url);
+    var owner_document = db.collection('owners').doc(owner.id.toString());
+    owner_document.update({'imageUrl': owner.imageUrl}).onError(
+        (error, stackTrace) => res = false);
+    return res;
+  }
+
   //Property functions:
 
   static Future<bool> Upload_property(Property property) async {
@@ -80,22 +92,17 @@ class Firebase_functions {
       print('Error -> owner doesn\'t exist');
       return false;
     }
-    // if(await property_exists(property.id)){
-    //   return false; // Property already exists
-    // }
-    // bool cond = await property_exists(property.id) || property.id == 0;
-    // while (cond) {
-    //   // Assigning new id numbers to owners
-    //   property.assign_id(Random().nextInt(999999));
-    //   cond = await property_exists(property.id) || property.id == 0;
-    // }
+    if(property.id != null && await property_exists(property.id!)){
+      print('Error -> Property already exists\n');
+      return false;
+    }
     DocumentReference prop = db.collection('properties').doc();
     property.assign_id(prop.id);
     prop
         .set(property.toJson())
         .onError((error, stackTrace) => {print('$stackTrace\n'), res = false});
     await Add_Property(await get_owner(property.owner_id), property.id!);
-    //ref gives us access to our route cloud storag bucket
+    //ref gives us access to our route cloud storage bucket
     //child allows to control where we want to store\read our file
     // Create a reference to the storage bucket
     final ref = FirebaseStorage.instance.ref().child("${property.id}.jpg");
@@ -128,8 +135,19 @@ class Firebase_functions {
     return Property.fromJson(json);
   }
 
+  static Future<bool> Edit_Property(String property_id, Map<String, Object> updates) async{
+    bool res = true;
+    if(!await property_exists(property_id)){
+      return false;
+    }
+    var property_document = db.collection('properties').doc(property_id);
+    updates.forEach((key, value) {
+        property_document.update({key : value}).onError((error, stackTrace) => res = false);
+    });
+    return res;
+  }
   static Future<bool> Delete_property(String property_id) async {
-    if (property_id == 0) {
+    if (property_id == '0') {
       return false;
     }
     bool res = true;
