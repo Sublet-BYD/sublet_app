@@ -1,0 +1,342 @@
+@startuml
+scale 2
+set namespaceSeparator ::
+
+' class "sublet_app::Firebase_functions.dart::Firebase_functions" {
+'   {static} +FirebaseFirestore db
+'   {static} +Future<bool> Upload_owner()
+'   {static} +Future<bool> owner_exists()
+'   {static} +Future<Owner_data> get_owner()
+'   {static} +Future<bool> Add_Property()
+'   {static} +Future<bool> Remove_Property()
+'   {static} +Future<bool> Upload_property()
+'   {static} +Future<bool> property_exists()
+'   {static} +Future<Property> get_property()
+'   {static} +Future<bool> Delete_property()
+'   {static} +Future<List<Property>> get_avail_properties()
+'   {static} +Future<List<Property>> get_properties_of_owner()
+'   {static} +Future<bool> Add_user()
+'   {static} +Future<String> get_user_type()
+' }
+
+' "sublet_app::Firebase_functions.dart::Firebase_functions" o-- "cloud_firestore::cloud_firestore.dart::FirebaseFirestore"
+
+' class "sublet_app::firebase_options.dart::DefaultFirebaseOptions" {
+'   {static} +FirebaseOptions android
+'   {static} +FirebaseOptions currentPlatform
+' }
+
+' "sublet_app::firebase_options.dart::DefaultFirebaseOptions" o-- "firebase_core_platform_interface::firebase_core_platform_interface.dart::FirebaseOptions"
+
+' class "sublet_app::main.dart::MyApp" {
+'   {static} +String property_id
+'   {static} +String uid
+'   {static} +String uType
+'   +Widget build()
+' }
+
+
+' class "sublet_app::models::http_exception.dart::HttpException" {
+'   +String message
+'   +String toString()
+' }
+
+' class "sublet_app::providers::auth.dart::Auth" {
+'   -String _token
+'   -DateTime? _expiryDate
+'   -String _userId
+'   +bool isAuth
+'   +String token
+'   -Future<String> _authentication()
+'   +Future<String> signup()
+'   +Future<String> login()
+'   +void logout()
+' }
+
+class "sublet_app::screens::chat_screen.dart::ChatScreen" {
+  {static} -ChatScreen _singleton
+  +Widget build()
+}
+
+"sublet_app::screens::chat_screen.dart::ChatScreen" o-- "sublet_app::screens::chat_screen.dart::ChatScreen"
+
+class "sublet_app::screens::Home::home_page.dart::HomeScreen" {
+  +State<HomeScreen> createState()
+}
+
+
+' class "sublet_app::screens::Home::home_page.dart::_HomeScreenState" {
+'   -GlobalKey<FormState> _formKey
+'   +Widget build()
+' }
+
+
+' class "sublet_app::screens::Home::home_page.dart::AuthCard" {
+'   +State<AuthCard> createState()
+' }
+
+
+class "sublet_app::screens::Home::home_page.dart::_AuthCardState" {
+  -GlobalKey<FormState> _formKey
+  +String type
+  -AuthMode _authMode
+  -Map<String, String> _authData
+  -TextEditingController _userName
+  -bool _isLoading
+  -TextEditingController _passwordController
+  -void _showErrorDiallog()
+  -Future<void> _submit()
+  -void _switchAuthMode()
+  +Widget build()
+}
+
+"sublet_app::screens::Home::home_page.dart::_AuthCardState" o-- "sublet_app::screens::Home::home_page.dart::AuthMode"
+
+class "sublet_app::screens::Home::home_page.dart::AuthMode" {
+  +int index
+  {static} +List<AuthMode> values
+  {static} +AuthMode Signup
+  {static} +AuthMode Login
+}
+
+"sublet_app::screens::Home::home_page.dart::AuthMode" o-- "sublet_app::screens::Home::home_page.dart::AuthMode"
+
+class "sublet_app::screens::Owner::manage_customers.dart::ManageCustomers" {
+  +State<ManageCustomers> createState()
+}
+
+
+class "sublet_app::screens::Owner::manage_customers.dart::_ManageCustomersState" {
+  +Widget build()
+}
+
+
+class "sublet_app::screens::Owner::manage_properties.dart::ManageProperties" {
+  +State<ManageProperties> createState()
+}
+
+
+class "sublet_app::screens::Owner::manage_properties.dart::_ManagePropertiesState" {
+  -String _recently
+  -String _occupied
+  -String _unoccupied
+  +Widget build()
+}
+
+
+class "sublet_app::screens::Owner::new_property.dart::NewProperty" {
+  +Function refresh
+  +State<NewProperty> createState()
+}
+
+
+class "sublet_app::screens::Owner::new_property.dart::_NewPropertyState" {
+  +TextEditingController propNameController
+  +TextEditingController propLocationController
+  +TextEditingController propPriceController
+  +TextEditingController propStatusController
+  +TextEditingController propStartDateController
+  +TextEditingController propEndDateController
+  +Widget build()
+}
+
+
+class "sublet_app::screens::Owner::Owner_data.dart::Owner_data" {
+  +String id
+  +String name
+  +List<String>? plist
+  +int joined_at
+  +List<String> chat_id_list
+  +void Add_Property()
+  +void Remove_Property()
+  +Map<String, dynamic> toJson()
+}
+
+class "sublet_app::screens::Owner::properties_list_categories.dart::PropertiesListCategories" {
+  +State<PropertiesListCategories> createState()
+}
+
+
+class "sublet_app::screens::Owner::properties_list_categories.dart::_PropertiesListCategoriesState" {
+  -Future<List<Property>> _properties
+  +List<Property> plist
+  +Future<Null> u
+  +void onPropertyCardPress()
+  +void initState()
+  +void update_plist()
+  +Widget build()
+}
+
+
+class "sublet_app::screens::Owner::property.dart::Property" {
+  +String? id
+  +String owner_id
+  +String name
+  +String location
+  +DateTime? dateAdded
+  +DateTime? fromdate
+  +DateTime? tilldate
+  +bool? occupied
+  +int? price
+  +String? description
+  +void assign_id()
+  +Map<String, dynamic> toJson()
+}
+
+class "sublet_app::screens::Owner::property_card.dart::PropertyCard" {
+  -Property _property
+  +Widget build()
+}
+
+"sublet_app::screens::Owner::property_card.dart::PropertyCard" o-- "sublet_app::screens::Owner::property.dart::Property"
+
+class "sublet_app::screens::Owner::property_screen.dart::PropertyScreen" {
+  -void _startEditProperty()
+  +Widget build()
+}
+
+
+class "sublet_app::screens::Owner::property_screen.dart::EditProperty" {
+  -Property _property
+  +State<EditProperty> createState()
+}
+
+"sublet_app::screens::Owner::property_screen.dart::EditProperty" o-- "sublet_app::screens::Owner::property.dart::Property"
+
+class "sublet_app::screens::Owner::property_screen.dart::_EditPropertyState" {
+  +String name
+  +String location
+  +TextEditingController propNameController
+  +TextEditingController propLocationController
+  +Widget build()
+}
+
+' "sublet_app::screens::Owner::property_screen.dart::_EditPropertyState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+
+class "sublet_app::screens::Owner::tabs_screen.dart::TabsScreen" {
+  +State<TabsScreen> createState()
+}
+
+
+class "sublet_app::screens::Owner::tabs_screen.dart::_TabsScreenState" {
+  -TabController _tabController
+  -int _screenIndex
+  -List<CustomTabItem> _tabs
+  +AppBar appBar
+  +void refresh()
+  -void _startAddNewProperty()
+  -dynamic _init()
+  +void initState()
+  +void dispose()
+  +Widget build()
+}
+
+class "sublet_app::screens::Owner::tabs_screen.dart::CustomTabItem" {
+  +String label
+  +Icon icon
+  +Widget screen
+  +FloatingActionButton? floatingActionButton
+}
+
+
+class "sublet_app::screens::Renter::Asset_Page.dart::Asset_Page" {
+  +State<Asset_Page> createState()
+}
+
+
+class "sublet_app::screens::Renter::Asset_Page.dart::_Asset_PageState" {
+  +Color contact_color
+  +Property property
+  +Future<Owner_data> fut_owner
+  +Owner_data owner
+  +void get_owner_data()
+  +void initState()
+  +Widget build()
+}
+
+' "sublet_app::screens::Renter::Asset_Page.dart::_Asset_PageState" o-- "dart::ui::Color"
+"sublet_app::screens::Renter::Asset_Page.dart::_Asset_PageState" o-- "sublet_app::screens::Owner::property.dart::Property"
+"sublet_app::screens::Renter::Asset_Page.dart::_Asset_PageState" o-- "sublet_app::screens::Owner::Owner_data.dart::Owner_data"
+
+class "sublet_app::screens::Renter::Renter_Screen.dart::Renter_Screen" {
+  +State<Renter_Screen> createState()
+}
+
+
+class "sublet_app::screens::Renter::Renter_Screen.dart::_Renter_ScreenState" {
+  +String uname
+  +Widget build()
+}
+
+
+class "sublet_app::screens::Renter::Renter_Screen.dart::Assetlist" {
+  +State<Assetlist> createState()
+}
+
+
+class "sublet_app::screens::Renter::Renter_Screen.dart::_AssetlistState" {
+  +Future<List<Property>> list
+  +List<Property> plist
+  +int list_length
+  +List<Card> cards
+  +void get_avail_properties()
+  +void initState()
+  +Widget build()
+  +void onPress()
+}
+
+
+class "sublet_app::screens::Renter::renter_tab_screen.dart::RenterTabsScreen" {
+  +State<RenterTabsScreen> createState()
+}
+
+
+class "sublet_app::screens::Renter::renter_tab_screen.dart::_RenterTabsScreenState" {
+  -TabController _tabController
+  -int _screenIndex
+  -List<CustomTabItem> _tabs
+  +AppBar appBar
+  +void refresh()
+  -void _startAddNewProperty()
+  -dynamic _init()
+  +void initState()
+  +void dispose()
+  +Widget build()
+}
+
+class "sublet_app::screens::Renter::renter_tab_screen.dart::CustomTabItem" {
+  +String label
+  +Icon icon
+  +Widget screen
+  +FloatingActionButton? floatingActionButton
+}
+
+
+
+class "sublet_app::widgets::chat::messages.dart::Messages" {
+  +Widget build()
+}
+
+
+class "sublet_app::widgets::chat::message_bubble.dart::MessageBubble" {
+  +Key key
+  +String message
+  +bool isMe
+  +Widget build()
+}
+
+
+class "sublet_app::widgets::chat::new_message.dart::NewMessage" {
+  +State<NewMessage> createState()
+}
+
+
+class "sublet_app::widgets::chat::new_message.dart::_NewMessageState" {
+  -String _entryMessage
+  -TextEditingController _controller
+  -void _sendMessage()
+  +Widget build()
+}
+
+
+@enduml

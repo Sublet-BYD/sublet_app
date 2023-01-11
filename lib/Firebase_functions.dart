@@ -1,12 +1,16 @@
 //This file will handle any and all interactions with the firebase firestore database.
+
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'screens/Owner/Owner_data.dart';
-import 'screens/Owner/property.dart';
+import 'models/data/host_data.dart';
+import 'models/data/property.dart';
+import './models/data/host_data.dart';
+import 'dart:io';
 
 class Firebase_functions {
   static var db = FirebaseFirestore.instance;
@@ -33,7 +37,7 @@ class Firebase_functions {
   }
 
   static Future<Owner_data> get_owner(String owner_id) async {
-    print(owner_id);
+    // print(owner_id);
     DocumentSnapshot<Map<String, dynamic>> document =
         await db.collection('owners').doc(owner_id).get();
     if (!document.exists) {
@@ -91,6 +95,18 @@ class Firebase_functions {
         .set(property.toJson())
         .onError((error, stackTrace) => {print('$stackTrace\n'), res = false});
     await Add_Property(await get_owner(property.owner_id), property.id!);
+    //ref gives us access to our route cloud storag bucket
+    //child allows to control where we want to store\read our file
+    // Create a reference to the storage bucket
+    final ref = FirebaseStorage.instance.ref().child("${property.id}.jpg");
+    //upload the file
+    final task = ref.putFile(property.image);
+
+    final url = await ref.getDownloadURL();
+    property.imageUrl = url;
+    print("===========");
+    print(property.imageUrl);
+    await prop.set(property.toJson());
     return res;
   }
 
@@ -141,14 +157,15 @@ class Firebase_functions {
     return res;
   }
 
-  static Future<List<Property>> get_properties_of_owner(String owner_id)async{
+  static Future<List<Property>> get_properties_of_owner(String owner_id) async {
     Owner_data owner = await get_owner(owner_id);
     List<Property> res = [];
-    if(owner.plist == null){
+    if (owner.plist == null) {
       return res;
     }
-    for(String pid in owner.plist!){ // Hard null check is safe as we confirmed owner.plist is not null 
-        res.add(await get_property(pid));
+    for (String pid in owner.plist!) {
+      // Hard null check is safe as we confirmed owner.plist is not null
+      res.add(await get_property(pid));
     }
     return res;
   }

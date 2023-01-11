@@ -1,31 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:sublet_app/screens/Owner/manage_properties.dart';
-import 'package:sublet_app/screens/Owner/new_property.dart';
-import 'package:sublet_app/screens/Renter/Renter_Screen.dart';
+import 'package:provider/provider.dart';
+import 'package:sublet_app/providers/firestore_properties.dart';
+import 'package:sublet_app/screens/Guest/Guest_Feed.dart';
+import 'package:sublet_app/widgets/host_widgets/manage_properties.dart';
+import 'package:sublet_app/screens/Host/new_property.dart';
 import 'package:sublet_app/widgets/app_drawer.dart';
 
-class RenterTabsScreen extends StatefulWidget {
-  const RenterTabsScreen({super.key});
+import '../../providers/Session_details.dart';
+
+class TabsScreen extends StatefulWidget {
+  final userType;
+  const TabsScreen({super.key, @required this.userType});
 
   @override
-  State<RenterTabsScreen> createState() => _RenterTabsScreenState();
+  State<TabsScreen> createState() => _TabsScreenState();
 }
 
-class _RenterTabsScreenState extends State<RenterTabsScreen>
+class _TabsScreenState extends State<TabsScreen>
     with SingleTickerProviderStateMixin {
   late final _tabController = TabController(length: 2, vsync: this);
   void refresh() {
     setState(() {
-      ManageProperties().createState();
+      print(
+          "CHECK ${Provider.of<Session_details>(context).UserType.toString()}");
+      Provider.of<Session_details>(context).UserType.toString() == 'host'
+          ? ManageProperties().createState()
+          : Renter_Screen().createState();
     });
   }
 
   var _screenIndex = 0;
   void _startAddNewProperty(BuildContext context) {
     // The half window for adding new property
-    showModalBottomSheet(
-      context: context,
-      builder: (context) => NewProperty(refresh: refresh),
+    // showModalBottomSheet(
+    //   context: context,
+    //   builder: (context) => NewProperty(refresh: refresh),
+    // );
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => NewProperty(refresh: refresh)),
     );
   }
 
@@ -57,12 +71,19 @@ class _RenterTabsScreenState extends State<RenterTabsScreen>
   _init() {
     _tabs = [
       CustomTabItem(
-        label: 'Apartments',
+        label: 'Manage Properties',
         icon: const Icon(Icons.holiday_village),
-        screen: const Renter_Screen(),
+        screen:
+            widget.userType == 'host' ? ManageProperties() : Renter_Screen(),
+        floatingActionButton: widget.userType == 'host'
+            ? FloatingActionButton(
+                child: const Icon(Icons.add),
+                onPressed: () => _startAddNewProperty(context),
+              )
+            : null,
       ),
       CustomTabItem(
-        label: 'Hosts',
+        label: 'Customers',
         icon: const Icon(Icons.contact_mail_rounded),
         screen: Container(),
       ),
@@ -86,11 +107,13 @@ class _RenterTabsScreenState extends State<RenterTabsScreen>
     return Scaffold(
       appBar: appBar,
       drawer: AppDrawer(),
+      resizeToAvoidBottomInset: false,
       body: TabBarView(
         physics: const NeverScrollableScrollPhysics(),
         controller: _tabController,
         children: _tabs.map((e) => e.screen).toList(),
       ),
+      floatingActionButton: _tabs[_screenIndex].floatingActionButton,
     );
   }
 }
