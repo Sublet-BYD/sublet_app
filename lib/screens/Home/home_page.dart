@@ -133,10 +133,10 @@ class _AuthCardState extends State<AuthCard> {
     'email': '',
     'password': '',
   };
-  final _userName = TextEditingController(text: 'adminh@admin.com');
+  final _userName = TextEditingController();
 
   var _isLoading = false;
-  final _passwordController = TextEditingController(text: 'admin1');
+  final _passwordController = TextEditingController();
 
 //show dialog to the users
   void _showErrorDiallog(String message) {
