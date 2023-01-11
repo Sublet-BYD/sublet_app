@@ -7,8 +7,8 @@ import 'package:sublet_app/providers/Session_details.dart';
 import 'package:sublet_app/models/data/host_data.dart';
 import 'package:sublet_app/models/data/property.dart';
 import 'package:intl/intl.dart';
-import 'package:sublet_app/screens/Owner/tabs_screen.dart';
-import 'package:sublet_app/screens/Renter/renter_tab_screen.dart';
+import 'package:sublet_app/screens/Host/tabs_screen.dart';
+import 'package:sublet_app/screens/Guest/renter_tab_screen.dart';
 import 'package:sublet_app/screens/chat_screen.dart';
 
 class Asset_Page extends StatefulWidget {

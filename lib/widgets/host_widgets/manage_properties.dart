@@ -6,8 +6,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 import 'package:sublet_app/providers/Session_details.dart';
 import 'package:sublet_app/providers/firestore_properties.dart';
-import 'package:sublet_app/screens/Owner/new_property.dart';
-import 'package:sublet_app/screens/Owner/tabs_screen.dart';
+import 'package:sublet_app/screens/Host/new_property.dart';
+import 'package:sublet_app/screens/Host/tabs_screen.dart';
 import 'properties_list_categories.dart';
 import 'package:sublet_app/widgets/app_drawer.dart';
 

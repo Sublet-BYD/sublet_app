@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sublet_app/Firebase_functions.dart';
 import 'package:sublet_app/models/data/property.dart';
-import 'package:sublet_app/screens/Renter/Asset_Page.dart';
+import 'package:sublet_app/screens/Guest/Asset_Page.dart';
 import 'package:sublet_app/widgets/app_drawer.dart';
 import 'package:provider/provider.dart';
 import 'package:sublet_app/providers/Session_details.dart';
