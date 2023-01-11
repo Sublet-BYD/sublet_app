@@ -38,7 +38,7 @@ class Property {
     this.imageUrls,
   }) {
     dateAdded = DateTime.now();
-    this.imageUrls!.add('assets/Images/home-placeholder-profile.jpg');
+    this.imageUrls = ['assets/Images/home-placeholder-profile.jpg'];
   }
 
   void assign_id(String id) {
