@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sublet_app/screens/Renter/Renter_Screen.dart';
+import 'package:sublet_app/providers/firestore_properties.dart';
+import 'package:sublet_app/screens/Guest/Guest_Feed.dart';
 import 'package:sublet_app/widgets/host_widgets/manage_properties.dart';
-import 'package:sublet_app/screens/Owner/new_property.dart';
+import 'package:sublet_app/screens/Host/new_property.dart';
 import 'package:sublet_app/widgets/app_drawer.dart';
 
 import '../../providers/Session_details.dart';
@@ -31,9 +32,14 @@ class _TabsScreenState extends State<TabsScreen>
   var _screenIndex = 0;
   void _startAddNewProperty(BuildContext context) {
     // The half window for adding new property
-    showModalBottomSheet(
-      context: context,
-      builder: (context) => NewProperty(refresh: refresh),
+    // showModalBottomSheet(
+    //   context: context,
+    //   builder: (context) => NewProperty(refresh: refresh),
+    // );
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => NewProperty(refresh: refresh)),
     );
   }
 

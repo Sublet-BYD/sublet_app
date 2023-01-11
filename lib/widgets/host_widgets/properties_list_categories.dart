@@ -5,21 +5,23 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 import 'package:sublet_app/Firebase_functions.dart';
 import 'package:sublet_app/providers/Session_details.dart';
+import 'package:sublet_app/providers/firestore_properties.dart';
 import 'property_card.dart';
 import '../../models/data/property.dart';
 
 class PropertiesListCategories extends StatefulWidget {
-  const PropertiesListCategories({super.key});
+  Stream proStream;
+  PropertiesListCategories({super.key, required this.proStream});
   @override
   State<PropertiesListCategories> createState() =>
       _PropertiesListCategoriesState();
 }
 
 class _PropertiesListCategoriesState extends State<PropertiesListCategories> {
-  void onPropertyCardPress(BuildContext ctx, int asset_id) async {
+  void onPropertyCardPress(BuildContext ctx, Property property) async {
     Navigator.of(ctx).pushNamed(
       '/property-screen',
-      arguments: (await _properties)[asset_id],
+      arguments: property,
     );
   }
 
@@ -35,14 +37,9 @@ class _PropertiesListCategoriesState extends State<PropertiesListCategories> {
 
   @override
   Widget build(BuildContext context) {
-    var proStream = FirebaseFirestore.instance
-        .collection('properties')
-        .where("owner_id",
-            isEqualTo: Provider.of<Session_details>(context).UserId.toString())
-        .snapshots();
     setState(() {});
     return StreamBuilder(
-        stream: proStream,
+        stream: widget.proStream,
         builder: ((context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
@@ -50,24 +47,23 @@ class _PropertiesListCategoriesState extends State<PropertiesListCategories> {
             );
           }
           return Container(
-            margin: EdgeInsets.only(top: 10, bottom: 15),
+            margin: const EdgeInsets.only(top: 10, bottom: 15),
             child: SingleChildScrollView(
-              child: Container(
+              child: SizedBox(
                 height: MediaQuery.of(context).size.height * 0.25,
                 child: ListView.builder(
-                  padding: EdgeInsets.only(left: 10),
+                  padding: const EdgeInsets.only(left: 10),
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
-                    final _propert_id = snapshot.data!.docs[index].data();
-                    print("property_id");
-                    print(Property.fromJson(_propert_id).id);
+                    final propertId = snapshot.data!.docs[index].data();
+                    final propertyObj = Property.fromJson(propertId);
                     return InkWell(
-                        splashColor: Theme.of(context).primaryColor,
-                        borderRadius: BorderRadius.circular(20),
-                        onTap: (() => onPropertyCardPress(context, index)),
-                        child: PropertyCard(Property.fromJson(_propert_id)));
+                      splashColor: Theme.of(context).primaryColor,
+                      borderRadius: BorderRadius.circular(20),
+                      onTap: (() => onPropertyCardPress(context, propertyObj)),
+                      child: PropertyCard(propertyObj),
+                    );
                   },
-                  // return PropertyCard(plist[index]);
                   itemCount: snapshot.data!.docs.length,
                 ),
               ),

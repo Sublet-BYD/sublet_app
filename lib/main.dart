@@ -3,15 +3,16 @@ import 'dart:math';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:sublet_app/providers/Session_details.dart';
+import 'package:sublet_app/providers/firestore_properties.dart';
 import 'package:sublet_app/screens/Home/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:sublet_app/models/data/host_data.dart';
 import 'package:sublet_app/widgets/host_widgets/manage_properties.dart';
-import 'package:sublet_app/screens/Owner/tabs_screen.dart';
-import 'package:sublet_app/screens/Renter/Asset_Page.dart';
-import 'package:sublet_app/screens/Renter/Renter_Screen.dart';
-import 'package:sublet_app/screens/Owner/property_screen.dart';
-import 'package:sublet_app/screens/Renter/renter_tab_screen.dart';
+import 'package:sublet_app/screens/Host/tabs_screen.dart';
+import 'package:sublet_app/screens/Guest/Asset_Page.dart';
+import 'package:sublet_app/screens/Guest/Guest_Feed.dart';
+import 'package:sublet_app/screens/Host/property_screen.dart';
+import 'package:sublet_app/screens/Guest/renter_tab_screen.dart';
 import 'firebase_options.dart';
 import 'package:provider/provider.dart';
 import 'Firebase_functions.dart';
@@ -64,8 +65,11 @@ class MyApp extends StatelessWidget {
             value: Auth(),
           ),
           ChangeNotifierProvider.value(
-              value:
-                  Session_details()) // Defining Session_details as a provider for the app.
+            value: Session_details(),
+          ),
+          ChangeNotifierProvider(
+              create: ((context) =>
+                  FirestoreProperties())) // Defining Session_details as a provider for the app.
         ],
         //rebuild this part of the tree
         //this ensure whenever that outh object changes

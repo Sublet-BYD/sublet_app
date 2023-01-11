@@ -34,9 +34,13 @@ dependencies:
     sdk: flutter
   firebase_auth: ^4.2.0
   cloud_firestore: ^4.2.0
+  firebase_storage: ^11.0.10
   provider: ^6.0.5
   http: any
+  image_picker: ^0.8.6
+  path_provider: ^2.0.11
   # dcdg: ^4.1.0
+  location: ^4.4.0
 
  
 
@@ -78,6 +82,7 @@ flutter:
     - assets/Profile_pic.jpg
     - assets/Empty_profile_pic.jpg
     - assets/Images/1Sublet_logo.png
+    - assets/Images/home-placeholder-profile.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -3,10 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sublet_app/Firebase_functions.dart';
 import 'package:sublet_app/models/data/property.dart';
-import 'package:sublet_app/screens/Renter/Asset_Page.dart';
+import 'package:sublet_app/screens/Guest/Asset_Page.dart';
 import 'package:sublet_app/widgets/app_drawer.dart';
 import 'package:provider/provider.dart';
 import 'package:sublet_app/providers/Session_details.dart';
+import 'package:sublet_app/models/sort_menu.dart';
 
 class Renter_Screen extends StatefulWidget {
   const Renter_Screen({super.key});
@@ -22,6 +23,13 @@ class _Renter_ScreenState extends State<Renter_Screen> {
     final appBar = AppBar(
       title: Text('Welcome, $uname'),
     );
+    void showSortPanel() {
+      showModalBottomSheet(
+          context: context,
+          builder: ((context) {
+            return Sort_Menu();
+          }));
+    }
     return Scaffold(
       resizeToAvoidBottomInset: false, // Preventing pixel overflow warnings
       drawer: AppDrawer(),
@@ -34,19 +42,22 @@ class _Renter_ScreenState extends State<Renter_Screen> {
               height: (MediaQuery.of(context).size.height -
                       appBar.preferredSize.height -
                       MediaQuery.of(context).padding.top) *
-                  0.15,
+                  0.1,
+              width: (MediaQuery.of(context).size.width),
               padding: EdgeInsets.only(top: 20, left: 40, right: 40),
-              // child: TextFormField(
-              //   decoration: InputDecoration(
-              //     labelText: 'Search',
-              //     prefixIcon: Icon(Icons.search),
-              //     contentPadding: EdgeInsets.all(8.0),
-              //     border: OutlineInputBorder(
-              //       borderRadius: BorderRadius.circular(30),
-              //     ),
-              //   ),
-              // ),
-              child: Text('hi'),
+              child: ElevatedButton(
+                onPressed: showSortPanel,
+                child: Text(
+                  'Search',
+                  style: TextStyle(
+                    fontSize: 15,
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  shadowColor: Colors.transparent,
+                ),
+              ),
             ),
             Container(
                 height: (MediaQuery.of(context).size.height -
@@ -73,8 +84,6 @@ class _AssetlistState extends State<Assetlist> {
     // get_avail_properties();
     var proStream =
         FirebaseFirestore.instance.collection('properties').snapshots();
-    print("LENGTHHHHHHHHHHHHHHHHHHHHHHHHH ${proStream.length}");
-    // setState(() =>{} );
     return StreamBuilder(
         stream: proStream,
         builder: (context, snapshot) {
