@@ -72,7 +72,7 @@ class Firebase_functions {
     return res;
   }
 
-  static Future<bool> Update_host_image(Owner_data owner, var image) async{
+  static Future<bool> Update_host_image(Owner_data owner, var image) async {
     bool res = true;
     final ref = FirebaseStorage.instance.ref().child("${owner.id}.jpg");
     final task = ref.putFile(image);
@@ -93,7 +93,7 @@ class Firebase_functions {
       return false;
     }
     print('Owner exists\n');
-    if(property.id != null && await property_exists(property.id!)){
+    if (property.id != null && await property_exists(property.id!)) {
       print('Error -> Property already exists\n');
       return false;
     }
@@ -114,7 +114,7 @@ class Firebase_functions {
     prop
         .set(property.toJson())
         .onError((error, stackTrace) => {print('$stackTrace\n'), res = false});
-    prop.update({'dateAdded' : Timestamp.fromDate(DateTime.now())});
+    // prop.update({'dateAdded' : Timestamp.fromDate(DateTime.now())});
     await Add_Property(await get_owner(property.owner_id), property.id!);
     // print("===========");
     // print(property.imageUrl);
@@ -134,23 +134,30 @@ class Firebase_functions {
     if (!document.exists) {
       print('property does not exist, please check your data\n');
       return Property(
-          id: '0', name: 'No name', location: 'No location', owner_id: 'no id');
+          id: '0',
+          name: 'No name',
+          location: 'No location',
+          owner_id: 'no id',
+          dateAdded: Timestamp.now().toDate());
     }
     Map<String, dynamic> json = document.data() as Map<String, dynamic>;
     return Property.fromJson(json);
   }
 
-  static Future<bool> Edit_Property(String property_id, Map<String, Object> updates) async{
+  static Future<bool> Edit_Property(
+      String property_id, Map<String, Object> updates) async {
     bool res = true;
-    if(!await property_exists(property_id)){
+    if (!await property_exists(property_id)) {
       return false;
     }
     var property_document = db.collection('properties').doc(property_id);
     updates.forEach((key, value) {
-        property_document.update({key : value}).onError((error, stackTrace) => res = false);
+      property_document
+          .update({key: value}).onError((error, stackTrace) => res = false);
     });
     return res;
   }
+
   static Future<bool> Delete_property(String property_id) async {
     if (property_id == '0') {
       return false;

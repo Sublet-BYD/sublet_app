@@ -121,7 +121,7 @@ class AuthCard extends StatefulWidget {
   State<AuthCard> createState() => _AuthCardState();
 }
 
-//control the auth mode
+// control the auth mode
 // this class has the botton to switch between this modes
 class _AuthCardState extends State<AuthCard> {
   //what doing ?
@@ -133,10 +133,10 @@ class _AuthCardState extends State<AuthCard> {
     'email': '',
     'password': '',
   };
-  final _userName = TextEditingController();
+  final _userName = TextEditingController(text: 'adminh@admin.com');
 
   var _isLoading = false;
-  final _passwordController = TextEditingController();
+  final _passwordController = TextEditingController(text: 'admin1');
 
 //show dialog to the users
   void _showErrorDiallog(String message) {

@@ -9,15 +9,16 @@ class FirestoreProperties with ChangeNotifier {
   // This methods is used to get STREAMS for the StreamBuilder widgets of properties
   // If you implement any StreamBuilder for peoperty UI add methods here:
   Stream<QuerySnapshot<Map<String, dynamic>>> getRecentHostProperties(
-      var hostId) {
+      String hostId) {
     return FirebaseFirestore.instance
         .collection('properties')
         .where("owner_id", isEqualTo: hostId)
+        .orderBy('dateAdded')
         .snapshots();
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getAvailableHostProperties(
-      var hostId) {
+      String hostId) {
     return FirebaseFirestore.instance
         .collection('properties')
         .where("owner_id", isEqualTo: hostId)
@@ -26,7 +27,7 @@ class FirestoreProperties with ChangeNotifier {
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getOccupiedHostProperties(
-      var hostId) {
+      String hostId) {
     return FirebaseFirestore.instance
         .collection('properties')
         .where("owner_id", isEqualTo: hostId)

@@ -11,26 +11,22 @@ import 'package:sublet_app/screens/Host/tabs_screen.dart';
 import 'package:sublet_app/screens/Guest/renter_tab_screen.dart';
 import 'package:sublet_app/screens/chat_screen.dart';
 
-class Asset_Page extends StatefulWidget {
-  // static final int? property_id;
-  const Asset_Page({Key? key}) : super(key: key);
+class AssetPage extends StatefulWidget {
+  final String imagePath;
+  const AssetPage({
+    Key? key,
+    required this.imagePath,
+  }) : super(key: key);
 
   @override
-  State<Asset_Page> createState() => _Asset_PageState();
+  State<AssetPage> createState() => _AssetPageState();
 }
 
-class _Asset_PageState extends State<Asset_Page> {
+class _AssetPageState extends State<AssetPage> {
   Color contact_color = (Colors.amber[600]!);
   late Future<Pair<Property, Owner_data>> data;
   late Property property;
   late Owner_data owner;
-
-  @override
-  void initState() {
-    super.initState();
-
-    // print(data.toString());
-  }
 
   Future<Pair<Property, Owner_data>> getData() async {
     data = Provider.of<Session_details>(context, listen: false).GetProp_Host();
@@ -39,234 +35,267 @@ class _Asset_PageState extends State<Asset_Page> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: getData(),
-        builder: (context, AsyncSnapshot<Pair<Property, Owner_data>> snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasData) {
-              property = snapshot.data!.obj1;
-              owner = snapshot.data!.obj2;
-            } else if (snapshot.hasError) {
-              print('${snapshot.error}');
-              return Container(
-                child: Center(child: Text('An unexpected error occurred')),
-              );
-            }
-            return ListView(
-              children: [
-                //Image with buttons on top of it
-                SizedBox(
-                  height: (MediaQuery.of(context).size.height -
-                          MediaQuery.of(context).padding.top) *
-                      0.3,
-                  width: MediaQuery.of(context).size.width,
-                  child: Stack(
-                    alignment: Alignment.topCenter,
-                    children: [
-                      //Image
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        child: FittedBox(
-                            fit: BoxFit.fill,
-                            child: Image(
-                              image: AssetImage(
-                                  'assets/Apartment_example.jpg'), //(property.image != null)? property.image as ImageProvider :
-                            )),
-                      ),
-                      //Back button
-                      Positioned(
-                        top: 0,
-                        left: 0,
-                        child: FloatingActionButton(
-                          backgroundColor: Colors.transparent,
-                          child: Icon(Icons.arrow_back),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: [
+            //Image with buttons on top of it
+            SizedBox(
+              height: (MediaQuery.of(context).size.height -
+                      MediaQuery.of(context).padding.top) *
+                  0.3,
+              width: MediaQuery.of(context).size.width,
+              child: Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  //Image
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: Hero(
+                      tag: widget.imagePath,
+                      child: FittedBox(
+                        fit: BoxFit.fill,
+                        child: Image(
+                          image: AssetImage(
+                            widget.imagePath,
+                          ), //(property.image != null)? property.image as ImageProvider :
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: (MediaQuery.of(context).size.height -
-                          MediaQuery.of(context).padding.top) *
-                      0.7,
-                  width: MediaQuery.of(context).size.width,
-                  child: Container(
-                    color: Colors.white,
-                    child: Column(
-                      children: [
-                        //Title of the property
-                        FittedBox(
-                          fit: BoxFit.fitHeight,
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            child: Card(
-                              shape: StadiumBorder(
-                                side: BorderSide(
-                                  // border color
-                                  color: Colors.purple,
-                                  // border thickness
-                                  width: 5,
-                                ),
-                              ),
-                              elevation: 1,
-                              child: ListTile(
-                                title: Center(
-                                    child: Text(property.name,
-                                        style: TextStyle(
-                                            fontFamily: 'OpenSans',
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20))),
-                              ),
-                            ),
-                          ),
-                        ),
-                        //Address
-                        Card(
-                          elevation: 0,
-                          child: Center(
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              child: ListTile(
-                                leading: Container(
-                                  padding: EdgeInsets.only(left: 15),
-                                  child: Icon(Icons.location_on, size: 30),
-                                ),
-                                title: Text(property.location,
-                                    style: TextStyle(
-                                        fontFamily: 'OpenSans', fontSize: 15)),
-                              ),
-                            ),
-                          ),
-                        ),
-                        //Information about the property
-                        FittedBox(
-                          alignment: Alignment.center,
-                          fit: BoxFit.fitHeight,
-                          child: Container(
-                            width: MediaQuery.of(context).size.width - 20,
-                            padding: EdgeInsets.symmetric(horizontal: 10),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.black),
-                            ),
-                            child: Card(
-                              elevation: 0,
-                              child: Text(
-                                (property.description != null &&
-                                        property.description!.length > 5)
-                                    ? property.description as String
-                                    : '{Man} Once upon a time there was a lovely princess.But she had an enchantment upon her of a fearful sort which could only be broken by loves first kiss.She was locked away in a castle guarded by a terrible fire-breathing dragon.Many brave knigts had attempted to free her from this dreadful prison, but non prevailed.She waited in the dragons keep in the highest room of the tallest tower for her true love and true loves first kiss.{Laughing} Like thats ever gonna happen.',
-                                style: TextStyle(
-                                    fontFamily: 'OpenSans', fontSize: 10),
-                              ),
-                            ),
-                          ),
-                        ),
-                        //Information about the owner
-                        Card(
-                          elevation: 0,
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            padding: EdgeInsets.only(top: 10),
-                            child: ListTile(
-                              leading: CircleAvatar(
-                                backgroundImage: AssetImage(
-                                    'assets/Empty_profile_pic.jpg'), // Commented out: owner.profile_pic
-                                radius: 40,
-                              ),
-                              title: Text('Meet your host, ${owner.name}',
-                                  style: TextStyle(
-                                      fontFamily: 'OpenSans',
-                                      fontWeight: FontWeight.bold)),
-                              subtitle: Text(
-                                  'They\'ve been hosting since ${(owner != null) ? owner.joined_at : 'literally just now'}'),
-                            ),
-                          ),
-                        ),
-                        //Availability of asset
-                        Card(
-                          elevation: 0,
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            child: ListTile(
-                              leading: Container(
-                                padding: EdgeInsets.only(left: 25),
-                                child: GestureDetector(
-                                    onTap: () {
-                                      //open a calendar widget to view dates - to do in the future
-                                      print('Clicked on calendar\n');
-                                    },
-                                    child: Icon(Icons.calendar_month_outlined,
-                                        size: 30)),
-                              ),
-                              title: Center(
-                                  child: Text('available_dates:',
-                                      style: TextStyle(
-                                          fontFamily: 'OpenSans',
-                                          fontWeight: FontWeight.bold))),
-                              subtitle: Center(
-                                  child: Text(
-                                      (property.fromdate != null &&
-                                              property.tilldate != null)
-                                          ? '${DateFormat('dd/MM/yyyy').format(property.fromdate!)} - ${DateFormat('dd/MM/yyyy').format(property.tilldate!)}'
-                                          : 'No available dates',
-                                      style:
-                                          TextStyle(fontFamily: 'OpenSans'))),
-                            ),
-                          ),
-                        ),
-                        //Contact
-                        GestureDetector(
-                          onTap: () {
-                            //Move to chat with owner
-                            // print(owner.toJson());
-                            // print('Redirecting to chat\n');
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => ChatScreen(),
-                              ), // need to feel with owner and client - id
-                            );
-                          },
-                          child: Card(
-                            elevation: 0,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: contact_color,
-                                border: Border.all(
-                                    color: (Colors.amber[800]!),
-                                    width:
-                                        3), //Exclamation mark added to assure null safety
-                              ),
-                              width: MediaQuery.of(context).size.width,
-                              child: ListTile(
-                                leading: Container(
-                                  padding: EdgeInsets.only(left: 25),
-                                  child: Icon(Icons.comment, size: 30),
-                                ),
-                                title: Center(
-                                    child: Text('Contact',
-                                        style: TextStyle(
-                                            fontFamily: 'OpenSans',
-                                            fontWeight: FontWeight.bold))),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
                     ),
                   ),
-                ),
-              ],
-            );
-          } else if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return Container();
-        });
+                  //Back button
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    child: FloatingActionButton(
+                      backgroundColor: Colors.transparent,
+                      child: Icon(Icons.arrow_back),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            FutureBuilder(
+                future: getData(),
+                builder: (context,
+                    AsyncSnapshot<Pair<Property, Owner_data>> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.hasData) {
+                      property = snapshot.data!.obj1;
+                      owner = snapshot.data!.obj2;
+                    } else if (snapshot.hasError) {
+                      print('${snapshot.error}');
+                      return Container(
+                        child:
+                            Center(child: Text('An unexpected error occurred')),
+                      );
+                    }
+                    return Expanded(
+                      child: ListView(
+                        children: [
+                          SizedBox(
+                            height: (MediaQuery.of(context).size.height -
+                                    MediaQuery.of(context).padding.top) *
+                                0.7,
+                            width: MediaQuery.of(context).size.width,
+                            child: Container(
+                              color: Colors.white,
+                              child: Column(
+                                children: [
+                                  //Title of the property
+                                  FittedBox(
+                                    fit: BoxFit.fitHeight,
+                                    child: SizedBox(
+                                      width: MediaQuery.of(context).size.width,
+                                      child: Card(
+                                        shape: StadiumBorder(
+                                          side: BorderSide(
+                                            // border color
+                                            color: Colors.purple,
+                                            // border thickness
+                                            width: 5,
+                                          ),
+                                        ),
+                                        elevation: 1,
+                                        child: ListTile(
+                                          title: Center(
+                                              child: Text(property.name,
+                                                  style: TextStyle(
+                                                      fontFamily: 'OpenSans',
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20))),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  //Address
+                                  Card(
+                                    elevation: 0,
+                                    child: Center(
+                                      child: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        child: ListTile(
+                                          leading: Container(
+                                            padding: EdgeInsets.only(left: 15),
+                                            child: Icon(Icons.location_on,
+                                                size: 30),
+                                          ),
+                                          title: Text(property.location,
+                                              style: TextStyle(
+                                                  fontFamily: 'OpenSans',
+                                                  fontSize: 15)),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  //Information about the property
+                                  FittedBox(
+                                    alignment: Alignment.center,
+                                    fit: BoxFit.fitHeight,
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width -
+                                          20,
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 10),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(color: Colors.black),
+                                      ),
+                                      child: Card(
+                                        elevation: 0,
+                                        child: Text(
+                                          (property.description != null &&
+                                                  property.description!.length >
+                                                      5)
+                                              ? property.description as String
+                                              : '{Man} Once upon a time there was a lovely princess.But she had an enchantment upon her of a fearful sort which could only be broken by loves first kiss.She was locked away in a castle guarded by a terrible fire-breathing dragon.Many brave knigts had attempted to free her from this dreadful prison, but non prevailed.She waited in the dragons keep in the highest room of the tallest tower for her true love and true loves first kiss.{Laughing} Like thats ever gonna happen.',
+                                          style: TextStyle(
+                                              fontFamily: 'OpenSans',
+                                              fontSize: 10),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  //Information about the owner
+                                  Card(
+                                    elevation: 0,
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      padding: EdgeInsets.only(top: 10),
+                                      child: ListTile(
+                                        leading: CircleAvatar(
+                                          backgroundImage: AssetImage(
+                                              'assets/Empty_profile_pic.jpg'), // Commented out: owner.profile_pic
+                                          radius: 40,
+                                        ),
+                                        title: Text(
+                                            'Meet your host, ${owner.name}',
+                                            style: TextStyle(
+                                                fontFamily: 'OpenSans',
+                                                fontWeight: FontWeight.bold)),
+                                        subtitle: Text(
+                                            'They\'ve been hosting since ${(owner != null) ? owner.joined_at : 'literally just now'}'),
+                                      ),
+                                    ),
+                                  ),
+                                  //Availability of asset
+                                  Card(
+                                    elevation: 0,
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      child: ListTile(
+                                        leading: Container(
+                                          padding: EdgeInsets.only(left: 25),
+                                          child: GestureDetector(
+                                              onTap: () {
+                                                //open a calendar widget to view dates - to do in the future
+                                                print('Clicked on calendar\n');
+                                              },
+                                              child: Icon(
+                                                  Icons.calendar_month_outlined,
+                                                  size: 30)),
+                                        ),
+                                        title: Center(
+                                            child: Text('available_dates:',
+                                                style: TextStyle(
+                                                    fontFamily: 'OpenSans',
+                                                    fontWeight:
+                                                        FontWeight.bold))),
+                                        subtitle: Center(
+                                            child: Text(
+                                                (property.fromdate != null &&
+                                                        property.tilldate !=
+                                                            null)
+                                                    ? '${DateFormat('dd/MM/yyyy').format(property.fromdate!)} - ${DateFormat('dd/MM/yyyy').format(property.tilldate!)}'
+                                                    : 'No available dates',
+                                                style: TextStyle(
+                                                    fontFamily: 'OpenSans'))),
+                                      ),
+                                    ),
+                                  ),
+                                  //Contact
+                                  GestureDetector(
+                                    onTap: () {
+                                      //Move to chat with owner
+                                      // print(owner.toJson());
+                                      // print('Redirecting to chat\n');
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) => ChatScreen(),
+                                        ), // need to feel with owner and client - id
+                                      );
+                                    },
+                                    child: Card(
+                                      elevation: 0,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: contact_color,
+                                          border: Border.all(
+                                              color: (Colors.amber[800]!),
+                                              width:
+                                                  3), //Exclamation mark added to assure null safety
+                                        ),
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        child: ListTile(
+                                          leading: Container(
+                                            padding: EdgeInsets.only(left: 25),
+                                            child:
+                                                Icon(Icons.comment, size: 30),
+                                          ),
+                                          title: Center(
+                                              child: Text('Contact',
+                                                  style: TextStyle(
+                                                      fontFamily: 'OpenSans',
+                                                      fontWeight:
+                                                          FontWeight.bold))),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  } else if (snapshot.connectionState ==
+                      ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  return Container();
+                }),
+          ],
+        ),
+      ),
+    );
   }
   //Function that returns rgb values to indicate availability of asset
   // int available_color(bool available){

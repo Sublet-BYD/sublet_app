@@ -1,25 +1,14 @@
-import 'dart:math';
-
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:sublet_app/providers/Session_details.dart';
 import 'package:sublet_app/providers/firestore_properties.dart';
 import 'package:sublet_app/screens/Home/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:sublet_app/models/data/host_data.dart';
-import 'package:sublet_app/widgets/host_widgets/manage_properties.dart';
 import 'package:sublet_app/screens/Host/tabs_screen.dart';
-import 'package:sublet_app/screens/Guest/Asset_Page.dart';
-import 'package:sublet_app/screens/Guest/Guest_Feed.dart';
 import 'package:sublet_app/screens/Host/property_screen.dart';
-import 'package:sublet_app/screens/Guest/renter_tab_screen.dart';
 import 'firebase_options.dart';
 import 'package:provider/provider.dart';
-import 'Firebase_functions.dart';
 import './providers/auth.dart';
-import './widgets/app_drawer.dart';
-import './screens/chat_screen.dart';
-import 'models/data/property.dart';
 // import 'package:dcdg/dcdg.dart';
 
 void main() async {
@@ -82,7 +71,7 @@ class MyApp extends StatelessWidget {
                 accentColor: Colors.deepOrange,
                 fontFamily: 'Lato',
               ),
-
+              debugShowCheckedModeBanner: false,
               home: (auth.isAuth) ? choosePage(session.utype) : HomeScreen(),
 
               // home: const HomeScreen(),

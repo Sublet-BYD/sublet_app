@@ -68,6 +68,7 @@ class _ManagePropertiesState extends State<ManageProperties> {
                         margin: EdgeInsets.only(bottom: 15.0, left: 20),
                       ),
                       PropertiesListCategories(
+                          title: 'Recently Added',
                           proStream:
                               firestoreProperties.getRecentHostProperties(
                                   Provider.of<Session_details>(context)
@@ -88,6 +89,7 @@ class _ManagePropertiesState extends State<ManageProperties> {
                         margin: EdgeInsets.only(bottom: 15.0, left: 20),
                       ),
                       PropertiesListCategories(
+                          title: 'Occupied Properties',
                           proStream:
                               firestoreProperties.getOccupiedHostProperties(
                                   Provider.of<Session_details>(context)
@@ -108,6 +110,7 @@ class _ManagePropertiesState extends State<ManageProperties> {
                         margin: EdgeInsets.only(bottom: 15.0, left: 20),
                       ),
                       PropertiesListCategories(
+                          title: 'Unoccupied Properties',
                           proStream:
                               firestoreProperties.getAvailableHostProperties(
                                   Provider.of<Session_details>(context)
