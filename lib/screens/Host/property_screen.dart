@@ -41,11 +41,10 @@ class PropertyScreen extends StatelessWidget {
             child: CarouselSlider.builder(
               options: CarouselOptions(autoPlay: true),
               itemCount: _property.imageUrls!.length,
-              itemBuilder: ((context, index, realIndex) => 
-              final urlImage= [index]) ,
-
-
-        
+              itemBuilder: ((context, index, realIndex) {
+                final urlImage = _property.imageUrls![index];
+                return buildImage(urlImage, index);
+              }),
             ),
 
             //  Image.asset('assets/Apartment_example.jpg',
@@ -220,6 +219,11 @@ class PropertyScreen extends StatelessWidget {
       ),
     );
   }
+
+  Widget buildImage(String urlImage, int index) => Container(
+        margin: EdgeInsets.symmetric(horizontal: 12),
+        color: Colors.grey,
+      );
 }
 
 class EditProperty extends StatefulWidget {

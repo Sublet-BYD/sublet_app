@@ -24,6 +24,9 @@ Property _$PropertyFromJson(Map<String, dynamic> json) => Property(
       occupied: json['occupied'] as bool? ?? false,
       description: json['description'] as String?,
       image: json['image'],
+      imageUrls: (json['imageUrls'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
     )..imageUrl = json['imageUrl'];
 
 Map<String, dynamic> _$PropertyToJson(Property instance) => <String, dynamic>{
@@ -39,4 +42,5 @@ Map<String, dynamic> _$PropertyToJson(Property instance) => <String, dynamic>{
       'description': instance.description,
       'image': instance.image,
       'imageUrl': instance.imageUrl,
+      'imageUrls': instance.imageUrls,
     };

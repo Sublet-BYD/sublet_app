@@ -221,6 +221,8 @@ class _AuthCardState extends State<AuthCard> {
                 _authData['email'].toString(),
                 _authData['password']
                     .toString())); // Signing the new user up and keeping the unique id assigned to them by firebase
+        print(
+            "--------------------\n${context.read<Session_details>().uid}, ${_userName.text}, ${type}");
         Firebase_functions.Add_user(
             context.read<Session_details>().uid, _userName.text, type);
         print("type ${type} ");
