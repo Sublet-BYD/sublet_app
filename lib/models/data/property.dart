@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -10,7 +11,8 @@ class Property {
   final String owner_id;
   final String name;
   final String location;
-  late DateTime? dateAdded, fromdate, tilldate;
+  late DateTime? dateAdded;
+  late DateTime? fromdate, tilldate;
   // final DateTimeRange? dates;
   final bool? occupied;
   final int? price; // Price of subletting the property for a single night

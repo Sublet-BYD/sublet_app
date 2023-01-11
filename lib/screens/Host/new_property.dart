@@ -161,7 +161,11 @@ class _NewPropertyState extends State<NewProperty> {
                   Property pro = Property(
                     name: propNameController.text,
                     location: propLocationController.text,
-                    owner_id: Provider.of<Session_details>(context, listen: false).UserId.toString(),
+                    owner_id:
+                        Provider.of<Session_details>(context, listen: false)
+                            .UserId
+                            .toString(),
+                    dateAdded: DateTime.now(),
                     fromdate: DateTime.tryParse(propStartDateController.text),
                     tilldate: DateTime.tryParse(propEndDateController.text),
                     price: int.parse(propPriceController.text),

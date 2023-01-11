@@ -30,6 +30,7 @@ class _Renter_ScreenState extends State<Renter_Screen> {
             return Sort_Menu();
           }));
     }
+
     return Scaffold(
       resizeToAvoidBottomInset: false, // Preventing pixel overflow warnings
       drawer: AppDrawer(),
@@ -79,6 +80,8 @@ class Assetlist extends StatefulWidget {
 }
 
 class _AssetlistState extends State<Assetlist> {
+  final assetImage = 'assets/Apartment_example.jpg';
+
   @override
   Widget build(BuildContext context) {
     // get_avail_properties();
@@ -122,7 +125,8 @@ class _AssetlistState extends State<Assetlist> {
                           child: ListTile(
                             leading: CircleAvatar(
                               backgroundImage: AssetImage(
-                                  'assets/Apartment_example.jpg'), // (list[index].image != null)? list[index].image as ImageProvider :
+                                assetImage,
+                              ), // (list[index].image != null)? list[index].image as ImageProvider :
                               radius: 50,
                             ),
                             title: Text((property
@@ -148,7 +152,12 @@ class _AssetlistState extends State<Assetlist> {
   void onPress(BuildContext context, String asset_id, String host_id) {
     context.read<Session_details>().UpdatePropertyId(asset_id);
     context.read<Session_details>().UpdateHostId(host_id);
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => Asset_Page()));
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => AssetPage(
+          imagePath: assetImage,
+        ),
+      ),
+    );
   }
 }
