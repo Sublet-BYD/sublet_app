@@ -107,9 +107,10 @@ class Firebase_functions {
     //upload the file
     final task = ref.putFile(property.image);
     print('Uploaded image\n');
-    final url = await ref.getDownloadURL();
+    final url = ref.getDownloadURL();
     print('Got url of image\n');
-    property.imageUrl = url;
+    // property.imageUrl = url;
+    property.image = null;
     prop
         .set(property.toJson())
         .onError((error, stackTrace) => {print('$stackTrace\n'), res = false});
