@@ -122,11 +122,14 @@ class _AssetlistState extends State<Assetlist> {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: ListTile(
-                            leading: CircleAvatar(
-                              backgroundImage: AssetImage(
-                                assetImage,
-                              ),
-                              radius: 50,
+                            leading: ClipRRect(
+                              borderRadius: BorderRadius.circular(5.0),
+                              child: Image.asset(assetImage),
+                              
+                              // backgroundImage: AssetImage(
+                              // assetImage,
+                              //),
+                              //radius: 50,
                             ),
                             title: Text((property
                                 .name)), // The comparison is technically unneccesary, since name cant be null, but is still used as a safety precaution
