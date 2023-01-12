@@ -11,14 +11,12 @@ class Session_details with ChangeNotifier {
   String property_id = "";
   String host_id = "";
   String uname = "";
-  Property? _currentProperty = null;
 
   String get UserId => uid;
   String get UserType => utype;
   String get PropertyId => property_id;
   String get HostId => host_id;
   String get UserName => uname;
-  Property? get currentProperty => _currentProperty;
 
   void UpdateUid(String uid) {
     this.uid = uid;
@@ -56,9 +54,7 @@ class Session_details with ChangeNotifier {
     return Pair(await GetProperty(), await GetHost());
   }
 
-  void UpdateProperty(Property newProperty) {
-    _currentProperty = newProperty;
-  }
+ 
 
   void Logout() {
     host_id = "";

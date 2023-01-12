@@ -9,14 +9,14 @@ part 'property.g.dart';
 class Property {
   String? id;
   final String owner_id;
-  final String name;
-  final String location;
+  late String name;
+  late String location;
   late DateTime? dateAdded, fromdate, tilldate;
   // final DateTimeRange? dates;
-  final bool? occupied;
+  late bool? occupied;
   final int? price; // Price of subletting the property for a single night
   // final ImageProvider? image;
-  final String?
+  late String?
       description; // Short paragraph about the property which would be provided by the owner
   var image;
   var imageUrl;
