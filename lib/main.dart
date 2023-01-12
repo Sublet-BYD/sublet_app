@@ -73,10 +73,10 @@ class MyApp extends StatelessWidget {
                 fontFamily: 'Lato',
               ),
               debugShowCheckedModeBanner: false,
-              // home: (auth.isAuth) ? choosePage(session.utype) : HomeScreen(),
-              home: ContactScreen(
-                  chatUsersStream:
-                      FirestoreProperties().getAvailableHostProperties("1")),
+              home: (auth.isAuth) ? choosePage(session.utype) : HomeScreen(),
+              // home: ContactScreen(
+              //     chatUsersStream:
+              //         FirestoreProperties().getAvailableHostProperties("1")),
 
               // home: const HomeScreen(),
               routes: {

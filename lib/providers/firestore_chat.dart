@@ -12,11 +12,11 @@ class FirestoreChats {
         .snapshots();
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> getAllMessages(
-      String userID, String userType) {
+  Stream<QuerySnapshot<Map<String, dynamic>>> getAllMessages(chatId) {
     return FirebaseFirestore.instance
         .collection('chats')
-        .where(userType == 'client' ? 'guest_id' : 'host_id', isEqualTo: userID)
+        .doc(chatId)
+        .collection('messages')
         .snapshots();
   }
 

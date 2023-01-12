@@ -27,6 +27,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
               child: Row(
                 children: <Widget>[
                   IconButton(
+                    // BACK Icon to previous page
                     onPressed: () {
                       Navigator.pop(context);
                     },
@@ -39,6 +40,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                     width: 2,
                   ),
                   CircleAvatar(
+                    // IMAGE of the contact user
                     backgroundImage: NetworkImage(widget.imageURL),
                     maxRadius: 20,
                   ),
@@ -51,6 +53,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
+                          // NAME of the contact User
                           widget.name,
                           style: const TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w600),
@@ -67,6 +70,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                     ),
                   ),
                   const Icon(
+                    // ICON SETTINGS (Optional)
                     Icons.settings,
                     color: Colors.black54,
                   ),
@@ -75,6 +79,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
             ),
           ),
         ),
+        // New class of the messages in this specific chat
         body: ChatMessages());
   }
 }
