@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:chat_ui_kit/chat_ui_kit.dart';
 import 'package:provider/provider.dart';
 
 import '../../screens/Chat/chat_details_screen.dart';
