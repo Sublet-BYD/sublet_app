@@ -164,8 +164,8 @@ class _NewPropertyState extends State<NewProperty> {
                     Firebase_functions.Upload_property(pro).then(
                       (value) {
                         if (value) {
-                          print("-----------------------");
-                          print(value);
+                          // print("-----------------------");
+                          // print(value);
                           // Property was uploaded successfully
                           // Now you can use the updated property in the PropertyScreen
                           Navigator.pop(context);
@@ -190,6 +190,8 @@ class _NewPropertyState extends State<NewProperty> {
                     Firebase_functions.Upload_property(pro).then(
                       (value) {
                         if (value) {
+                          // print("-----------------------");
+                          // print(value);
                           // Property was uploaded successfully
                           // Now you can use the updated property in the PropertyScreen
                           Navigator.pop(context);
