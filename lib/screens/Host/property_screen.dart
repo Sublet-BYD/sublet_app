@@ -46,6 +46,13 @@ class PropertyScreen extends StatelessWidget {
               itemBuilder: ((context, index, realIndex) {
                 print("\n\n");
                 print("--------------");
+                if (_property.imageUrls!.isEmpty) {
+                  return Image.asset(
+                    'assets/Images/home-placeholder-profile.jpg',
+                    fit: BoxFit.fill,
+                  );
+                }
+
                 print(_property.imageUrls!.length);
                 final urlImage = _property.imageUrls![index];
                 for (int i = 0; i < _property.imageUrls!.length; i++) {
