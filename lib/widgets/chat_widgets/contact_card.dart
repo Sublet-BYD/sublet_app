@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
+import 'package:sublet_app/providers/current_chat.dart';
 
 import '../../screens/Chat/chat_details_screen.dart';
 import 'package:sublet_app/providers/Session_details.dart';
@@ -25,6 +26,7 @@ class ContactCard extends StatefulWidget {
 class _ContactCardState extends State<ContactCard> {
   @override
   Widget build(BuildContext context) {
+    final currentChatId = Provider.of<CurrentChat>(context).chatId;
     // String messageText = ((FirestoreChats().getLastMessage(widget.chatId)
     //     as QuerySnapshot).data() Map<String, dynamic>)['text'];
 
@@ -49,7 +51,7 @@ class _ContactCardState extends State<ContactCard> {
                     backgroundImage: NetworkImage(widget.imageUrl),
                     maxRadius: 30,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 16,
                   ),
                   Expanded(
@@ -60,9 +62,9 @@ class _ContactCardState extends State<ContactCard> {
                         children: <Widget>[
                           Text(
                             widget.name,
-                            style: TextStyle(fontSize: 16),
+                            style: const TextStyle(fontSize: 16),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 6,
                           ),
                           Text(

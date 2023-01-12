@@ -1,6 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:provider/provider.dart';
+import 'package:sublet_app/providers/Session_details.dart';
+import 'package:sublet_app/providers/current_chat.dart';
+import 'package:sublet_app/providers/firestore_chat.dart';
 
 import '../../models/data/message.dart';
 
@@ -13,49 +18,71 @@ class ChatMessages extends StatefulWidget {
 
 class _ChatMessagesState extends State<ChatMessages> {
   // DUMMY MESSAGES for example:
-  List<Message> messages = [
-    Message(messageContent: "Hello, Will", messageType: "receiver"),
-    Message(messageContent: "How have you been?", messageType: "receiver"),
-    Message(
-        messageContent: "Hey Kriss, I am doing fine dude. wbu?",
-        messageType: "sender"),
-    Message(messageContent: "ehhhh, doing OK.", messageType: "receiver"),
-    Message(messageContent: "Is there any thing wrong?", messageType: "sender"),
-  ];
-
-  // Stream messagesStream = ;
+  // List<Message> messages = [
+  //   Message(messageContent: "Hello, Will", messageType: "receiver"),
+  //   Message(messageContent: "How have you been?", messageType: "receiver"),
+  //   Message(
+  //       messageContent: "Hey Kriss, I am doing fine dude. wbu?",
+  //       messageType: "sender"),
+  //   Message(messageContent: "ehhhh, doing OK.", messageType: "receiver"),
+  //   Message(messageContent: "Is there any thing wrong?", messageType: "sender"),
+  // ];
 
   @override
   Widget build(BuildContext context) {
+    final String chatId = Provider.of<CurrentChat>(context).chatId;
+    final receiver = Provider.of<Session_details>(context).UserType;
+    Stream messagesStream = FirestoreChats().getAllMessages(chatId);
+
     return StreamBuilder(
-        stream: null,
+        stream: messagesStream,
         builder: (context, snapshot) {
+          final data = snapshot.data as QuerySnapshot;
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            default:
+              if (!snapshot.hasData) {
+                return SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.25,
+                  child: const Text("Not available properties here"),
+                );
+              }
+          }
+
           return Stack(
             children: <Widget>[
               ListView.builder(
-                itemCount: messages.length,
+                itemCount: data.docs.length,
                 shrinkWrap: true,
-                padding: EdgeInsets.only(top: 10, bottom: 10),
-                physics: NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
+                  // get the message from the snapshots with the correct index.
+                  final messageAsMap =
+                      data.docs[index].data() as Map<String, dynamic>;
+                  final Message message = Message.fromJson(messageAsMap);
+
                   return Container(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                         left: 16, right: 16, top: 10, bottom: 10),
                     child: Align(
-                      alignment: (messages[index].messageType == "receiver"
+                      alignment: (message.userType == receiver
                           ? Alignment.topLeft
                           : Alignment.topRight),
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          color: (messages[index].messageType == "receiver"
+                          color: (message.userType == receiver
                               ? Colors.grey.shade200
                               : Colors.blue[200]),
                         ),
-                        padding: EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(16),
                         child: Text(
-                          messages[index].messageContent,
-                          style: TextStyle(fontSize: 15),
+                          message.text,
+                          style: const TextStyle(fontSize: 15),
                         ),
                       ),
                     ),
@@ -66,7 +93,7 @@ class _ChatMessagesState extends State<ChatMessages> {
                 // Lower Bar of chat screen
                 alignment: Alignment.bottomLeft,
                 child: Container(
-                  padding: EdgeInsets.only(left: 10, bottom: 10, top: 10),
+                  padding: const EdgeInsets.only(left: 10, bottom: 10, top: 10),
                   height: 60,
                   width: double.infinity,
                   color: Colors.white,

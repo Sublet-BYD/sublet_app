@@ -6,6 +6,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 import 'package:sublet_app/models/data/chat_user.dart';
+import 'package:sublet_app/providers/current_chat.dart';
 import 'package:sublet_app/providers/firestore_chat.dart';
 import 'package:sublet_app/widgets/chat_widgets/contact_card.dart';
 import 'package:sublet_app/providers/Session_details.dart';
@@ -70,8 +71,11 @@ class _ContactScreenState extends State<ContactScreen> {
                         ChatUsers chatUsers = FirestoreChats().getChatUser(
                             data.docs[index].data() as Map<String, dynamic>);
                         var chatId = data.docs[index].id;
-                        return widgetByUserType(
-                            context, chatUsers, index, chatId);
+                        return ChangeNotifierProvider.value(
+                          value: CurrentChat(chatId: chatId),
+                          child: widgetByUserType(
+                              context, chatUsers, index, chatId),
+                        );
                       },
                     ),
                   ),
