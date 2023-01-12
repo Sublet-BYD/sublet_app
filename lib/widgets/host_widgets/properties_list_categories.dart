@@ -19,6 +19,7 @@ class PropertiesListCategories extends StatefulWidget {
 
 class _PropertiesListCategoriesState extends State<PropertiesListCategories> {
   void onPropertyCardPress(BuildContext ctx, Property property) async {
+    print(property.imageUrls);
     Navigator.of(ctx).pushNamed(
       '/property-screen',
       arguments: property,

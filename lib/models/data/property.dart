@@ -38,8 +38,9 @@ class Property {
     this.imageUrls,
   }) {
     dateAdded = DateTime.now();
-    this.imageUrls!.add('assets/Images/home-placeholder-profile.jpg');
+    //this.imageUrls = [];
   }
+
 
   void assign_id(String id) {
     // This function will be called by Firebase_functions when uploading a new owner to the database.

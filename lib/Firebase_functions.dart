@@ -60,6 +60,7 @@ class Firebase_functions {
     owner.Add_Property(property_id);
     owner_document.update({'plist': owner.plist}).onError(
         (error, stackTrace) => res = false);
+
     return res;
   }
 
@@ -101,33 +102,43 @@ class Firebase_functions {
     DocumentReference prop = db.collection('properties').doc();
     property.assign_id(prop.id);
     print('Assigned id\n');
+
     //ref gives us access to our route cloud storage bucket
     //child allows to control where we want to store\read our file
     // Create a reference to the storage bucket
-    final storageRef = FirebaseStorage.instance.ref();
-    Reference ref =
-        storageRef.child("${DateTime.now().microsecondsSinceEpoch}.jpg");
-    //upload the file
-    final metaData = SettableMetadata(contentType: 'image/jpeg');
-    final uploadTask = ref.putFile(property.image, metaData);
-    print('Uploaded image\n');
-    FirebaseAuth auth = FirebaseAuth.instance;
-    print(auth.currentUser);
 
-    final url = ref.getDownloadURL();
-    print('Got url of image\n');
-    print(url);
-    property.imageUrls = [url.toString()];
-    // property.imageUrls!.add();
+    if (property.image != null) {
+      final storageRef = FirebaseStorage.instance.ref();
+      Reference ref =
+          storageRef.child("${DateTime.now().microsecondsSinceEpoch}.jpg");
+
+      print('Uploaded image\n');
+      //upload the file
+      final metaData = SettableMetadata(contentType: 'image/jpeg');
+      try {
+        await ref.putFile(property.image, metaData);
+        String url = await ref.getDownloadURL();
+        FirebaseAuth auth = FirebaseAuth.instance;
+        if (property.imageUrls == null) {
+          property.imageUrls = [];
+        }
+        property.imageUrls!.add(url);
+        print(auth.currentUser);
+      } catch (e) {
+        print(e);
+      }
+    }
+
+    print("we are here ");
+    print(property.imageUrls);
     property.image = null;
     prop
         .set(property.toJson())
         .onError((error, stackTrace) => {print('$stackTrace\n'), res = false});
-    prop.update({'dateAdded': Timestamp.fromDate(DateTime.now())});
+    print("workk");
+    //prop.update({'dateAdded': Timestamp.fromDate(DateTime.now())});
     await Add_Property(await get_owner(property.owner_id), property.id!);
-    // print("===========");
-    // print(property.imageUrl);
-    // await prop.set(property.toJson());
+    print("done ");
     return res;
   }
 
