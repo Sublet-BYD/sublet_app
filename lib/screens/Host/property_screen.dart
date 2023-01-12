@@ -331,6 +331,7 @@ class _EditPropertyState extends State<EditProperty> {
                 decoration: InputDecoration(labelText: 'Property Name'),
                 controller: propNameController,
                 onSubmitted: (value) {
+                  print('\n$value\n');
                   if (value.isNotEmpty && value != name) {
                     info['name'] = value;
                   }
