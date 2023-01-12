@@ -144,7 +144,6 @@ class _AssetlistState extends State<Assetlist> {
               itemCount: snapshot.data!.docs.length,
             );
           }
-          return Container();
         });
   }
 

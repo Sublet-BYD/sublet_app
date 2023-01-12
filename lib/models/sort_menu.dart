@@ -18,7 +18,8 @@ class _Sort_MenuState extends State<Sort_Menu> {
   final propEndDateController = TextEditingController(
     text: DateFormat.yMMMd().format(DateTime.now()).toString(),
   );
-  DateTime from = DateTime.now(); // Will be selected by the user; Defualt value is now.
+  DateTime from =
+      DateTime.now(); // Will be selected by the user; Defualt value is now.
   late DateTime till; // Will be selected by the user; No defualt value.
   String search_res = ''; // Will be inputed by the user; No defualt location.
   bool sort_asc =
@@ -89,24 +90,26 @@ class _Sort_MenuState extends State<Sort_Menu> {
                 String formattedDate = DateFormat.yMMMd().format(pickedDate);
                 from = pickedDate;
                 setState(() {
-                  propStartDateController.text =
-                      formattedDate;
+                  propStartDateController.text = formattedDate;
                 });
               } else {
                 // print('incorrect date\n');
-                showDialog(context: context, builder: (BuildContext ctx) =>
-                AlertDialog(
-                  title: Text('Wrong date'),
-                  content: Text('The date you have selected has already passed.'),
-                  actions: [
-                    ElevatedButton(onPressed:() {
-                      Navigator.pop(context);
-                    }, 
-                    child: Text('OK'),
-                    )
-                  ],
-
-                ),);
+                showDialog(
+                  context: context,
+                  builder: (BuildContext ctx) => AlertDialog(
+                    title: Text('Wrong date'),
+                    content:
+                        Text('The date you have selected has already passed.'),
+                    actions: [
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text('OK'),
+                      )
+                    ],
+                  ),
+                );
               }
             }),
           ),
@@ -130,24 +133,26 @@ class _Sort_MenuState extends State<Sort_Menu> {
                 String formattedDate = DateFormat.yMMMd().format(pickedDate);
                 setState(
                   () {
-                    propEndDateController.text =
-                        formattedDate; 
+                    propEndDateController.text = formattedDate;
                   },
                 );
               } else {
-                showDialog(context: context, builder: (BuildContext ctx) =>
-                AlertDialog(
-                  title: Text('Wrong date'),
-                  content: Text('The date you have selected has already passed or is before the first selected date.'),
-                  actions: [
-                    ElevatedButton(onPressed:() {
-                      Navigator.pop(context);
-                    }, 
-                    child: Text('OK'),
-                    )
-                  ],
-
-                ),);
+                showDialog(
+                  context: context,
+                  builder: (BuildContext ctx) => AlertDialog(
+                    title: Text('Wrong date'),
+                    content: Text(
+                        'The date you have selected has already passed or is before the first selected date.'),
+                    actions: [
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text('OK'),
+                      )
+                    ],
+                  ),
+                );
               }
             }),
           ),

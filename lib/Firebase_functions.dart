@@ -175,10 +175,11 @@ class Firebase_functions {
   }
 
   static Future<bool> Delete_property(String property_id) async {
-    if (property_id == '0') {
+    if (!await property_exists(property_id)) {
       return false;
     }
     bool res = true;
+    Property prop = await get_property(property_id);
     String owner_id = (await get_property(property_id)).owner_id;
     db
         .collection('properties')
@@ -186,6 +187,11 @@ class Firebase_functions {
         .delete()
         .onError((error, stackTrace) => res = false);
     if (res) {
+      if (prop.imageUrls != null) {
+        for (var url in prop.imageUrls!) {
+          FirebaseStorage.instance.refFromURL(url).delete();
+        }
+      }
       Remove_Property(await get_owner(owner_id), property_id);
     }
     return res;
