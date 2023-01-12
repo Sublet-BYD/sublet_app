@@ -16,6 +16,7 @@ class ImageInput extends StatefulWidget {
 
 class _ImageInputState extends State<ImageInput> {
   var _storedImage;
+  bool _userPressedButton = false;
 
   Future<void> _pickImage() {
     return showDialog<void>(
@@ -31,6 +32,7 @@ class _ImageInputState extends State<ImageInput> {
                 ),
                 child: const Text('From Camera'),
                 onPressed: () {
+                  _userPressedButton = true;
                   Navigator.of(context).pop();
                   _takePicture(ImageSource.camera);
                 },
@@ -41,6 +43,7 @@ class _ImageInputState extends State<ImageInput> {
                 ),
                 child: const Text('From  Gallery'),
                 onPressed: () {
+                  _userPressedButton = true;
                   Navigator.of(context).pop();
                   _takePicture(ImageSource.gallery);
                 },
@@ -56,14 +59,21 @@ class _ImageInputState extends State<ImageInput> {
     if (imageFile == null) {
       return;
     }
-    setState(() {
-      _storedImage = File(imageFile.path);
-    });
-    final appDir = await syspaths.getApplicationDocumentsDirectory();
-    final fileName = path.basename(imageFile.path);
+    if (_userPressedButton) {
+      setState(() {
+        _storedImage = File(imageFile.path);
+      });
+      final appDir = await syspaths.getApplicationDocumentsDirectory();
+      final fileName = path.basename(imageFile.path);
 
-    final savedImage = await _storedImage!.copy('${appDir.path}/$fileName');
-    widget.onSelectimage(savedImage);
+      final savedImage = await _storedImage!.copy('${appDir.path}/$fileName');
+      widget.onSelectimage(savedImage);
+    } else {
+      setState(() {
+        _storedImage = null;
+      });
+    }
+    _userPressedButton = false;
   }
 
   @override
@@ -95,11 +105,12 @@ class _ImageInputState extends State<ImageInput> {
           width: 10,
         ),
         Expanded(
-            child: TextButton.icon(
-          onPressed: _pickImage,
-          icon: const Icon(Icons.camera),
-          label: const Text('Take Picture'),
-        ))
+          child: TextButton.icon(
+            onPressed: _pickImage,
+            icon: const Icon(Icons.camera),
+            label: const Text('Take Picture'),
+          ),
+        ),
       ],
     );
   }

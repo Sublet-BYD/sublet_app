@@ -8,10 +8,17 @@ import 'package:sublet_app/Firebase_functions.dart';
 import 'package:sublet_app/models/data/property.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:sublet_app/widgets/host_widgets/Delete_prop_dialog.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class PropertyScreen extends StatelessWidget {
+class PropertyScreen extends StatefulWidget {
   const PropertyScreen({super.key});
 
+  @override
+  State<PropertyScreen> createState() => _PropertyScreenState();
+}
+
+class _PropertyScreenState extends State<PropertyScreen> {
+  int activateIndex = 0;
   void _startEditProperty(BuildContext context, Property prop) {
     // The half window for adding new property
     showModalBottomSheet(
@@ -49,20 +56,47 @@ class PropertyScreen extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
 
             //photo slider
-            child: CarouselSlider.builder(
-              options: CarouselOptions(height: 400),
-              itemCount: _property.imageUrls!.length,
-              itemBuilder: ((context, index, realIndex) {
-                print("\n\n");
-                print("--------------");
-                print(_property.imageUrls!.length);
-                final urlImage = _property.imageUrls![index];
-                for (int i = 0; i < _property.imageUrls!.length; i++) {
-                  print(_property.imageUrls![i]);
-                }
-                print("\n\n");
-                return buildImage(urlImage, index);
-              }),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CarouselSlider.builder(
+                  options: CarouselOptions(
+                    height: 200,
+                    reverse: true,
+                    //viewportFraction: 1, //only one image
+                    //enlargeCenterPage: true,
+                    //enableInfiniteScroll: false, //lime the slider
+                    onPageChanged: (index, reason) =>
+                        setState(() => activateIndex = index),
+                  ),
+                  itemCount: _property.imageUrls!.length,
+                  itemBuilder: ((context, index, realIndex) {
+                    print("\n\n");
+                    print("--------------");
+                    if (_property.imageUrls!.isEmpty) {
+                      return Image.asset(
+                        'assets/Images/home-placeholder-profile.jpg',
+                        fit: BoxFit.fill,
+                      );
+                    }
+
+                    print(_property.imageUrls!.length);
+                    final urlImage = _property.imageUrls![index];
+                    for (int i = 0; i < _property.imageUrls!.length; i++) {
+                      print(_property.imageUrls![i]);
+                    }
+                    print("\n\n");
+                    return buildImage(urlImage, index);
+                  }),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                if (_property.imageUrls!.isNotEmpty)
+                  buildIndicator(_property.imageUrls!.length)
+                else
+                  buildIndicator(1)
+              ],
             ),
 
             //  Image.asset('assets/Apartment_example.jpg',
@@ -237,11 +271,21 @@ class PropertyScreen extends StatelessWidget {
   }
 
   Widget buildImage(String urlImage, int index) => Container(
-        margin: EdgeInsets.symmetric(horizontal: 12),
+        //margin: EdgeInsets.symmetric(horizontal: 12),
         color: Colors.grey,
         child: Image.network(
           urlImage,
           fit: BoxFit.cover,
+        ),
+      );
+
+  Widget buildIndicator(int length) => AnimatedSmoothIndicator(
+        activeIndex: activateIndex,
+        count: length,
+        effect: SlideEffect(
+          activeDotColor: Colors.deepPurple,
+          dotHeight: 10,
+          dotWidth: 10,
         ),
       );
 }

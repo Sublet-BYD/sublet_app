@@ -32,7 +32,7 @@ class _NewPropertyState extends State<NewProperty> {
     title: Text('Add a new Property'),
   );
 
-  late File _pickedImaged;
+  File? _pickedImaged;
   void _selectImage(File pickedImage) {
     _pickedImaged = pickedImage;
   }
@@ -49,16 +49,6 @@ class _NewPropertyState extends State<NewProperty> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // SizedBox(
-              //   height: 150,
-              //   width: 100,
-              //   child: Expanded(
-              //     child: Card(
-              //       child: Text(''),
-              //       color: Colors.grey,
-              //     ),
-              //   ),
-              // ),
               ImageInput(_selectImage),
               TextField(
                 decoration: InputDecoration(labelText: 'Property Name'),
@@ -158,30 +148,58 @@ class _NewPropertyState extends State<NewProperty> {
                 onPressed: () {
                   FocusScope.of(context).unfocus();
                   //  _addNewProperty();
-                  Property pro = Property(
-                    name: propNameController.text,
-                    location: propLocationController.text,
-                    owner_id:
-                        Provider.of<Session_details>(context, listen: false)
-                            .UserId
-                            .toString(),
-                    fromdate: DateTime.tryParse(propStartDateController.text),
-                    tilldate: DateTime.tryParse(propEndDateController.text),
-                    price: int.parse(propPriceController.text),
-                    image: _pickedImaged,
-                  );
-                  Firebase_functions.Upload_property(pro).then(
-                    (value) {
-                      if (value) {
-                        print("-----------------------");
-                        print(value);
-                        // Property was uploaded successfully
-                        // Now you can use the updated property in the PropertyScreen
-                        Navigator.pop(context);
-                        widget.refresh();
-                      }
-                    },
-                  );
+                  if (_pickedImaged == null) {
+                    print("is in");
+                    Property pro = Property(
+                      name: propNameController.text,
+                      location: propLocationController.text,
+                      owner_id:
+                          Provider.of<Session_details>(context, listen: false)
+                              .UserId
+                              .toString(),
+                      fromdate: DateTime.tryParse(propStartDateController.text),
+                      tilldate: DateTime.tryParse(propEndDateController.text),
+                      price: int.parse(propPriceController.text),
+                    );
+                    Firebase_functions.Upload_property(pro).then(
+                      (value) {
+                        if (value) {
+                          print("-----------------------");
+                          print(value);
+                          // Property was uploaded successfully
+                          // Now you can use the updated property in the PropertyScreen
+                          Navigator.pop(context);
+                          widget.refresh();
+                        }
+                      },
+                    );
+                  } else {
+                    print("is out");
+                    Property pro = Property(
+                      name: propNameController.text,
+                      location: propLocationController.text,
+                      owner_id:
+                          Provider.of<Session_details>(context, listen: false)
+                              .UserId
+                              .toString(),
+                      fromdate: DateTime.tryParse(propStartDateController.text),
+                      tilldate: DateTime.tryParse(propEndDateController.text),
+                      price: int.parse(propPriceController.text),
+                      image: _pickedImaged,
+                    );
+                    Firebase_functions.Upload_property(pro).then(
+                      (value) {
+                        if (value) {
+                          print("-----------------------");
+                          print(value);
+                          // Property was uploaded successfully
+                          // Now you can use the updated property in the PropertyScreen
+                          Navigator.pop(context);
+                          widget.refresh();
+                        }
+                      },
+                    );
+                  }
                   //PropertiesListCategories.setState()
                   // setState(() {
                   //   Navigator.pop(context);

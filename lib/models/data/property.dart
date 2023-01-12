@@ -38,7 +38,7 @@ class Property {
     this.imageUrls,
   }) {
     dateAdded = DateTime.now();
-    //this.imageUrls = [];
+    
   }
 
 

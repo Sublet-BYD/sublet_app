@@ -87,7 +87,6 @@ class Firebase_functions {
   }
 
   //Property functions:
-
   static Future<bool> Upload_property(Property property) async {
     bool res = true;
     if (!await owner_exists(property.owner_id)) {
@@ -102,7 +101,9 @@ class Firebase_functions {
     DocumentReference prop = db.collection('properties').doc();
     property.assign_id(prop.id);
     print('Assigned id\n');
-
+    if (property.imageUrls == null) {
+      property.imageUrls = [];
+    }
     //ref gives us access to our route cloud storage bucket
     //child allows to control where we want to store\read our file
     // Create a reference to the storage bucket
@@ -119,9 +120,7 @@ class Firebase_functions {
         await ref.putFile(property.image, metaData);
         String url = await ref.getDownloadURL();
         FirebaseAuth auth = FirebaseAuth.instance;
-        if (property.imageUrls == null) {
-          property.imageUrls = [];
-        }
+
         property.imageUrls!.add(url);
         print(auth.currentUser);
       } catch (e) {
@@ -129,16 +128,15 @@ class Firebase_functions {
       }
     }
 
-    print("we are here ");
     print(property.imageUrls);
     property.image = null;
     prop
         .set(property.toJson())
         .onError((error, stackTrace) => {print('$stackTrace\n'), res = false});
-    print("workk");
+
     //prop.update({'dateAdded': Timestamp.fromDate(DateTime.now())});
     await Add_Property(await get_owner(property.owner_id), property.id!);
-    print("done ");
+
     return res;
   }
 
