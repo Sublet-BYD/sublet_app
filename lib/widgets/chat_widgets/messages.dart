@@ -4,7 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sublet_app/main.dart';
-import 'package:sublet_app/widgets/chat/message_bubble.dart';
+import 'package:sublet_app/widgets/chat_widgets/message_bubble.dart';
 
 class Messages extends StatelessWidget {
   const Messages({

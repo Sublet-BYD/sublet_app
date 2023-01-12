@@ -18,8 +18,9 @@ Property _$PropertyFromJson(Map<String, dynamic> json) => Property(
       tilldate: json['tilldate'] == null
           ? null
           : DateTime.parse(json['tilldate'] as String),
-      // dateAdded: json['dateAdded'] =
-      //     DateTime.fromMillisecondsSinceEpoch((json['dateAdded']) * 1000),
+      dateAdded: json['dateAdded'] == null
+          ? null
+          : DateTime.parse(json['dateAdded'] as String),
       occupied: json['occupied'] as bool? ?? false,
       description: json['description'] as String?,
       image: json['image'],
@@ -33,7 +34,7 @@ Map<String, dynamic> _$PropertyToJson(Property instance) => <String, dynamic>{
       'owner_id': instance.owner_id,
       'name': instance.name,
       'location': instance.location,
-      'dateAdded': Timestamp.now(),
+      'dateAdded': instance.dateAdded?.toIso8601String(),
       'fromdate': instance.fromdate?.toIso8601String(),
       'tilldate': instance.tilldate?.toIso8601String(),
       'occupied': instance.occupied,

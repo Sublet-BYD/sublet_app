@@ -48,19 +48,19 @@ class _Renter_ScreenState extends State<Renter_Screen> {
               padding: EdgeInsets.only(top: 20, left: 40, right: 40),
               child: ElevatedButton(
                 onPressed: showSortPanel,
+                style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  shadowColor: Colors.transparent,
+                ),
                 child: Text(
                   'Search',
                   style: TextStyle(
                     fontSize: 15,
                   ),
                 ),
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  shadowColor: Colors.transparent,
-                ),
               ),
             ),
-            Container(
+            SizedBox(
                 height: (MediaQuery.of(context).size.height -
                         appBar.preferredSize.height -
                         MediaQuery.of(context).padding.top) *
@@ -84,7 +84,6 @@ class _AssetlistState extends State<Assetlist> {
 
   @override
   Widget build(BuildContext context) {
-    // get_avail_properties();
     var proStream =
         FirebaseFirestore.instance.collection('properties').snapshots();
     return StreamBuilder(
@@ -99,10 +98,11 @@ class _AssetlistState extends State<Assetlist> {
               padding: const EdgeInsets.only(bottom: 70),
               physics: BouncingScrollPhysics(),
               itemBuilder: (ctx, index) {
-                final _property_data = snapshot.data!.docs[index].data(); // Renamed _propert_id to _property_data
+                final _property_data = snapshot.data!.docs[index]
+                    .data(); // Renamed _propert_id to _property_data
                 // VERY IMPORTANT: Change assetimage to be the first image in the url list of the property.
                 // This will only be doable after finishing the implementation of url list in the Firebase collection
-                // assetImage = 
+                // assetImage =
                 final Property property = Property.fromJson(_property_data);
                 return GestureDetector(
                     onTap: () async {
@@ -111,7 +111,7 @@ class _AssetlistState extends State<Assetlist> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 5, vertical: 2),
-                      child: Container(
+                      child: SizedBox(
                         width: MediaQuery.of(context).size.width,
                         height: (MediaQuery.of(context).size.height -
                                 MediaQuery.of(context).padding.top) *

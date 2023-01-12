@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 // Add the Firestore library
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sublet_app/Firebase_functions.dart';
-import 'package:sublet_app/widgets/image_input.dart';
+import 'package:sublet_app/widgets/image_widgets/image_input.dart';
 import '../../models/data/property.dart';
 import 'package:provider/provider.dart';
 import 'package:sublet_app/providers/Session_details.dart';
