@@ -80,7 +80,7 @@ class Assetlist extends StatefulWidget {
 }
 
 class _AssetlistState extends State<Assetlist> {
-  final assetImage = 'assets/Apartment_example.jpg';
+  var assetImage = 'assets/Apartment_example.jpg';
 
   @override
   Widget build(BuildContext context) {
@@ -99,15 +99,14 @@ class _AssetlistState extends State<Assetlist> {
               padding: const EdgeInsets.only(bottom: 70),
               physics: BouncingScrollPhysics(),
               itemBuilder: (ctx, index) {
-                final _propert_id = snapshot.data!.docs[index].data();
-                print("property_id");
-                print(Property.fromJson(_propert_id).id);
-                final Property property = Property.fromJson(_propert_id);
+                final _property_data = snapshot.data!.docs[index].data(); // Renamed _propert_id to _property_data
+                // VERY IMPORTANT: Change assetimage to be the first image in the url list of the property.
+                // This will only be doable after finishing the implementation of url list in the Firebase collection
+                // assetImage = 
+                final Property property = Property.fromJson(_property_data);
                 return GestureDetector(
                     onTap: () async {
-                      // onPress(context, (await list)[index].id!,
-                      //     (await list)[index].owner_id);
-                      onPress(context, '1', property.owner_id);
+                      onPress(context, _property_data['id'], property.owner_id);
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
@@ -126,7 +125,7 @@ class _AssetlistState extends State<Assetlist> {
                             leading: CircleAvatar(
                               backgroundImage: AssetImage(
                                 assetImage,
-                              ), // (list[index].image != null)? list[index].image as ImageProvider :
+                              ),
                               radius: 50,
                             ),
                             title: Text((property

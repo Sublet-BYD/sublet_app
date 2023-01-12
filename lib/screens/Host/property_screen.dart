@@ -1,9 +1,13 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:sublet_app/Firebase_functions.dart';
 import 'package:sublet_app/models/data/property.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:sublet_app/widgets/host_widgets/Delete_prop_dialog.dart';
 
 class PropertyScreen extends StatelessWidget {
   const PropertyScreen({super.key});
@@ -27,6 +31,11 @@ class PropertyScreen extends StatelessWidget {
       foregroundColor: Colors.white,
       elevation: 0,
     );
+    void ChangeAvailability() {
+      Firebase_functions.Edit_Property(
+          _property.id!, {'occupied': !_property.occupied!});
+    }
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: appBar,
@@ -112,6 +121,8 @@ class PropertyScreen extends StatelessWidget {
               // Chats with renters
               GestureDetector(
                 onTap: () {
+                  // VERY IMPORTANT: Move user to the apropriate chats page (screen with all chats about this property).
+
                   //Move to chat page for this property
                   print('Moving to chats page\n');
                 },
@@ -157,42 +168,38 @@ class PropertyScreen extends StatelessWidget {
                 ),
               ),
               //Occupation status
-              Container(
-                color: Color(available_color),
-                margin: EdgeInsets.only(top: 10),
-                padding: EdgeInsets.symmetric(vertical: 15),
-                alignment: Alignment
-                    .topLeft, // require for the title to begin from left
-                // height: constrains.maxHeight * 0.2,
-                child: Center(
-                  child: FittedBox(
-                    child: Text(
-                      // textAlign: TextAlign.left,
-                      (_property.occupied!)
-                          ? 'This Property is now occupied'
-                          : 'This property is not occupied',
-                      style: TextStyle(
-                        fontFamily: 'OpenSans',
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
+              GestureDetector(
+                onTap: () => ChangeAvailability(),
+                child: Container(
+                  color: Color(available_color),
+                  margin: EdgeInsets.only(top: 10),
+                  padding: EdgeInsets.symmetric(vertical: 15),
+                  alignment: Alignment
+                      .topLeft, // require for the title to begin from left
+                  // height: constrains.maxHeight * 0.2,
+                  child: Center(
+                    child: FittedBox(
+                      child: Text(
+                        // textAlign: TextAlign.left,
+                        (_property.occupied!)
+                            ? 'Occupied. Tap to change status'
+                            : 'Not occupied. Tap to change status',
+                        style: TextStyle(
+                          fontFamily: 'OpenSans',
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-              //Empty container as a placeholder
-              SizedBox(
-                  // margin: EdgeInsets.only(top: 10),
-                  // height: constrains.maxHeight * 0.2,
-                  ),
               //Remove this property -> will be fully implemented in the future
               GestureDetector(
                 onTap: () {
-                  //Implement pop up warning window here
-                  print((_property.occupied!)
-                      ? 'You cannot delete this property, as it is currently occupied.'
-                      : 'Are you sure you want to delete this property?\n');
+                  showDialog(context: context, builder: (BuildContext ctx) => Delete_prop_dialog(property: _property));
+
                 },
                 child: Container(
                   color: Colors.red[800],
@@ -232,17 +239,21 @@ class EditProperty extends StatefulWidget {
   EditProperty(this._property);
 
   @override
-  State<EditProperty> createState() =>
-      _EditPropertyState(this._property.name, this._property.location);
+  State<EditProperty> createState() => _EditPropertyState(
+      this._property.name, this._property.location, this._property.description);
 }
 
 class _EditPropertyState extends State<EditProperty> {
   final String name;
   final String location;
-  _EditPropertyState(this.name, this.location);
+  final String? description;
+  _EditPropertyState(this.name, this.location, this.description);
   // final Property _property;
   late final propNameController = TextEditingController(text: name);
   late final propLocationController = TextEditingController(text: location);
+  late final propDescController =
+      TextEditingController(text: (description != null) ? description : '');
+  Map<String, String> info = Map();
 
   @override
   Widget build(BuildContext context) {
@@ -262,15 +273,40 @@ class _EditPropertyState extends State<EditProperty> {
               TextField(
                 decoration: InputDecoration(labelText: 'Property Name'),
                 controller: propNameController,
-                onSubmitted: ((value) {}), // TODO
+                onSubmitted: (value) {
+                  if (value.isNotEmpty && value != name) {
+                    info['name'] = value;
+                  }
+                },
               ),
               TextField(
                 decoration: InputDecoration(labelText: 'Property Location'),
                 controller: propLocationController,
-                onSubmitted: ((value) {}), // TODO
+                onSubmitted: (value) {
+                  if (value.isNotEmpty && value != location) {
+                    info['location'] = value;
+                  }
+                },
+              ),
+              TextField(
+                decoration: InputDecoration(labelText: 'Property Description'),
+                controller: propDescController,
+                onSubmitted: (value) {
+                  if (value.isNotEmpty && value != description) {
+                    info['description'] = value;
+                  }
+                },
               ),
               TextButton(
-                onPressed: () => {},
+                onPressed: () {
+                  print(info);
+                  info.forEach((key, value) {
+                    print('$key : $value\n');
+                  });
+                  Firebase_functions.Edit_Property(widget._property.id!, info);
+                  setState(() {});
+                  Navigator.pop(context);
+                },
                 child: Text('Update'),
                 style: TextButton.styleFrom(
                   foregroundColor: Colors.purple,
