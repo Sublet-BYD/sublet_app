@@ -124,8 +124,11 @@ class _AssetlistState extends State<Assetlist> {
                           child: ListTile(
                             leading: ClipRRect(
                               borderRadius: BorderRadius.circular(5.0),
-                              child: Image.asset(assetImage),
-                              
+                              child: property.imageUrls!.isEmpty
+                                  ? Image.asset(
+                                      'assets/Images/home-placeholder-profile.jpg')
+                                  : Image.network(property.imageUrls![0]),
+
                               // backgroundImage: AssetImage(
                               // assetImage,
                               //),
