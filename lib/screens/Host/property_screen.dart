@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -281,8 +282,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
                     ),
                   ]),
                 );
-              }
-              else{
+              } else {
                 return Center(child: Text('An unexpected error has occurred.'));
               }
             }
@@ -323,19 +323,35 @@ class EditProperty extends StatefulWidget {
 
   @override
   State<EditProperty> createState() => _EditPropertyState(
-      this._property.name, this._property.location, this._property.description);
+      this._property.name,
+      this._property.location,
+      this._property.description,
+      this._property.fromdate,
+      this._property.tilldate);
 }
 
 class _EditPropertyState extends State<EditProperty> {
   final String name;
   final String location;
   final String? description;
-  _EditPropertyState(this.name, this.location, this.description);
+  final DateTime? from, till;
+  _EditPropertyState(
+      this.name, this.location, this.description, this.from, this.till);
   // final Property _property;
   late final propNameController = TextEditingController(text: name);
   late final propLocationController = TextEditingController(text: location);
   late final propDescController =
       TextEditingController(text: (description != null) ? description : '');
+  late final propStartDateController = TextEditingController(
+    text: DateFormat.yMMMd()
+        .format((from != null) ? from! : DateTime.now())
+        .toString(),
+  );
+  late final propEndDateController = TextEditingController(
+    text: DateFormat.yMMMd()
+        .format((till != null) ? till! : DateTime.now())
+        .toString(),
+  );
   Map<String, String> info = Map();
 
   @override
@@ -380,6 +396,95 @@ class _EditPropertyState extends State<EditProperty> {
                     info['description'] = value;
                   }
                 },
+              ),
+              Text('First available date:'),
+              TextField(
+                controller: propStartDateController,
+                decoration: InputDecoration(
+                    icon: Icon(Icons.calendar_today), //icon of text field
+                    labelText: "From" //label text of field
+                    ),
+                readOnly: true,
+                onTap: (() async {
+                  DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1950),
+                      lastDate: DateTime(2100));
+                  if (pickedDate != null &&
+                      pickedDate.isAfter(DateTime.now())) {
+                    info['fromdate'] = pickedDate.toIso8601String();
+                    String formattedDate =
+                        DateFormat.yMMMd().format(pickedDate);
+                    setState(() {
+                      propStartDateController.text = formattedDate;
+                    });
+                  } else {
+                    // print('incorrect date\n');
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext ctx) => AlertDialog(
+                        title: Text('Wrong date'),
+                        content: Text(
+                            'The date you have selected has already passed.'),
+                        actions: [
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text('OK'),
+                          )
+                        ],
+                      ),
+                    );
+                  }
+                }),
+              ),
+              Text('Last available date:'),
+              TextField(
+                controller: propEndDateController,
+                //editing controller of this TextField
+                decoration: InputDecoration(
+                    icon: Icon(Icons.calendar_today), //icon of text field
+                    labelText: "To" //label text of field
+                    ),
+                readOnly: true,
+                onTap: (() async {
+                  DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1950),
+                      lastDate: DateTime(2100));
+                  if (pickedDate != null &&
+                      pickedDate
+                          .isAfter((from != null) ? from! : DateTime.now())) {
+                    info['tilldate'] = pickedDate.toIso8601String();
+                    String formattedDate =
+                        DateFormat.yMMMd().format(pickedDate);
+                    setState(
+                      () {
+                        propEndDateController.text = formattedDate;
+                      },
+                    );
+                  } else {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext ctx) => AlertDialog(
+                        title: Text('Wrong date'),
+                        content: Text(
+                            'The date you have selected has already passed or is before the first selected date.'),
+                        actions: [
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text('OK'),
+                          )
+                        ],
+                      ),
+                    );
+                  }
+                }),
               ),
               TextButton(
                 onPressed: () {

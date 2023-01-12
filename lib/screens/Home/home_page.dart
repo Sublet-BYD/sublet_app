@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -133,10 +135,10 @@ class _AuthCardState extends State<AuthCard> {
     'email': '',
     'password': '',
   };
-  final _userName = TextEditingController();
+  final _userName = TextEditingController(text: 'adminh@admin.com');
 
   var _isLoading = false;
-  final _passwordController = TextEditingController();
+  final _passwordController = TextEditingController(text: 'admin1');
 
 //show dialog to the users
   void _showErrorDiallog(String message) {
