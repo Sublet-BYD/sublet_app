@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -11,8 +10,7 @@ class Property {
   final String owner_id;
   final String name;
   final String location;
-  late DateTime? dateAdded;
-  late DateTime? fromdate, tilldate;
+  late DateTime? dateAdded, fromdate, tilldate;
   // final DateTimeRange? dates;
   final bool? occupied;
   final int? price; // Price of subletting the property for a single night
@@ -40,8 +38,9 @@ class Property {
     this.imageUrls,
   }) {
     dateAdded = DateTime.now();
-    this.imageUrls = ['assets/Images/home-placeholder-profile.jpg'];
+    //this.imageUrls = [];
   }
+
 
   void assign_id(String id) {
     // This function will be called by Firebase_functions when uploading a new owner to the database.

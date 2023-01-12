@@ -62,6 +62,7 @@ class Auth with ChangeNotifier {
           //Provider.of<Session_details>(context).UpdateUid(user.uid);
 
           _userId = user.uid;
+          _token = user.getIdToken().toString();
         }
       });
 

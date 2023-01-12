@@ -32,10 +32,17 @@ class PropertyCard extends StatelessWidget {
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20)),
-                  child: Image.asset(
-                    'assets/Apartment_example.jpg',
-                    fit: BoxFit.fill,
-                  ),
+                  child: _property.imageUrls!.isEmpty
+                      ? Image.asset(
+                          'assets/Images/home-placeholder-profile.jpg',
+                          fit: BoxFit.fill,
+                        )
+                      : Image.network(
+                          _property.imageUrls![0],
+                          fit: BoxFit.fill,
+                          height: 100,
+                          width: 40,
+                        ),
                 ),
                 FittedBox(
                   fit: BoxFit.scaleDown,

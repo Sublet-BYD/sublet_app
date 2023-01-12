@@ -47,11 +47,20 @@ class PropertyScreen extends StatelessWidget {
                     MediaQuery.of(context).padding.top) *
                 0.3,
             width: MediaQuery.of(context).size.width,
+
+            //photo slider
             child: CarouselSlider.builder(
-              options: CarouselOptions(autoPlay: true),
+              options: CarouselOptions(height: 400),
               itemCount: _property.imageUrls!.length,
               itemBuilder: ((context, index, realIndex) {
+                print("\n\n");
+                print("--------------");
+                print(_property.imageUrls!.length);
                 final urlImage = _property.imageUrls![index];
+                for (int i = 0; i < _property.imageUrls!.length; i++) {
+                  print(_property.imageUrls![i]);
+                }
+                print("\n\n");
                 return buildImage(urlImage, index);
               }),
             ),
@@ -230,6 +239,10 @@ class PropertyScreen extends StatelessWidget {
   Widget buildImage(String urlImage, int index) => Container(
         margin: EdgeInsets.symmetric(horizontal: 12),
         color: Colors.grey,
+        child: Image.network(
+          urlImage,
+          fit: BoxFit.cover,
+        ),
       );
 }
 

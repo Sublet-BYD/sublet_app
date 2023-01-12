@@ -165,21 +165,30 @@ class _NewPropertyState extends State<NewProperty> {
                         Provider.of<Session_details>(context, listen: false)
                             .UserId
                             .toString(),
-                    dateAdded: DateTime.now(),
                     fromdate: DateTime.tryParse(propStartDateController.text),
                     tilldate: DateTime.tryParse(propEndDateController.text),
                     price: int.parse(propPriceController.text),
                     image: _pickedImaged,
                   );
-
-                  Firebase_functions.Upload_property(pro);
-                  // PropertiesListCategories.setState()
-                  setState(() {
-                    Navigator.pop(context);
-                    widget.refresh();
-                    //           Navigator.pushReplacement(context,
-                    // MaterialPageRoute(builder: (context) => TabsScreen()));
-                  });
+                  Firebase_functions.Upload_property(pro).then(
+                    (value) {
+                      if (value) {
+                        print("-----------------------");
+                        print(value);
+                        // Property was uploaded successfully
+                        // Now you can use the updated property in the PropertyScreen
+                        Navigator.pop(context);
+                        widget.refresh();
+                      }
+                    },
+                  );
+                  //PropertiesListCategories.setState()
+                  // setState(() {
+                  //   Navigator.pop(context);
+                  //   widget.refresh();
+                  //   //           Navigator.pushReplacement(context,
+                  //   // MaterialPageRoute(builder: (context) => TabsScreen()));
+                  // });
                 },
                 icon: Icon(Icons.add),
                 label: Text('Add Place'),

@@ -11,6 +11,7 @@ import 'models/data/host_data.dart';
 import 'models/data/property.dart';
 import './models/data/host_data.dart';
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Firebase_functions {
   static var db = FirebaseFirestore.instance;
@@ -59,6 +60,7 @@ class Firebase_functions {
     owner.Add_Property(property_id);
     owner_document.update({'plist': owner.plist}).onError(
         (error, stackTrace) => res = false);
+
     return res;
   }
 
@@ -100,25 +102,43 @@ class Firebase_functions {
     DocumentReference prop = db.collection('properties').doc();
     property.assign_id(prop.id);
     print('Assigned id\n');
+
     //ref gives us access to our route cloud storage bucket
     //child allows to control where we want to store\read our file
     // Create a reference to the storage bucket
-    final ref = FirebaseStorage.instance.ref().child("${property.id}.jpg");
-    //upload the file
-    final task = ref.putFile(property.image);
-    print('Uploaded image\n');
-    final url = ref.getDownloadURL();
-    print('Got url of image\n');
-    // property.imageUrl = url;
+
+    if (property.image != null) {
+      final storageRef = FirebaseStorage.instance.ref();
+      Reference ref =
+          storageRef.child("${DateTime.now().microsecondsSinceEpoch}.jpg");
+
+      print('Uploaded image\n');
+      //upload the file
+      final metaData = SettableMetadata(contentType: 'image/jpeg');
+      try {
+        await ref.putFile(property.image, metaData);
+        String url = await ref.getDownloadURL();
+        FirebaseAuth auth = FirebaseAuth.instance;
+        if (property.imageUrls == null) {
+          property.imageUrls = [];
+        }
+        property.imageUrls!.add(url);
+        print(auth.currentUser);
+      } catch (e) {
+        print(e);
+      }
+    }
+
+    print("we are here ");
+    print(property.imageUrls);
     property.image = null;
     prop
         .set(property.toJson())
         .onError((error, stackTrace) => {print('$stackTrace\n'), res = false});
-    // prop.update({'dateAdded' : Timestamp.fromDate(DateTime.now())});
+    print("workk");
+    //prop.update({'dateAdded': Timestamp.fromDate(DateTime.now())});
     await Add_Property(await get_owner(property.owner_id), property.id!);
-    // print("===========");
-    // print(property.imageUrl);
-    // await prop.set(property.toJson());
+    print("done ");
     return res;
   }
 
@@ -134,11 +154,7 @@ class Firebase_functions {
     if (!document.exists) {
       print('property does not exist, please check your data\n');
       return Property(
-          id: '0',
-          name: 'No name',
-          location: 'No location',
-          owner_id: 'no id',
-          dateAdded: Timestamp.now().toDate());
+          id: '0', name: 'No name', location: 'No location', owner_id: 'no id');
     }
     Map<String, dynamic> json = document.data() as Map<String, dynamic>;
     return Property.fromJson(json);
@@ -159,11 +175,10 @@ class Firebase_functions {
   }
 
   static Future<bool> Delete_property(String property_id) async {
-    if (!await property_exists(property_id)) {
+    if (property_id == '0') {
       return false;
     }
     bool res = true;
-    Property property = await get_property(property_id);
     String owner_id = (await get_property(property_id)).owner_id;
     db
         .collection('properties')
@@ -172,12 +187,6 @@ class Firebase_functions {
         .onError((error, stackTrace) => res = false);
     if (res) {
       Remove_Property(await get_owner(owner_id), property_id);
-      if (property.imageUrls != null) {
-        for (var url in property.imageUrls!) {
-          print(url);
-          FirebaseStorage.instance.refFromURL(url).delete();
-        }
-      }
     }
     return res;
   }
