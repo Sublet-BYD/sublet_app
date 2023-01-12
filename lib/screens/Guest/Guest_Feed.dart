@@ -48,19 +48,19 @@ class _Renter_ScreenState extends State<Renter_Screen> {
               padding: EdgeInsets.only(top: 20, left: 40, right: 40),
               child: ElevatedButton(
                 onPressed: showSortPanel,
+                style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  shadowColor: Colors.transparent,
+                ),
                 child: Text(
                   'Search',
                   style: TextStyle(
                     fontSize: 15,
                   ),
                 ),
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  shadowColor: Colors.transparent,
-                ),
               ),
             ),
-            Container(
+            SizedBox(
                 height: (MediaQuery.of(context).size.height -
                         appBar.preferredSize.height -
                         MediaQuery.of(context).padding.top) *
@@ -84,7 +84,6 @@ class _AssetlistState extends State<Assetlist> {
 
   @override
   Widget build(BuildContext context) {
-    // get_avail_properties();
     var proStream =
         FirebaseFirestore.instance.collection('properties').snapshots();
     return StreamBuilder(
@@ -99,20 +98,16 @@ class _AssetlistState extends State<Assetlist> {
               padding: const EdgeInsets.only(bottom: 70),
               physics: BouncingScrollPhysics(),
               itemBuilder: (ctx, index) {
-                final _propert_id = snapshot.data!.docs[index].data();
-                print("property_id");
-                print(Property.fromJson(_propert_id).id);
-                final Property property = Property.fromJson(_propert_id);
+                final PropertId = snapshot.data!.docs[index].data();
+                final Property property = Property.fromJson(PropertId);
                 return GestureDetector(
                     onTap: () async {
-                      // onPress(context, (await list)[index].id!,
-                      //     (await list)[index].owner_id);
                       onPress(context, '1', property.owner_id);
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 5, vertical: 2),
-                      child: Container(
+                      child: SizedBox(
                         width: MediaQuery.of(context).size.width,
                         height: (MediaQuery.of(context).size.height -
                                 MediaQuery.of(context).padding.top) *
@@ -145,7 +140,6 @@ class _AssetlistState extends State<Assetlist> {
               itemCount: snapshot.data!.docs.length,
             );
           }
-          return Container();
         });
   }
 

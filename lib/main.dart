@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sublet_app/providers/Session_details.dart';
 import 'package:sublet_app/providers/firestore_properties.dart';
+import 'package:sublet_app/screens/Chat/contact_screen.dart';
 import 'package:sublet_app/screens/Home/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:sublet_app/models/data/host_data.dart';
@@ -72,7 +73,10 @@ class MyApp extends StatelessWidget {
                 fontFamily: 'Lato',
               ),
               debugShowCheckedModeBanner: false,
-              home: (auth.isAuth) ? choosePage(session.utype) : HomeScreen(),
+              // home: (auth.isAuth) ? choosePage(session.utype) : HomeScreen(),
+              home: ContactScreen(
+                  chatUsersStream:
+                      FirestoreProperties().getAvailableHostProperties("1")),
 
               // home: const HomeScreen(),
               routes: {
