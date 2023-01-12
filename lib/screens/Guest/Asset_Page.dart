@@ -172,7 +172,7 @@ class _AssetPageState extends State<AssetPage> {
                                                   property.description!.length >
                                                       5)
                                               ? property.description as String
-                                              : '{Man} Once upon a time there was a lovely princess.But she had an enchantment upon her of a fearful sort which could only be broken by loves first kiss.She was locked away in a castle guarded by a terrible fire-breathing dragon.Many brave knigts had attempted to free her from this dreadful prison, but non prevailed.She waited in the dragons keep in the highest room of the tallest tower for her true love and true loves first kiss.{Laughing} Like thats ever gonna happen.',
+                                              : 'No available',
                                           style: TextStyle(
                                               fontFamily: 'OpenSans',
                                               fontSize: 10),
