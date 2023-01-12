@@ -32,22 +32,6 @@ class _ManagePropertiesState extends State<ManageProperties> {
         builder: (context, firestoreProperties, child) {
       return Column(
         children: [
-          // Padding(
-          //   padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 8.0),
-          //   child: TextFormField(
-          //     decoration: InputDecoration(
-          //       labelText: 'Search',
-          //       prefixIcon: const Icon(
-          //         Icons.search,
-          //         // color: Colors.white,
-          //       ),
-          //       contentPadding: EdgeInsets.all(8.0),
-          //       border: OutlineInputBorder(
-          //         borderRadius: BorderRadius.circular(30),
-          //       ),
-          //     ),
-          //   ),
-          // ),
           Expanded(
             child: SingleChildScrollView(
               padding: const EdgeInsets.only(bottom: 60),
@@ -57,6 +41,7 @@ class _ManagePropertiesState extends State<ManageProperties> {
                   Column(
                     children: [
                       Container(
+                        margin: EdgeInsets.only(bottom: 15.0, left: 20),
                         child: Text(
                           'Recently Added',
                           style: TextStyle(
@@ -65,7 +50,6 @@ class _ManagePropertiesState extends State<ManageProperties> {
                             fontFamily: 'OpenSans',
                           ),
                         ),
-                        margin: EdgeInsets.only(bottom: 15.0, left: 20),
                       ),
                       PropertiesListCategories(
                           title: 'Recently Added',
@@ -78,6 +62,7 @@ class _ManagePropertiesState extends State<ManageProperties> {
                   Column(
                     children: [
                       Container(
+                        margin: EdgeInsets.only(bottom: 15.0, left: 20),
                         child: Text(
                           'Occupied Properties',
                           style: TextStyle(
@@ -86,7 +71,6 @@ class _ManagePropertiesState extends State<ManageProperties> {
                             fontFamily: 'OpenSans',
                           ),
                         ),
-                        margin: EdgeInsets.only(bottom: 15.0, left: 20),
                       ),
                       PropertiesListCategories(
                           title: 'Occupied Properties',
@@ -99,6 +83,7 @@ class _ManagePropertiesState extends State<ManageProperties> {
                   Column(
                     children: [
                       Container(
+                        margin: EdgeInsets.only(bottom: 15.0, left: 20),
                         child: Text(
                           'Unoccupied Properties',
                           style: TextStyle(
@@ -107,7 +92,6 @@ class _ManagePropertiesState extends State<ManageProperties> {
                             fontFamily: 'OpenSans',
                           ),
                         ),
-                        margin: EdgeInsets.only(bottom: 15.0, left: 20),
                       ),
                       PropertiesListCategories(
                           title: 'Unoccupied Properties',

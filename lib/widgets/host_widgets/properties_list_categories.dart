@@ -23,12 +23,8 @@ class PropertiesListCategories extends StatefulWidget {
 }
 
 class _PropertiesListCategoriesState extends State<PropertiesListCategories> {
-  void onPropertyCardPress(BuildContext ctx, Property property) async {
-    print(property.imageUrls);
-    Navigator.of(ctx).pushNamed(
-      '/property-screen',
-      arguments: property,
-    );
+  void onPropertyCardPress(BuildContext ctx) async {
+    Navigator.of(ctx).pushNamed('/property-screen');
   }
 
   @override
@@ -59,14 +55,17 @@ class _PropertiesListCategoriesState extends State<PropertiesListCategories> {
                       padding: const EdgeInsets.only(left: 10),
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
-                        final propertId =
+                        final propertyJson =
                             data.docs[index].data() as Map<String, dynamic>;
-                        final propertyObj = Property.fromJson(propertId);
+                        final propertyObj = Property.fromJson(propertyJson);
                         return InkWell(
                           splashColor: Theme.of(context).primaryColor,
                           borderRadius: BorderRadius.circular(20),
-                          onTap: (() =>
-                              onPropertyCardPress(context, propertyObj)),
+                          onTap: (() {
+                            Provider.of<Session_details>(context)
+                                .UpdateProperty(propertyObj);
+                            return onPropertyCardPress(context);
+                          }),
                           child: PropertyCard(propertyObj),
                         );
                       },
