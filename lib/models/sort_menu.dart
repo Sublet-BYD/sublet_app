@@ -16,7 +16,6 @@ class Sort_Menu extends StatefulWidget {
 }
 
 class _Sort_MenuState extends State<Sort_Menu> {
-  Map<String, Object> sort_reqs = {'price' : true, 'from' : DateTime.now()}; // Defualt values
   late Future<List<String>> suggestions =
       Provider.of<FirestoreProperties>(context).getAllLocations();
   final propStartDateController = TextEditingController(
@@ -31,14 +30,25 @@ class _Sort_MenuState extends State<Sort_Menu> {
   DateTime from =
       DateTime.now(); // Will be selected by the user; Defualt value is now.
   late DateTime till; // Will be selected by the user; No defualt value.
-  late String search_res; // Will be inputed by the user; No defualt location.
-  bool sort_asc =
-      true; // Will be selected by the user; Defualt value means sorting by ascending prices.
   @override
   Widget build(BuildContext context) {
-    void printlist() async{
+    Map<String, Object> sort_reqs =
+        Provider.of<Session_details>(context).sort_reqs;
+    if (sort_reqs.containsKey('location')) {
+      locationController.text = sort_reqs['location'] as String;
+    }
+    if (sort_reqs.containsKey('from')) {
+      propStartDateController.text =
+          DateFormat.yMMMd().format(sort_reqs['from'] as DateTime).toString();
+    }
+    if (sort_reqs.containsKey('till')) {
+      propStartDateController.text =
+          DateFormat.yMMMd().format(sort_reqs['till'] as DateTime).toString();
+    }
+    void printlist() async {
       print(await suggestions);
     }
+
     return FutureBuilder(
         future: suggestions,
         builder: (context, snapshot) {
@@ -52,53 +62,39 @@ class _Sort_MenuState extends State<Sort_Menu> {
                 children: [
                   //Search bar
                   TypeAheadField(
-                      animationStart: 0,
-                      animationDuration: Duration.zero,
-                      suggestionsCallback: ((pattern) {
-                        List<String> relevant_suggestions = [];
-                        relevant_suggestions.addAll(snapshot.data!);
-                        relevant_suggestions.retainWhere((element) {
-                          return element
-                              .toLowerCase()
-                              .contains(pattern.toLowerCase());
-                        });
-                        return relevant_suggestions;
-                      }),
-                      itemBuilder: (context, sone) {
-                        return Card(
-                            child: Container(
-                          padding: EdgeInsets.all(10),
-                          child: Text(sone.toString()),
-                        ));
-                      },
-                      textFieldConfiguration: TextFieldConfiguration(
-                        decoration: InputDecoration(
-                            labelText: 'Search location...',
-                            prefixIcon: Icon(Icons.search)),
-                            controller: locationController,
-                      ),
-                      onSuggestionSelected: ((suggestion) {
-                        locationController.text = suggestion;
-                        sort_reqs['location'] = suggestion;
-                      })),
-                  // TextFormField(
-                  //   decoration: InputDecoration(
-                  //       labelText: 'Search location...',
-                  //       prefixIcon: Icon(Icons.search)),
-                  //   // validator: (value) {
-                  //   //   if (value!.isEmpty) {
-                  //   //     return '!';
-                  //   //   }
-                  //   //   return null;
-                  //   // },
-                  //   style: TextStyle(
-                  //       fontSize: MediaQuery.of(context).textScaleFactor * 15),
-                  //   onSaved: (value) {
-                  //     // print(_authData);
-                  //     search_res =
-                  //         value!; // Hard null check will be safe once list search is implemented (meaning users could only search locations from a given list).
-                  //   },
-                  // ),
+                    animationStart: 0,
+                    animationDuration: Duration.zero,
+                    suggestionsCallback: ((pattern) {
+                      List<String> relevant_suggestions = [];
+                      relevant_suggestions.addAll(snapshot.data!);
+                      relevant_suggestions.retainWhere((element) {
+                        return element
+                            .toLowerCase()
+                            .contains(pattern.toLowerCase());
+                      });
+                      return relevant_suggestions;
+                    }),
+                    itemBuilder: (context, sone) {
+                      return Card(
+                          child: Container(
+                        padding: EdgeInsets.all(10),
+                        child: Text(sone.toString()),
+                      ));
+                    },
+                    textFieldConfiguration: TextFieldConfiguration(
+                      decoration: InputDecoration(
+                          labelText: (locationController.text != '')
+                              ? ''
+                              : 'Search location...',
+                          prefixIcon: Icon(Icons.search)),
+                      controller: locationController,
+                    ),
+                    onSuggestionSelected: ((suggestion) {
+                      locationController.text = suggestion;
+                      sort_reqs['location'] = suggestion;
+                    }),
+                    hideOnEmpty: true,
+                  ),
                   //Sort by price:
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 20),
@@ -133,7 +129,7 @@ class _Sort_MenuState extends State<Sort_Menu> {
                     onTap: (() async {
                       DateTime? pickedDate = await showDatePicker(
                           context: context,
-                          initialDate: DateTime.now(),
+                          initialDate: sort_reqs['from'] as DateTime,
                           firstDate: DateTime(1950),
                           lastDate: DateTime(2100));
                       if (pickedDate != null &&
@@ -177,19 +173,22 @@ class _Sort_MenuState extends State<Sort_Menu> {
                     onTap: (() async {
                       DateTime? pickedDate = await showDatePicker(
                           context: context,
-                          initialDate: DateTime.now(),
+                          initialDate: (sort_reqs.containsKey('till'))
+                              ? sort_reqs['till'] as DateTime
+                              : DateTime.now(),
                           firstDate: DateTime(1950),
                           lastDate: DateTime(2100));
                       if (pickedDate != null && pickedDate.isAfter(from)) {
                         till = pickedDate;
                         String formattedDate =
                             DateFormat.yMMMd().format(pickedDate);
-                            sort_reqs['till'] = pickedDate;
+                        sort_reqs['till'] = pickedDate;
                         setState(
                           () {
                             propEndDateController.text = formattedDate;
                           },
                         );
+                      } else if (pickedDate == null) {
                       } else {
                         showDialog(
                           context: context,
@@ -212,14 +211,14 @@ class _Sort_MenuState extends State<Sort_Menu> {
                   ),
                   ElevatedButton(
                       onPressed: (() {
-                        Provider.of<Session_details>(context, listen: false).UpdateRequirements(sort_reqs);
+                        Provider.of<Session_details>(context, listen: false)
+                            .UpdateRequirements(sort_reqs);
                         Navigator.pop(context);
                       }),
                       child: Text('Confirm')),
                 ],
               );
-            }
-            else{
+            } else {
               printlist();
               return Text('ERROR');
             }

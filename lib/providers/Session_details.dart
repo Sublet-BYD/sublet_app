@@ -11,7 +11,7 @@ class Session_details with ChangeNotifier {
   String property_id = "";
   String host_id = "";
   String uname = "";
-  Map<String, Object> sort_reqs = {'price' : true, 'from' : DateTime.now()}; // Requirements for sorting the properties in Guest_Feed; Defualt sort will only be by ascending prices.
+  Map<String, Object> sort_reqs = {'price' : true, 'from' : DateTime.now(), 'location' : 'any location'}; // Requirements for sorting the properties in Guest_Feed; Defualt sort will only be by ascending prices.
 
   String get UserId => uid;
   String get UserType => utype;
@@ -69,6 +69,6 @@ class Session_details with ChangeNotifier {
     utype = "";
     property_id = "";
     uname = "";
-    sort_reqs = {'price' : true, 'from' : DateTime.now()};
+    sort_reqs = {'price' : true, 'from' : DateTime.now(), 'location' : 'any location'};
   }
 }

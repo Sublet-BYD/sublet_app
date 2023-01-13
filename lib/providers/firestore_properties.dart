@@ -34,11 +34,13 @@ class FirestoreProperties with ChangeNotifier {
   }
 
   Future<List<String>> getAllLocations() async {
-    List<String> output = [];
+    List<String> output = ['any location'];
     FirebaseFirestore.instance.collection('properties').get().then((value) {
       if (value != null) {
         value.docChanges.forEach((element) {
-          output.add(element.doc['location']);
+          if (!output.contains(element)) {
+            output.add(element.doc['location']);
+          }
         });
       }
     });
@@ -51,6 +53,7 @@ class FirestoreProperties with ChangeNotifier {
     DateTime from = requirements['from'] as DateTime;
     DateTime till;
     String location;
+    var output;
     if (requirements.containsKey('till')) {
       till = requirements['till'] as DateTime;
     } else {
@@ -58,37 +61,33 @@ class FirestoreProperties with ChangeNotifier {
           3000); // Arbitrarily far away time; The user has not chosen an end date.
     }
     print('Attempting query\n');
-    if (requirements.containsKey('location')) {
+    if (requirements.containsKey('location') &&
+        requirements['location'] != 'any location') {
       // Return only properties from chosen location
-      var output = FirebaseFirestore.instance
+      output = FirebaseFirestore.instance
           .collection('properties')
           .where('location', isEqualTo: requirements['location'] as String)
+          .where('occupied', isEqualTo: false)
           .where('fromdate', isGreaterThanOrEqualTo: from.toIso8601String());
-          // .orderBy(
-              // 'fromdate') // This line is required by firebase!!! 'The initial orderBy() field has to be the same as the where() field parameter when an inequality operator is invoked.'
-          // .where('tilldate', isLessThanOrEqualTo: till.toIso8601String())
-          // .orderBy('price', descending: !price_asc);
-          print(output);
-      // .snapshots();
-      return output
-          // .where('tilldate', isLessThanOrEqualTo: till.toIso8601String())
-          .orderBy(
-              'fromdate') // This line is required by firebase!!! 'The initial orderBy() field has to be the same as the where() field parameter when an inequality operator is invoked.'
-          .orderBy('price', descending: !price_asc)
-          .snapshots();
+    } else {
+      output = FirebaseFirestore.instance
+          .collection('properties')
+          .where('occupied', isEqualTo: false)
+          .where('fromdate', isGreaterThanOrEqualTo: from.toIso8601String());
     }
-    // Else; Return properties from all locations
-    var output = FirebaseFirestore.instance
-        .collection('properties')
-        .where('fromdate', isGreaterThanOrEqualTo: from.toIso8601String());
-    // .where('tilldate', isLessThanOrEqualTo: till.toIso8601String())
-      print(output);
-    // .snapshots();
+    print(price_asc);
+    if(price_asc){
+      return output
+        .orderBy(
+            'fromdate') // This line is required by firebase!!! 'The initial orderBy() field has to be the same as the where() field parameter when an inequality operator is invoked.'
+        .orderBy('price')
+        .snapshots();
+    }
     return output
         // .where('tilldate', isLessThanOrEqualTo: till.toIso8601String())
         .orderBy(
             'fromdate') // This line is required by firebase!!! 'The initial orderBy() field has to be the same as the where() field parameter when an inequality operator is invoked.'
-        .orderBy('price', descending: !price_asc)
+        .orderBy('price', descending: true)
         .snapshots();
   }
 }
