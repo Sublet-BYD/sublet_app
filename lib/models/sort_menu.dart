@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sublet_app/providers/Session_details.dart';
 import 'package:sublet_app/providers/firestore_properties.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -15,6 +16,7 @@ class Sort_Menu extends StatefulWidget {
 }
 
 class _Sort_MenuState extends State<Sort_Menu> {
+  Map<String, Object> sort_reqs = {'price' : true, 'from' : DateTime.now()}; // Defualt values
   late Future<List<String>> suggestions =
       Provider.of<FirestoreProperties>(context).getAllLocations();
   final propStartDateController = TextEditingController(
@@ -77,7 +79,7 @@ class _Sort_MenuState extends State<Sort_Menu> {
                       ),
                       onSuggestionSelected: ((suggestion) {
                         locationController.text = suggestion;
-                        search_res = suggestion;
+                        sort_reqs['location'] = suggestion;
                       })),
                   // TextFormField(
                   //   decoration: InputDecoration(
@@ -114,9 +116,9 @@ class _Sort_MenuState extends State<Sort_Menu> {
                     labels: ['Price ascending', 'Price descending'],
                     onToggle: (index) {
                       if (index == 0) {
-                        sort_asc = true;
+                        sort_reqs['price'] = true;
                       } else {
-                        sort_asc = false;
+                        sort_reqs['price'] = false;
                       }
                     },
                   ),
@@ -138,7 +140,7 @@ class _Sort_MenuState extends State<Sort_Menu> {
                           pickedDate.isAfter(DateTime.now())) {
                         String formattedDate =
                             DateFormat.yMMMd().format(pickedDate);
-                        from = pickedDate;
+                        sort_reqs['from'] = pickedDate;
                         setState(() {
                           propStartDateController.text = formattedDate;
                         });
@@ -182,6 +184,7 @@ class _Sort_MenuState extends State<Sort_Menu> {
                         till = pickedDate;
                         String formattedDate =
                             DateFormat.yMMMd().format(pickedDate);
+                            sort_reqs['till'] = pickedDate;
                         setState(
                           () {
                             propEndDateController.text = formattedDate;
@@ -209,7 +212,7 @@ class _Sort_MenuState extends State<Sort_Menu> {
                   ),
                   ElevatedButton(
                       onPressed: (() {
-                        // Call a function in the firestore_properties provider which will change the stream used in Guest_Feed (Said function has yet to be implemented)
+                        Provider.of<Session_details>(context, listen: false).UpdateRequirements(sort_reqs);
                         Navigator.pop(context);
                       }),
                       child: Text('Confirm')),

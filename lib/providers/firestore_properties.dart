@@ -57,22 +57,38 @@ class FirestoreProperties with ChangeNotifier {
       till = DateTime(
           3000); // Arbitrarily far away time; The user has not chosen an end date.
     }
+    print('Attempting query\n');
     if (requirements.containsKey('location')) {
       // Return only properties from chosen location
-      return FirebaseFirestore.instance
+      var output = FirebaseFirestore.instance
           .collection('properties')
           .where('location', isEqualTo: requirements['location'] as String)
-          .where('from', isGreaterThanOrEqualTo: from.toIso8601String())
-          .where('till', isLessThanOrEqualTo: till.toIso8601String())
+          .where('fromdate', isGreaterThanOrEqualTo: from.toIso8601String());
+          // .orderBy(
+              // 'fromdate') // This line is required by firebase!!! 'The initial orderBy() field has to be the same as the where() field parameter when an inequality operator is invoked.'
+          // .where('tilldate', isLessThanOrEqualTo: till.toIso8601String())
+          // .orderBy('price', descending: !price_asc);
+          print(output);
+      // .snapshots();
+      return output
+          // .where('tilldate', isLessThanOrEqualTo: till.toIso8601String())
+          .orderBy(
+              'fromdate') // This line is required by firebase!!! 'The initial orderBy() field has to be the same as the where() field parameter when an inequality operator is invoked.'
           .orderBy('price', descending: !price_asc)
           .snapshots();
     }
     // Else; Return properties from all locations
-    return FirebaseFirestore.instance
-          .collection('properties')
-          .where('from', isGreaterThanOrEqualTo: from.toIso8601String())
-          .where('till', isLessThanOrEqualTo: till.toIso8601String())
-          .orderBy('price', descending: !price_asc)
-          .snapshots();
+    var output = FirebaseFirestore.instance
+        .collection('properties')
+        .where('fromdate', isGreaterThanOrEqualTo: from.toIso8601String());
+    // .where('tilldate', isLessThanOrEqualTo: till.toIso8601String())
+      print(output);
+    // .snapshots();
+    return output
+        // .where('tilldate', isLessThanOrEqualTo: till.toIso8601String())
+        .orderBy(
+            'fromdate') // This line is required by firebase!!! 'The initial orderBy() field has to be the same as the where() field parameter when an inequality operator is invoked.'
+        .orderBy('price', descending: !price_asc)
+        .snapshots();
   }
 }
