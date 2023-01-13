@@ -91,6 +91,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
                                 return Image.asset(
                                   'assets/Images/home-placeholder-profile.jpg',
                                   fit: BoxFit.fill,
+                                  
                                 );
                               }
 

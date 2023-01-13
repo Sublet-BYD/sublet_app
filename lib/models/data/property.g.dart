@@ -23,7 +23,7 @@ Property _$PropertyFromJson(Map<String, dynamic> json) => Property(
           : DateTime.parse(json['dateAdded'] as String),
       occupied: json['occupied'] as bool? ?? false,
       description: json['description'] as String?,
-      image: json['image'],
+      images: json['image'],
       imageUrls: (json['imageUrls'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
@@ -40,7 +40,7 @@ Map<String, dynamic> _$PropertyToJson(Property instance) => <String, dynamic>{
       'occupied': instance.occupied,
       'price': instance.price,
       'description': instance.description,
-      'image': instance.image,
+      'images': instance.images,
       'imageUrl': instance.imageUrl,
       'imageUrls': instance.imageUrls,
     };
