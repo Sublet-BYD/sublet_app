@@ -30,16 +30,8 @@ class _ContactCardState extends State<ContactCard> {
   Widget build(BuildContext context) {
     final currentChatId = Provider.of<CurrentChat>(context).chatId;
     print(widget.imageUrl);
-    String lastMessage = '';
     Stream<QuerySnapshot> lastMessageStream =
         FirestoreChats().getLastMessage(widget.chatId);
-    lastMessageStream.listen((QuerySnapshot snapshot) {
-      print("SNAPISNAPPP");
-      print(snapshot.runtimeType.toString());
-      print(snapshot.docs.last.get('text'));
-      if (snapshot == null || snapshot.docs.isEmpty) return;
-      lastMessage = snapshot.docs.last.get('text');
-    });
 
     return StreamBuilder<Object>(
         stream: lastMessageStream,

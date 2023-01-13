@@ -44,4 +44,17 @@ class FirestoreChats {
         .collection('messages')
         .add(message.toJson());
   }
+
+  String startNewChat(ChatUsers chatUser, Message newMessage) {
+    String chatId = FirebaseFirestore.instance
+        .collection('chats')
+        .add(chatUser.toJson())
+        .toString();
+    FirebaseFirestore.instance
+        .collection('chats')
+        .doc(chatId)
+        .collection('messages')
+        .add(newMessage.toJson());
+    return chatId;
+  }
 }
