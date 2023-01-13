@@ -58,8 +58,8 @@ class _ChatMessagesState extends State<ChatMessages> {
               ListView.builder(
                 itemCount: data.docs.length,
                 shrinkWrap: true,
-                padding: const EdgeInsets.only(top: 10, bottom: 10),
-                physics: const NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.only(top: 10, bottom: 60),
+                physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
                   // get the message from the snapshots with the correct index.
                   final messageAsMap =
@@ -134,7 +134,7 @@ class _ChatMessagesState extends State<ChatMessages> {
                       ),
                       FloatingActionButton(
                         // Send Icon
-                        onPressed: () => SendMessage(receiver),
+                        onPressed: () => SendMessage(receiver, chatId),
                         backgroundColor: Colors.blue,
                         elevation: 0,
                         child: const Icon(
@@ -152,10 +152,12 @@ class _ChatMessagesState extends State<ChatMessages> {
         });
   }
 
-  SendMessage(String _userType) {
+  SendMessage(String _userType, String chatId) {
     Message messageToSend = Message(
       text: _messageController.text,
       userType: _userType,
     );
+    FirestoreChats().uploadMessage(messageToSend, chatId);
+    _messageController.clear();
   }
 }

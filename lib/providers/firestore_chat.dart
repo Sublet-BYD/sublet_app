@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sublet_app/models/data/chat_user.dart';
+import 'package:sublet_app/models/data/message.dart';
 
 class FirestoreChats {
   // Return snapshots of all conversation this specific userId is participantating.
@@ -18,6 +19,7 @@ class FirestoreChats {
         .collection('chats')
         .doc(chatId)
         .collection('messages')
+        .orderBy('createdAt')
         .snapshots();
   }
 
@@ -32,5 +34,13 @@ class FirestoreChats {
 
   ChatUsers getChatUser(Map<String, dynamic> snapshot) {
     return ChatUsers.fromJson(snapshot);
+  }
+
+  void uploadMessage(Message message, String chatId) {
+    FirebaseFirestore.instance
+        .collection('chats')
+        .doc(chatId)
+        .collection('messages')
+        .add(message.toJson());
   }
 }

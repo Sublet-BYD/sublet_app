@@ -18,7 +18,7 @@ class ChatDetailPage extends StatefulWidget {
 class _ChatDetailPageState extends State<ChatDetailPage> {
   @override
   Widget build(BuildContext context) {
-    // final chatId = Provider.of<CurrentChat>(context).chatId;
+    final chatId = Provider.of<CurrentChat>(context).chatId;
     return Scaffold(
         appBar: AppBar(
           elevation: 0,

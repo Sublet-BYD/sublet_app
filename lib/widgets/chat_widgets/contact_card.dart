@@ -33,9 +33,13 @@ class _ContactCardState extends State<ContactCard> {
     return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return ChatDetailPage(
-            name: widget.name,
-            imageURL: widget.imageUrl,
+          return ChangeNotifierProvider.value(
+            value:
+                CurrentChat(chatId: currentChatId, lastMessage: 'last message'),
+            child: ChatDetailPage(
+              name: widget.name,
+              imageURL: widget.imageUrl,
+            ),
           );
         }));
       },
