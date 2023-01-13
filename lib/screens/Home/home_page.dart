@@ -135,10 +135,10 @@ class _AuthCardState extends State<AuthCard> {
     'email': '',
     'password': '',
   };
-  final _userName = TextEditingController(text: 'adminh@admin.com');
+  final _userName = TextEditingController(text: 'test123@gmail.com');
 
   var _isLoading = false;
-  final _passwordController = TextEditingController(text: 'admin1');
+  final _passwordController = TextEditingController(text: '123456');
 
 //show dialog to the users
   void _showErrorDiallog(String message) {
@@ -315,6 +315,7 @@ class _AuthCardState extends State<AuthCard> {
                       child: TextFormField(
                         decoration: InputDecoration(labelText: 'E-Mail'),
                         keyboardType: TextInputType.emailAddress,
+                        
                         validator: (value) {
                           if (value!.isEmpty || !value.contains('@')) {
                             return 'Invalid email!';

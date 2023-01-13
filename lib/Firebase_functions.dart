@@ -104,32 +104,37 @@ class Firebase_functions {
     if (property.imageUrls == null) {
       property.imageUrls = [];
     }
+
+    print("\n------------------\n is outtt");
     //ref gives us access to our route cloud storage bucket
     //child allows to control where we want to store\read our file
     // Create a reference to the storage bucket
+    for (int i = 0; i < property.images!.length; i = i + 1) {
+      print("\n------------------\n is innn");
+      print(property.images!.length);
+      if (property.images![i] != null) {
+        final storageRef = FirebaseStorage.instance.ref();
+        Reference ref =
+            storageRef.child("${DateTime.now().microsecondsSinceEpoch}.jpg");
 
-    if (property.image != null) {
-      final storageRef = FirebaseStorage.instance.ref();
-      Reference ref =
-          storageRef.child("${DateTime.now().microsecondsSinceEpoch}.jpg");
+        print('Uploaded image\n');
+        //upload the file
+        final metaData = SettableMetadata(contentType: 'image/jpeg');
+        try {
+          await ref.putFile(property.images![i], metaData);
+          String url = await ref.getDownloadURL();
+          FirebaseAuth auth = FirebaseAuth.instance;
 
-      print('Uploaded image\n');
-      //upload the file
-      final metaData = SettableMetadata(contentType: 'image/jpeg');
-      try {
-        await ref.putFile(property.image, metaData);
-        String url = await ref.getDownloadURL();
-        FirebaseAuth auth = FirebaseAuth.instance;
-
-        property.imageUrls!.add(url);
-        print(auth.currentUser);
-      } catch (e) {
-        print(e);
+          property.imageUrls!.add(url);
+          print(auth.currentUser);
+        } catch (e) {
+          print(e);
+        }
       }
     }
-
+    property.images = null;
     print(property.imageUrls);
-    property.image = null;
+
     prop
         .set(property.toJson())
         .onError((error, stackTrace) => {print('$stackTrace\n'), res = false});

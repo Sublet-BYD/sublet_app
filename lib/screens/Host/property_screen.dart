@@ -81,9 +81,9 @@ class _PropertyScreenState extends State<PropertyScreen> {
                               reverse: true,
                               //viewportFraction: 1, //only one image
                               //enlargeCenterPage: true,
-                              //enableInfiniteScroll: false, //lime the slider
-                              onPageChanged: (index, reason) =>
-                                  setState(() => activateIndex = index),
+                              enableInfiniteScroll: false, //lime the slider
+                            //  onPageChanged: (index, reason) =>
+                              //    setState(() => activateIndex = index),
                             ),
                             itemCount: property.imageUrls!.length,
                             itemBuilder: ((context, index, realIndex) {
@@ -94,24 +94,24 @@ class _PropertyScreenState extends State<PropertyScreen> {
                                 );
                               }
 
-                              print(property.imageUrls!.length);
+                              //print(property.imageUrls!.length);
                               final urlImage = property.imageUrls![index];
-                              for (int i = 0;
-                                  i < property.imageUrls!.length;
-                                  i++) {
-                                print(property.imageUrls![i]);
-                              }
-                              print("\n\n");
+                              // for (int i = 0;
+                              //     i < property.imageUrls!.length;
+                              //     i++) {
+                              //   print(property.imageUrls![i]);
+                              // }
+                             // print("\n\n");
                               return buildImage(urlImage, index);
                             }),
                           ),
                           const SizedBox(
                             height: 5,
                           ),
-                          if (property.imageUrls!.isNotEmpty)
-                            buildIndicator(property.imageUrls!.length)
-                          else
-                            buildIndicator(1)
+                          // if (property.imageUrls!.isNotEmpty)
+                          //   buildIndicator(property.imageUrls!.length)
+                          // else
+                          //   buildIndicator(1)
                         ],
                       ),
 
@@ -305,15 +305,20 @@ class _PropertyScreenState extends State<PropertyScreen> {
         ),
       );
 
-  Widget buildIndicator(int length) => AnimatedSmoothIndicator(
-        activeIndex: activateIndex,
-        count: length,
-        effect: SlideEffect(
-          activeDotColor: Colors.deepPurple,
-          dotHeight: 10,
-          dotWidth: 10,
-        ),
-      );
+  Widget buildIndicator(int length) => StreamBuilder<Object>(
+    stream: null,
+    builder: (context, snapshot) {
+      return AnimatedSmoothIndicator(
+            activeIndex: activateIndex,
+            count: length,
+            effect: SlideEffect(
+              activeDotColor: Colors.deepPurple,
+              dotHeight: 10,
+              dotWidth: 10,
+            ),
+          );
+    }
+  );
 }
 
 class EditProperty extends StatefulWidget {
