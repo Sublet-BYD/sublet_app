@@ -27,9 +27,8 @@ ContactCard widgetByUserType(
   String userId = Provider.of<Session_details>(context).UserId;
   print(" host imageURL: ${chatUsers.hostImageURL}");
   print("guestIdname: ${chatUsers.guestId} hostIdname: ${chatUsers.hostId}");
-  String stURL = (chatUsers.hostImageURL == null ||
-          chatUsers.guestImageURL == null)
-      ? 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fstackoverflow.com%2Fquestions%2F49917726%2Fretrieving-default-image-all-url-profile-picture-from-facebook-graph-api&psig=AOvVaw0gYaZXd_ssSUA0fZBiZpd5&ust=1673653240146000&source=images&cd=vfe&ved=0CA8QjRxqFwoTCIDCl6yaw_wCFQAAAAAdAAAAABAE'
+  String stURL = (chatUsers.hostImageURL == '' || chatUsers.guestImageURL == '')
+      ? 'https://firebasestorage.googleapis.com/v0/b/sublet-34e39.appspot.com/o/Empty_profile_pic.jpg?alt=media&token=3d3a8c93-7254-43e4-8a90-0855ce0406ab'
       : (userId == 'client'
           ? chatUsers.hostImageURL!
           : chatUsers.guestImageURL!);

@@ -23,13 +23,14 @@ class FirestoreChats {
         .snapshots();
   }
 
-  Future<QuerySnapshot<Map<String, dynamic>>> getLastMessage(chatId) {
+  Stream<QuerySnapshot<Map<String, dynamic>>> getLastMessage(chatId) {
     return FirebaseFirestore.instance
         .collection('chats')
         .doc(chatId)
         .collection('messages')
-        .snapshots()
-        .last;
+        .orderBy('createdAt', descending: true)
+        .limit(1)
+        .snapshots();
   }
 
   ChatUsers getChatUser(Map<String, dynamic> snapshot) {
