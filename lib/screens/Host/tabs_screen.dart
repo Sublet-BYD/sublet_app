@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sublet_app/providers/firestore_chat.dart';
 import 'package:sublet_app/providers/firestore_properties.dart';
+import 'package:sublet_app/screens/Chat/contact_screen.dart';
 import 'package:sublet_app/screens/Guest/Guest_Feed.dart';
 import 'package:sublet_app/widgets/host_widgets/manage_properties.dart';
 import 'package:sublet_app/screens/Host/new_property.dart';
@@ -10,7 +12,8 @@ import '../../providers/Session_details.dart';
 
 class TabsScreen extends StatefulWidget {
   final userType;
-  const TabsScreen({super.key, @required this.userType});
+  final userId;
+  const TabsScreen({super.key, @required this.userType, this.userId});
 
   @override
   State<TabsScreen> createState() => _TabsScreenState();
@@ -85,7 +88,9 @@ class _TabsScreenState extends State<TabsScreen>
       CustomTabItem(
         label: 'Customers',
         icon: const Icon(Icons.contact_mail_rounded),
-        screen: Container(),
+        screen: ContactScreen(
+            chatUsersStream:
+                FirestoreChats().getAllChats(widget.userId, widget.userType)),
       ),
     ];
   }

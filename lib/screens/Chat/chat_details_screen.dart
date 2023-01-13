@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sublet_app/providers/current_chat.dart';
 import 'package:sublet_app/widgets/chat_widgets/chat_messages.dart';
 
 class ChatDetailPage extends StatefulWidget {
@@ -16,6 +18,7 @@ class ChatDetailPage extends StatefulWidget {
 class _ChatDetailPageState extends State<ChatDetailPage> {
   @override
   Widget build(BuildContext context) {
+    final chatId = Provider.of<CurrentChat>(context).chatId;
     return Scaffold(
         appBar: AppBar(
           elevation: 0,

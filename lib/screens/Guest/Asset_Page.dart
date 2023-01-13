@@ -9,7 +9,6 @@ import 'package:sublet_app/models/data/host_data.dart';
 import 'package:sublet_app/models/data/property.dart';
 import 'package:intl/intl.dart';
 import 'package:sublet_app/screens/Host/tabs_screen.dart';
-import 'package:sublet_app/screens/Guest/renter_tab_screen.dart';
 import 'package:sublet_app/screens/Chat/chat_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 

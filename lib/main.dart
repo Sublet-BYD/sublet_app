@@ -36,10 +36,12 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  choosePage(String type) {
+  choosePage(String type, String id) {
+    print("------------ userId on main!!!! ${id}");
     if (type == 'host' || type == 'client') {
       return TabsScreen(
         userType: type,
+        userId: id,
       );
     } else {
       print("emptyy");
@@ -73,7 +75,9 @@ class MyApp extends StatelessWidget {
                 fontFamily: 'Lato',
               ),
               debugShowCheckedModeBanner: false,
-              home: (auth.isAuth) ? choosePage(session.utype) : HomeScreen(),
+              home: (auth.isAuth)
+                  ? choosePage(session.utype, session.UserId)
+                  : HomeScreen(),
               // home: ContactScreen(
               //     chatUsersStream:
               //         FirestoreProperties().getAvailableHostProperties("1")),
