@@ -14,4 +14,6 @@ class Message {
   factory Message.fromJson(Map<String, dynamic> json) {
     return _$MessageFromJson(json);
   }
+
+  Map<String, dynamic> toJson() => _$MessageToJson(this);
 }

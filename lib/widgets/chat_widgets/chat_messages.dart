@@ -17,6 +17,7 @@ class ChatMessages extends StatefulWidget {
 }
 
 class _ChatMessagesState extends State<ChatMessages> {
+  final _messageController = new TextEditingController();
   // DUMMY MESSAGES for example:
   // List<Message> messages = [
   //   Message(messageContent: "Hello, Will", messageType: "receiver"),
@@ -119,9 +120,10 @@ class _ChatMessagesState extends State<ChatMessages> {
                       const SizedBox(
                         width: 15,
                       ),
-                      const Expanded(
+                      Expanded(
                         child: TextField(
-                          decoration: InputDecoration(
+                          controller: _messageController,
+                          decoration: const InputDecoration(
                               hintText: "Write message...",
                               hintStyle: TextStyle(color: Colors.black54),
                               border: InputBorder.none),
@@ -132,7 +134,7 @@ class _ChatMessagesState extends State<ChatMessages> {
                       ),
                       FloatingActionButton(
                         // Send Icon
-                        onPressed: () {},
+                        onPressed: () => SendMessage(receiver),
                         backgroundColor: Colors.blue,
                         elevation: 0,
                         child: const Icon(
@@ -148,5 +150,12 @@ class _ChatMessagesState extends State<ChatMessages> {
             ],
           );
         });
+  }
+
+  SendMessage(String _userType) {
+    Message messageToSend = Message(
+      text: _messageController.text,
+      userType: _userType,
+    );
   }
 }

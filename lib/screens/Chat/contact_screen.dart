@@ -25,11 +25,17 @@ class ContactScreen extends StatefulWidget {
 ContactCard widgetByUserType(
     BuildContext context, ChatUsers chatUsers, index, chatId) {
   String userId = Provider.of<Session_details>(context).UserId;
-
+  print(" host imageURL: ${chatUsers.hostImageURL}");
+  print("guestIdname: ${chatUsers.guestId} hostIdname: ${chatUsers.hostId}");
+  String stURL = (chatUsers.hostImageURL == null ||
+          chatUsers.guestImageURL == null)
+      ? 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fstackoverflow.com%2Fquestions%2F49917726%2Fretrieving-default-image-all-url-profile-picture-from-facebook-graph-api&psig=AOvVaw0gYaZXd_ssSUA0fZBiZpd5&ust=1673653240146000&source=images&cd=vfe&ved=0CA8QjRxqFwoTCIDCl6yaw_wCFQAAAAAdAAAAABAE'
+      : (userId == 'client'
+          ? chatUsers.hostImageURL!
+          : chatUsers.guestImageURL!);
   return ContactCard(
-    name: userId == 'client' ? chatUsers.guestId : chatUsers.hostId,
-    imageUrl:
-        userId == 'client' ? chatUsers.guestImageURL : chatUsers.hostImageURL,
+    name: userId == 'client' ? chatUsers.hostName : chatUsers.guestName,
+    imageUrl: stURL,
     isMessageRead: (index == 0 || index == 3) ? true : false,
     chatId: chatId,
   );
@@ -54,7 +60,6 @@ class _ContactScreenState extends State<ContactScreen> {
                   child: const Text("Not available Chats yet"),
                 );
               }
-
               final data = snapshot.data as QuerySnapshot;
               return Container(
                 margin: const EdgeInsets.only(top: 10, bottom: 15),
@@ -68,6 +73,9 @@ class _ContactScreenState extends State<ContactScreen> {
                       padding: EdgeInsets.only(top: 16),
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
+                        // PRINT HRER FOR CHECK
+                        print(
+                            'snapshot, data=${snapshot.data}, title=${data.docs[index].data()}');
                         ChatUsers chatUsers = FirestoreChats().getChatUser(
                             data.docs[index].data() as Map<String, dynamic>);
                         var chatId = data.docs[index].id;

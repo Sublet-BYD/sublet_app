@@ -8,8 +8,8 @@ class ChatUsers {
   String guestId;
   String hostName;
   String guestName;
-  String hostImageURL;
-  String guestImageURL;
+  String? hostImageURL;
+  String? guestImageURL;
   ChatUsers({
     required this.hostId,
     required this.guestId,
@@ -22,4 +22,6 @@ class ChatUsers {
   factory ChatUsers.fromJson(Map<String, dynamic> json) {
     return _$ChatUsersFromJson(json);
   }
+
+  Map<String, dynamic> toJson() => _$ChatUsersToJson(this);
 }

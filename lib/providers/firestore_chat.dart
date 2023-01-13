@@ -6,9 +6,10 @@ class FirestoreChats {
   // directing by usertype.
   Stream<QuerySnapshot<Map<String, dynamic>>> getAllChats(
       String userID, String userType) {
+    print("userType: ${userType} || UserId ${userID}");
     return FirebaseFirestore.instance
         .collection('chats')
-        .where(userType == 'client' ? 'guest_id' : 'host_id', isEqualTo: userID)
+        .where(userType == 'client' ? 'guestId' : 'hostId', isEqualTo: userID)
         .snapshots();
   }
 

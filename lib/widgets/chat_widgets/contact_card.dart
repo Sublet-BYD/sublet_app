@@ -11,14 +11,14 @@ import 'package:sublet_app/providers/firestore_chat.dart';
 class ContactCard extends StatefulWidget {
   String name;
   String imageUrl;
-  late String time;
+  String time = DateTime.now().toString();
   final chatId;
   bool isMessageRead = false; //dont know if needed
   ContactCard(
       {required this.name,
       required this.imageUrl,
       required this.isMessageRead,
-      required this.chatId});
+      required this.chatId}) {}
   @override
   _ContactCardState createState() => _ContactCardState();
 }
