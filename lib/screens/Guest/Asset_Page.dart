@@ -4,13 +4,19 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:sublet_app/models/Pair.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sublet_app/models/data/chat_user.dart';
+import 'package:sublet_app/models/data/message.dart';
 import 'package:sublet_app/providers/Session_details.dart';
 import 'package:sublet_app/models/data/host_data.dart';
 import 'package:sublet_app/models/data/property.dart';
 import 'package:intl/intl.dart';
+import 'package:sublet_app/providers/firestore_chat.dart';
 import 'package:sublet_app/screens/Host/tabs_screen.dart';
 import 'package:sublet_app/screens/Chat/chat_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
+import '../../providers/current_chat.dart';
+import '../Chat/chat_details_screen.dart';
 
 class AssetPage extends StatefulWidget {
   final String imagePath;
@@ -37,6 +43,7 @@ class _AssetPageState extends State<AssetPage> {
 
   @override
   Widget build(BuildContext context) {
+    final selfAccount = Provider.of<Session_details>(context);
     return Scaffold(
       body: SafeArea(
         child: FutureBuilder(
@@ -268,15 +275,46 @@ class _AssetPageState extends State<AssetPage> {
                                 ),
                                 //Contact
                                 GestureDetector(
+                                  // new implementation on chat!
+                                  // please ask before change
                                   onTap: () {
+                                    final newChat = ChatUsers(
+                                        hostId: owner.id,
+                                        guestId: selfAccount.UserId,
+                                        hostName: owner.name,
+                                        guestName: selfAccount.UserName,
+                                        hostImageURL: (owner.imageUrl
+                                                    .toString()
+                                                    .isEmpty ||
+                                                owner.imageUrl == null)
+                                            ? 'https://firebasestorage.googleapis.com/v0/b/sublet-34e39.appspot.com/o/Empty_profile_pic.jpg?alt=media&token=3d3a8c93-7254-43e4-8a90-0855ce0406ab'
+                                            : owner.imageUrl,
+                                        guestImageURL:
+                                            'https://firebasestorage.googleapis.com/v0/b/sublet-34e39.appspot.com/o/Empty_profile_pic.jpg?alt=media&token=3d3a8c93-7254-43e4-8a90-0855ce0406ab');
+                                    final newMessage = Message(
+                                      text: "Hello ${owner.name}",
+                                      userType: selfAccount.UserType,
+                                    );
+                                    String newChatId = FirestoreChats()
+                                        .startNewChat(newChat, newMessage);
+
                                     //Move to chat with owner
                                     // print(owner.toJson());
                                     // print('Redirecting to chat\n');
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => ChatScreen(),
-                                      ), // need to feel with owner and client - id
-                                    );
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return ChangeNotifierProvider.value(
+                                        value: CurrentChat(
+                                            chatId: newChatId,
+                                            lastMessage: 'last message'),
+                                        child: ChatDetailPage(
+                                          name: owner.name,
+                                          imageURL: owner.imageUrl == null
+                                              ? 'https://firebasestorage.googleapis.com/v0/b/sublet-34e39.appspot.com/o/Empty_profile_pic.jpg?alt=media&token=3d3a8c93-7254-43e4-8a90-0855ce0406ab'
+                                              : owner.imageUrl,
+                                        ),
+                                      );
+                                    }));
                                   },
                                   child: Card(
                                     elevation: 0,
