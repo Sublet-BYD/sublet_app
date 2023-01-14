@@ -41,7 +41,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
 
     final appBar = AppBar(
       backgroundColor: Colors.transparent,
-      foregroundColor: Colors.white,
+      foregroundColor: Colors.deepPurple,
       elevation: 0,
     );
     void ChangeAvailability(Property _currProperty) {
@@ -75,60 +75,66 @@ class _PropertyScreenState extends State<PropertyScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          CarouselSlider.builder(
-                            options: CarouselOptions(
-                              height: 200,
-                              reverse: true,
-                              //viewportFraction: 1, //only one image
-                              //enlargeCenterPage: true,
-                              enableInfiniteScroll: false, //limt the slider
-                              // onPageChanged: (index, reason) =>
-                              //     setState(() => activateIndex = index),
-                            ),
-                            itemCount: property.imageUrls!.length,
-                            itemBuilder: ((context, index, realIndex) {
-                              if (property.imageUrls!.isEmpty) {
-                                return Image.asset(
+                          if (property.imageUrls!.isEmpty)
+                            Builder(builder: (context) {
+                              return Container(
+                                height: 200,
+                                // width: 200,
+                                child: Image.asset(
                                   'assets/Images/home-placeholder-profile.jpg',
-                                  fit: BoxFit.fill,
-                                );
-                              }
-
-                              final urlImage = property.imageUrls![index];
-
-                              //return buildImage(urlImage, index);
-                              return InkWell(
-                                onTap: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) {
-                                        return Scaffold(
-                                          appBar: AppBar(
-                                            title: Text("Full screen"),
-                                          ),
-                                          body: Hero(
-                                            tag: urlImage,
-                                            child: Image.network(
-                                              urlImage,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  );
-                                },
-                                child: Hero(
-                                  tag: urlImage,
-                                  child: Image.network(
-                                    urlImage,
-                                    fit: BoxFit.cover,
-                                  ),
+                                  fit: BoxFit.cover,
                                 ),
                               );
                             }),
-                          ),
-                          //--------- for now I off the tot
+                          if (property.imageUrls!.isNotEmpty)
+                            CarouselSlider.builder(
+                              options: CarouselOptions(
+                                //
+                                height: 200,
+                                reverse: true,
+                                //viewportFraction: 1, //only one image
+                                //enlargeCenterPage: true,
+                                enableInfiniteScroll: false, //limt the slider
+                                // onPageChanged: (index, reason) =>
+                                //     setState(() => activateIndex = index),
+                              ),
+                              itemCount: property.imageUrls!.length,
+                              itemBuilder: ((context, index, realIndex) {
+                                final urlImage = property.imageUrls![index];
+
+                                //return buildImage(urlImage, index);
+                                return InkWell(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) {
+                                          return Scaffold(
+                                            appBar: AppBar(
+                                              title: Text("Full screen"),
+                                            ),
+                                            body: Hero(
+                                              tag: urlImage,
+                                              child: Image.network(
+                                                urlImage,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    );
+                                  },
+                                  child: Hero(
+                                    tag: urlImage,
+                                    child: Image.network(
+                                      urlImage,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                );
+                              }),
+                            ),
+                          //--------- for now I off the dot
                           // const SizedBox(
                           //   height: 5,
                           // ),
