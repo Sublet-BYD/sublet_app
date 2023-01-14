@@ -21,6 +21,8 @@ class AuthCard extends StatefulWidget {
 class _AuthCardState extends State<AuthCard> {
   //what doing ?
   final GlobalKey<FormState> _formKey = GlobalKey();
+  String imageURL =
+      'https://firebasestorage.googleapis.com/v0/b/sublet-34e39.appspot.com/o/Empty_profile_pic.jpg?alt=media&token=3d3a8c93-7254-43e4-8a90-0855ce0406ab';
   String type = 'client';
   final _emailController = TextEditingController();
   final _userName = TextEditingController();
@@ -117,8 +119,8 @@ class _AuthCardState extends State<AuthCard> {
                 _authData['password']
                     .toString())); // Signing the new user up and keeping the unique id assigned to them by firebase
         // print("--------------------\n${context.read<Session_details>().uid}, ${_userName.text}, ${type}");
-        Firebase_functions.Add_user(
-            context.read<Session_details>().uid, _userName.text, type);
+        Firebase_functions.Add_user(context.read<Session_details>().uid,
+            _userName.text, type, imageURL);
         print("type ${type} ");
         if (type == 'host') {
           Firebase_functions.Upload_owner(
