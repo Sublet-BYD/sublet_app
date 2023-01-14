@@ -54,7 +54,6 @@ class _NewPropertyState extends State<NewProperty> {
     }
   }
 
-
   //-------------MultiImages-----------------------
   List<File> _storedImage = [];
 
@@ -90,6 +89,7 @@ class _NewPropertyState extends State<NewProperty> {
           );
         });
   }
+
 //-------------MultiImages-----------------------
   Widget buildImage(File file, int index) => Container(
         margin: EdgeInsets.symmetric(horizontal: 12),
@@ -106,7 +106,7 @@ class _NewPropertyState extends State<NewProperty> {
       final List<XFile>? selectedImages = await imagePicker.pickMultiImage();
       if (selectedImages != null && selectedImages!.isNotEmpty) {
         setState(() {
-          for (int i = 0; i < selectedImages!.length; i = i+1) {
+          for (int i = 0; i < selectedImages!.length; i = i + 1) {
             _storedImage.add(File(selectedImages[i].path));
             print(_storedImage!.length);
             print(_storedImage);
@@ -141,7 +141,6 @@ class _NewPropertyState extends State<NewProperty> {
             children: [
               //ImageInput(_selectImage),
               //MultiImages(_selectImages),
-
 
               //-------------MultiImages-----------------------
               Row(
