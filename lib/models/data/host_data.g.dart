@@ -17,7 +17,7 @@ Owner_data _$Owner_dataFromJson(Map<String, dynamic> json) => Owner_data(
               ?.map((e) => e as String)
               .toList() ??
           const [],
-      image: json['image'],
+      imageUrl: json['image'],
     )..imageUrl = json['imageUrl'];
 
 Map<String, dynamic> _$Owner_dataToJson(Owner_data instance) =>

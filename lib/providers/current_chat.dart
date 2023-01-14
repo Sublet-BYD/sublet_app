@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 
 class CurrentChat with ChangeNotifier {
   final String chatId;
-  String lastMessage;
 
-  CurrentChat({required this.chatId, this.lastMessage = ''});
+  CurrentChat({required this.chatId});
 
   // String get getchatId => chatId;
 

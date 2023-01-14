@@ -138,8 +138,9 @@ class _AuthCardState extends State<AuthCard> {
             _userName.text, type, imageURL, about);
         print("type ${type} ");
         if (type == 'host') {
-          Firebase_functions.Upload_owner(
-              Owner_data(_userName.text, context.read<Session_details>().uid));
+          Firebase_functions.Upload_owner(Owner_data(
+              _userName.text, context.read<Session_details>().uid,
+              imageUrl: imageURL));
         }
         context.read<Session_details>().UpdateUtype(type);
       }

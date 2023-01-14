@@ -278,40 +278,30 @@ class _AssetPageState extends State<AssetPage> {
                                   // please ask before change
                                   onTap: () {
                                     final newChat = ChatUsers(
-                                        hostId: owner.id,
-                                        guestId: selfAccount.UserId,
-                                        hostName: owner.name,
-                                        guestName: selfAccount.UserName,
-                                        hostImageURL: (owner.imageUrl
-                                                    .toString()
-                                                    .isEmpty ||
-                                                owner.imageUrl == null)
-                                            ? 'https://firebasestorage.googleapis.com/v0/b/sublet-34e39.appspot.com/o/Empty_profile_pic.jpg?alt=media&token=3d3a8c93-7254-43e4-8a90-0855ce0406ab'
-                                            : owner.imageUrl,
-                                        guestImageURL:
-                                            'https://firebasestorage.googleapis.com/v0/b/sublet-34e39.appspot.com/o/Empty_profile_pic.jpg?alt=media&token=3d3a8c93-7254-43e4-8a90-0855ce0406ab');
+                                      hostId: owner.id,
+                                      guestId: selfAccount.UserId,
+                                      hostName: owner.name,
+                                      guestName: selfAccount.UserName,
+                                      hostImageURL: (owner.imageUrl.toString()),
+                                      guestImageURL: context
+                                          .read<Session_details>()
+                                          .ImgURL,
+                                    );
                                     final newMessage = Message(
                                       text: "Hello ${owner.name}",
                                       userType: selfAccount.UserType,
                                     );
                                     String newChatId = FirestoreChats()
                                         .startNewChat(newChat, newMessage);
-
-                                    //Move to chat with owner
-                                    // print(owner.toJson());
-                                    // print('Redirecting to chat\n');
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) {
                                       return ChangeNotifierProvider.value(
                                         value: CurrentChat(
-                                            chatId: newChatId,
-                                            lastMessage: 'last message'),
-                                        child: ChatDetailPage(
-                                          name: owner.name,
-                                          imageURL: owner.imageUrl == null
-                                              ? 'https://firebasestorage.googleapis.com/v0/b/sublet-34e39.appspot.com/o/Empty_profile_pic.jpg?alt=media&token=3d3a8c93-7254-43e4-8a90-0855ce0406ab'
-                                              : owner.imageUrl,
+                                          chatId: newChatId,
                                         ),
+                                        child: ChatDetailPage(
+                                            name: owner.name,
+                                            imageURL: owner.imageUrl),
                                       );
                                     }));
                                   },

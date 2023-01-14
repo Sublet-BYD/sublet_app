@@ -54,8 +54,7 @@ class _ContactCardState extends State<ContactCard> {
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return ChangeNotifierProvider.value(
-                  value: CurrentChat(
-                      chatId: currentChatId, lastMessage: 'last message'),
+                  value: CurrentChat(chatId: currentChatId),
                   child: ChatDetailPage(
                     name: widget.name,
                     imageURL: widget.imageUrl,
