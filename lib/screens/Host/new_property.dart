@@ -40,19 +40,19 @@ class _NewPropertyState extends State<NewProperty> {
   //   _pickedImaged = pickedImage;
   // }
 
-  List<XFile> imagesList1 = [];
-  List<File> imagesList = [];
-  void _selectImages(List<XFile> pickedImage) {
-    print("-----------------------");
-    print(pickedImage.length);
-    print("-----------------------");
-    imagesList1.addAll(pickedImage);
-    print("pppppppppppppp");
-    print(imagesList);
-    for (var element in imagesList1) {
-      imagesList.add(File(element.path));
-    }
-  }
+  // List<XFile> imagesList1 = [];
+  // List<File> imagesList = [];
+  // void _selectImages(List<XFile> pickedImage) {
+  //   print("-----------------------");
+  //   print(pickedImage.length);
+  //   print("-----------------------");
+  //   imagesList1.addAll(pickedImage);
+  //   print("pppppppppppppp");
+  //   print(imagesList);
+  //   for (var element in imagesList1) {
+  //     imagesList.add(File(element.path));
+  //   }
+  // }
 
   //-------------MultiImages-----------------------
   List<File> _storedImage = [];

@@ -104,42 +104,42 @@ class Firebase_functions {
     if (property.imageUrls == null) {
       property.imageUrls = [];
     }
+    if (property.images != null) {
+      //print("\n------------------\n is outtt");
+      //ref gives us access to our route cloud storage bucket
+      //child allows to control where we want to store\read our file
+      // Create a reference to the storage bucket
+      for (int i = 0; i < property.images!.length; i = i + 1) {
+        //print("\n------------------\n is innn");
+        //print(property.images!.length);
+        if (property.images![i] != null) {
+          final storageRef = FirebaseStorage.instance.ref();
+          Reference ref =
+              storageRef.child("${DateTime.now().microsecondsSinceEpoch}.jpg");
 
-    print("\n------------------\n is outtt");
-    //ref gives us access to our route cloud storage bucket
-    //child allows to control where we want to store\read our file
-    // Create a reference to the storage bucket
-    for (int i = 0; i < property.images!.length; i = i + 1) {
-      print("\n------------------\n is innn");
-      print(property.images!.length);
-      if (property.images![i] != null) {
-        final storageRef = FirebaseStorage.instance.ref();
-        Reference ref =
-            storageRef.child("${DateTime.now().microsecondsSinceEpoch}.jpg");
+          print('Uploaded image\n');
+          //upload the file
+          final metaData = SettableMetadata(contentType: 'image/jpeg');
+          try {
+            await ref.putFile(property.images![i], metaData);
+            String url = await ref.getDownloadURL();
+            FirebaseAuth auth = FirebaseAuth.instance;
 
-        print('Uploaded image\n');
-        //upload the file
-        final metaData = SettableMetadata(contentType: 'image/jpeg');
-        try {
-          await ref.putFile(property.images![i], metaData);
-          String url = await ref.getDownloadURL();
-          FirebaseAuth auth = FirebaseAuth.instance;
-
-          property.imageUrls!.add(url);
-          print(auth.currentUser);
-        } catch (e) {
-          print(e);
+            property.imageUrls!.add(url);
+            print(auth.currentUser);
+          } catch (e) {
+            print(e);
+          }
         }
       }
-    }
-
-    property.images = null;
-    print(property.imageUrls);
-
+      property.images = null;
+      print(property.imageUrls);
+    } 
     prop
         .set(property.toJson())
         .onError((error, stackTrace) => {print('$stackTrace\n'), res = false});
 
+    //prop.update({'dateAdded': Timestamp.fromDate(DateTime.now())});
     await Add_Property(await get_owner(property.owner_id), property.id!);
 
     return res;
@@ -227,16 +227,13 @@ class Firebase_functions {
 
   //Users functions:
 
-  static Future<bool> Add_user(
-      String uid, String name, String type, imageURL, String about) async {
+  static Future<bool> Add_user(String uid, String name, String type) async {
     bool res = true;
-    db.collection('users').doc(uid).set({
-      'id': uid,
-      'name': name,
-      'type': type,
-      'imageURL': imageURL,
-      'about': about
-    }).onError((error, stackTrace) => {print('$stackTrace\n'), res = false});
+    db
+        .collection('users')
+        .doc(uid)
+        .set({'id': uid, 'name': name, 'type': type}).onError(
+            (error, stackTrace) => {print('$stackTrace\n'), res = false});
     return res;
   }
 
