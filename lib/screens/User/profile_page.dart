@@ -35,9 +35,9 @@ class _ProfilePageState extends State<ProfilePage> {
             },
           ),
           const SizedBox(height: 24),
-          buildName(userData.UserName, userData.UserEmail),
-          // const SizedBox(height: 24),
-          // NumbersWidget(),
+          buildName(
+            userData.UserName,
+          ),
           const SizedBox(height: 48),
           buildAbout(userData.UserAbout),
         ],
@@ -45,17 +45,12 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget buildName(String userName, String userEmail) => Column(
+  Widget buildName(String userName) => Column(
         children: [
           Text(
             userName,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
           ),
-          const SizedBox(height: 4),
-          Text(
-            userEmail,
-            style: TextStyle(color: Colors.grey),
-          )
         ],
       );
 
@@ -65,7 +60,7 @@ class _ProfilePageState extends State<ProfilePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'About',
+              'About Me',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
