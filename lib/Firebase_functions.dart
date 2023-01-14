@@ -105,13 +105,13 @@ class Firebase_functions {
       property.imageUrls = [];
     }
 
-    print("\n------------------\n is outtt");
+   //print("\n------------------\n is outtt");
     //ref gives us access to our route cloud storage bucket
     //child allows to control where we want to store\read our file
     // Create a reference to the storage bucket
     for (int i = 0; i < property.images!.length; i = i + 1) {
-      print("\n------------------\n is innn");
-      print(property.images!.length);
+      //print("\n------------------\n is innn");
+      //print(property.images!.length);
       if (property.images![i] != null) {
         final storageRef = FirebaseStorage.instance.ref();
         Reference ref =
