@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:sublet_app/models/data/property.dart';
 import 'package:intl/intl.dart';
-import 'package:sublet_app/widgets/chat_widgets/messages.dart';
 part 'host_data.g.dart';
 
 @JsonSerializable(explicitToJson: true)

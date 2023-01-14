@@ -69,7 +69,7 @@ class Session_details with ChangeNotifier {
   }
 
   void UpdateUserData(String name, String about) {
-    this.uname = uname;
+    this.uname = name;
     this.userAbout = about;
     FirestoreUser().updateUserData(UserId, name, about);
     notifyListeners();

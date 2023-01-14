@@ -12,7 +12,6 @@ import 'package:sublet_app/models/data/property.dart';
 import 'package:intl/intl.dart';
 import 'package:sublet_app/providers/firestore_chat.dart';
 import 'package:sublet_app/screens/Host/tabs_screen.dart';
-import 'package:sublet_app/screens/Chat/chat_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../providers/current_chat.dart';

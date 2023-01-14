@@ -20,8 +20,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<Session_details>(context);
-    // currName = userData.UserName;
-    // currAbout = userData.userAbout;
+    currName = userData.UserName;
+    currAbout = userData.userAbout;
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(),
