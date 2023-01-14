@@ -15,9 +15,13 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
+  String currName = '';
+  String currAbout = '';
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<Session_details>(context);
+    // currName = userData.UserName;
+    // currAbout = userData.userAbout;
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(),
@@ -25,8 +29,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
         elevation: 0,
       ),
       body: ListView(
-        padding: EdgeInsets.symmetric(horizontal: 32),
-        physics: BouncingScrollPhysics(),
+        padding: const EdgeInsets.symmetric(horizontal: 32),
+        physics: const BouncingScrollPhysics(),
         children: [
           ProfileWidget(
             imagePath: userData.ImgURL,
@@ -37,23 +41,53 @@ class _EditProfilePageState extends State<EditProfilePage> {
           TextFieldWidget(
             label: 'Full Name',
             text: userData.UserName,
-            onChanged: (name) {},
+            onChanged: (name) {
+              currName = name;
+            },
           ),
           const SizedBox(height: 24),
           TextFieldWidget(
-            label: 'Email',
-            text: userData.UserEmail,
-            onChanged: (email) {},
+            label: 'About',
+            text: userData.UserAbout,
+            maxLines: 5,
+            onChanged: (about) {
+              currAbout = about;
+            },
           ),
-          // const SizedBox(height: 24),
-          // TextFieldWidget(
-          //   label: 'About',
-          //   text: user.about,
-          //   maxLines: 5,
-          //   onChanged: (about) {},
-          // ),
+          const SizedBox(height: 24),
+          ButtonWidget(
+            text: 'Save',
+            onClicked: () {
+              // userData.UpdateName(currName);
+              // userData.UpdateAbout(currAbout);
+              userData.UpdateUserData(currName, currAbout);
+              Navigator.of(context).pop();
+            },
+          ),
         ],
       ),
     );
   }
+}
+
+class ButtonWidget extends StatelessWidget {
+  final String text;
+  final VoidCallback onClicked;
+
+  const ButtonWidget({
+    Key? key,
+    required this.text,
+    required this.onClicked,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          shape: StadiumBorder(),
+          onPrimary: Colors.white,
+          padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+        ),
+        child: Text(text),
+        onPressed: onClicked,
+      );
 }

@@ -132,6 +132,7 @@ class Firebase_functions {
         }
       }
     }
+
     property.images = null;
     print(property.imageUrls);
 
@@ -228,13 +229,14 @@ class Firebase_functions {
   //Users functions:
 
   static Future<bool> Add_user(
-      String uid, String name, String type, imageURL) async {
+      String uid, String name, String type, imageURL, String about) async {
     bool res = true;
     db.collection('users').doc(uid).set({
       'id': uid,
       'name': name,
       'type': type,
-      'imageURL': imageURL
+      'imageURL': imageURL,
+      'about': about
     }).onError((error, stackTrace) => {print('$stackTrace\n'), res = false});
     return res;
   }

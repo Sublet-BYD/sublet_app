@@ -19,18 +19,6 @@ class AppDrawer extends StatelessWidget {
           ),
           const Divider(),
           ListTile(
-            leading: Icon(Icons.exit_to_app),
-            title: Text('Logout'),
-            onTap: () {
-              context
-                  .read<Session_details>()
-                  .Logout(); // Resetting all session_details
-              Navigator.of(context).pop();
-              Provider.of<Auth>(context, listen: false).logout();
-            },
-          ),
-          const Divider(),
-          ListTile(
             leading: const Icon(Icons.account_box),
             title: const Text('My Account'),
             onTap: () {
@@ -43,6 +31,18 @@ class AppDrawer extends StatelessWidget {
               // Navigator.of(context)
               //     .pushReplacement(MaterialPageRoute(builder: ((context) => HomeScreen())));
               // Provider.of<Auth>(context, listen: false).logout();
+            },
+          ),
+          const Divider(),
+          ListTile(
+            leading: Icon(Icons.exit_to_app),
+            title: Text('Logout'),
+            onTap: () {
+              context
+                  .read<Session_details>()
+                  .Logout(); // Resetting all session_details
+              Navigator.of(context).pop();
+              Provider.of<Auth>(context, listen: false).logout();
             },
           ),
         ],

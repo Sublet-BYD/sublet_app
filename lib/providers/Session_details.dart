@@ -3,6 +3,7 @@ import 'package:sublet_app/Firebase_functions.dart';
 import 'package:sublet_app/models/Pair.dart';
 import 'package:sublet_app/models/data/host_data.dart';
 import 'package:sublet_app/models/data/property.dart';
+import 'Firestore_user.dart';
 
 class Session_details with ChangeNotifier {
   // This class contains all information related to the current session. It is a provider, meaning it will be used to "transfer" data between classes.
@@ -13,6 +14,7 @@ class Session_details with ChangeNotifier {
   String uname = "";
   String imgURL = "";
   String userEmail = 'example@example.com';
+  String userAbout = '';
   // String userAbout = '';
   Map<String, Object> sort_reqs = {
     'price': true,
@@ -27,6 +29,7 @@ class Session_details with ChangeNotifier {
   String get UserName => uname;
   String get ImgURL => imgURL;
   String get UserEmail => userEmail;
+  String get UserAbout => userAbout;
 
   Map<String, Object> get SortReqs => sort_reqs;
 
@@ -57,6 +60,19 @@ class Session_details with ChangeNotifier {
 
   void UpdateName(String uname) {
     this.uname = uname;
+    notifyListeners();
+  }
+
+  void UpdateAbout(String about) {
+    this.userAbout = about;
+    notifyListeners();
+  }
+
+  void UpdateUserData(String name, String about) {
+    this.uname = uname;
+    this.userAbout = about;
+    FirestoreUser().updateUserData(UserId, name, about);
+    notifyListeners();
   }
 
   void UpdateRequirements(Map<String, Object> sort_reqs) {

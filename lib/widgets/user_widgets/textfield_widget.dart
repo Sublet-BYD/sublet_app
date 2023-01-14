@@ -51,6 +51,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
+            onChanged: widget.onChanged,
             maxLines: widget.maxLines,
           ),
         ],
