@@ -11,7 +11,9 @@ class Session_details with ChangeNotifier {
   String property_id = "";
   String host_id = "";
   String uname = "";
-  String ImgURL = "";
+  String imgURL = "";
+  String userEmail = 'example@example.com';
+  // String userAbout = '';
   Map<String, Object> sort_reqs = {
     'price': true,
     'from': DateTime.now(),
@@ -23,6 +25,9 @@ class Session_details with ChangeNotifier {
   String get PropertyId => property_id;
   String get HostId => host_id;
   String get UserName => uname;
+  String get ImgURL => imgURL;
+  String get UserEmail => userEmail;
+
   Map<String, Object> get SortReqs => sort_reqs;
 
   void UpdateUid(String uid) {
@@ -32,6 +37,11 @@ class Session_details with ChangeNotifier {
 
   void UpdateUtype(String utype) {
     this.utype = utype;
+    notifyListeners();
+  }
+
+  void UpdateUserImage(String userImg) {
+    imgURL = userImg;
     notifyListeners();
   }
 
@@ -72,7 +82,7 @@ class Session_details with ChangeNotifier {
     utype = "";
     property_id = "";
     uname = "";
-    ImgURL = "";
+    imgURL = "";
     sort_reqs = {
       'price': true,
       'from': DateTime.now(),

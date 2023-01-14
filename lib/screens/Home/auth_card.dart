@@ -22,7 +22,7 @@ class _AuthCardState extends State<AuthCard> {
   //what doing ?
   final GlobalKey<FormState> _formKey = GlobalKey();
   String imageURL =
-      'https://firebasestorage.googleapis.com/v0/b/sublet-34e39.appspot.com/o/Empty_profile_pic.jpg?alt=media&token=3d3a8c93-7254-43e4-8a90-0855ce0406ab';
+      'https://firebasestorage.googleapis.com/v0/b/sublet-34e39.appspot.com/o/Empty_profile_pic.jpg?alt=media&token=08d7dff3-fee3-42be-9a4c-d27a1dd2b9e0';
   String type = 'client';
   final _emailController = TextEditingController();
   final _userName = TextEditingController();
@@ -34,7 +34,7 @@ class _AuthCardState extends State<AuthCard> {
   };
 
   var _isLoading = false;
-  final _passwordController = TextEditingController(text: 'admin1');
+  final _passwordController = TextEditingController(text: '121212');
 
 //show dialog to the users
   void _showErrorDiallog(String message) {
@@ -77,39 +77,49 @@ class _AuthCardState extends State<AuthCard> {
 
     try {
       if (_authMode == AuthMode.Login) {
+        final sessionProvider =
+            Provider.of<Session_details>(context, listen: false);
         // print('Log in');
         // Log user in
-        context.read<Session_details>().UpdateUtype(
+        sessionProvider.UpdateUtype(
             await Provider.of<Auth>(context, listen: false).login(
                 _authData['email'].toString(),
                 _authData['password'].toString()));
-        context.read<Session_details>().UpdateUid(
+        sessionProvider.UpdateUid(
             await Provider.of<Auth>(context, listen: false).login(
                 _authData['email'].toString(),
                 _authData['password'].toString()));
-        if (context.read<Session_details>().uid != '') {
+        if (sessionProvider.uid != '') {
           FirebaseFirestore.instance
               .collection('users')
-              .doc(context.read<Session_details>().uid)
+              .doc(sessionProvider.uid)
               .get()
-              .then((doc) async {
-            if (doc.exists) {
-              // Document data is available
-              print("--------------------------");
+              .then(
+            (doc) async {
+              if (doc.exists) {
+                // Document data is available
+                print("--------------------------");
 
-              String utype = doc.data()!['type'];
-              print(utype);
-              // To write a value
-              context.read<Session_details>().UpdateUtype(utype);
-              // MyApp.uType = doc.data()!['type'];
-            } else {
-              // Document is not found
-              print(" this no such ");
-              print("No such document!");
-            }
-            print("HERE");
-            print(context.read<Session_details>().utype);
-          });
+                // Update the user type.
+                String utype = doc.data()!['type'];
+                print("Logged in user type is: $utype");
+                sessionProvider.UpdateUtype(utype);
+
+                // Update the user name.
+                String userName = doc.data()!['name'];
+                sessionProvider.UpdateName(userName);
+                // Update the user profile Img
+                String userImg = doc.data()!['imageURL'];
+                sessionProvider.UpdateUserImage(userImg);
+              } else {
+                // Document is not found
+                print(" this no such ");
+                print("No such document!");
+              }
+              print("HERE");
+              print(sessionProvider.utype);
+            },
+          );
         }
       } else {
         // Sign user up
