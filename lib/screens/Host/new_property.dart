@@ -34,6 +34,8 @@ class _NewPropertyState extends State<NewProperty> {
   var appBar = AppBar(
     title: Text('Add a new Property'),
   );
+  DateTime from = DateTime.now(); // Will be assigned by the user when entering data for the new property.
+  DateTime till = DateTime(2024); // Will be assigned by the user when entering data for the new property.
 
   // File? _pickedImaged;
   // void _selectImage(File pickedImage) {
@@ -129,8 +131,6 @@ class _NewPropertyState extends State<NewProperty> {
 
   @override
   Widget build(BuildContext context) {
-    late DateTime from = DateTime.now(); 
-    late DateTime till = DateTime(2024); // Will be assigned by the user when entering data for the new property.
     return Scaffold(
       appBar: appBar,
       body: SingleChildScrollView(
@@ -216,7 +216,7 @@ class _NewPropertyState extends State<NewProperty> {
                 onSubmitted: ((value) {
                   FocusScope.of(context).unfocus();
                   final user = FirebaseAuth.instance.currentUser;
-                }), // TODO
+                }),
               ),
               TextField(
                 decoration: InputDecoration(labelText: 'Property Location'),
@@ -224,7 +224,7 @@ class _NewPropertyState extends State<NewProperty> {
                 onSubmitted: ((value) {
                   FocusScope.of(context).unfocus();
                   final user = FirebaseAuth.instance.currentUser;
-                }), // TODO
+                }),
               ),
               TextField(
                 decoration: InputDecoration(labelText: 'Property Price'),
@@ -232,7 +232,7 @@ class _NewPropertyState extends State<NewProperty> {
                 onSubmitted: ((value) {
                   FocusScope.of(context).unfocus();
                   final user = FirebaseAuth.instance.currentUser;
-                }), // TODO
+                }),
               ),
               Container(
                 padding: EdgeInsets.only(top: 15, left: 15, right: 15),
@@ -251,16 +251,16 @@ class _NewPropertyState extends State<NewProperty> {
                           context: context,
                           initialDate: DateTime.now(),
                           firstDate: DateTime(1950),
-                          //DateTime.now() - not to allow to choose before today.
                           lastDate: DateTime(2100));
                       if (pickedDate != null) {
                         String formattedDate =
                             DateFormat.yMMMd().format(pickedDate);
-                        print(formattedDate);
+                        
+                        from =pickedDate;
                         setState(() {
                           propStartDateController.text =
                               formattedDate; //set output date to TextField value.
-                              from = pickedDate;
+                          print(propStartDateController.text);
                         });
                       } else {}
                     }),
@@ -287,6 +287,7 @@ class _NewPropertyState extends State<NewProperty> {
                           //DateTime.now() - not to allow to choose before today.
                           lastDate: DateTime(2100));
                       if (pickedDate != null) {
+                        till = pickedDate;
                         String formattedDate =
                             DateFormat.yMMMd().format(pickedDate);
                         print(formattedDate);
@@ -294,7 +295,6 @@ class _NewPropertyState extends State<NewProperty> {
                           () {
                             propEndDateController.text =
                                 formattedDate; //set output date to TextField value.
-                                till = pickedDate;
                           },
                         );
                       } else {}
@@ -307,7 +307,7 @@ class _NewPropertyState extends State<NewProperty> {
                   FocusScope.of(context).unfocus();
                   //  _addNewProperty();
                   if (_storedImage.isEmpty) {
-                    print("is in");
+                    print("\n ${from.toIso8601String()} - ${till.toIso8601String()}\n");
                     Property pro = Property(
                       name: propNameController.text,
                       location: propLocationController.text,
@@ -322,17 +322,13 @@ class _NewPropertyState extends State<NewProperty> {
                     Firebase_functions.Upload_property(pro).then(
                       (value) {
                         if (value) {
-                          // print("-----------------------");
-                          // print(value);
-                          // Property was uploaded successfully
-                          // Now you can use the updated property in the PropertyScreen
                           Navigator.pop(context);
                           widget.refresh();
                         }
                       },
                     );
                   } else {
-                    print("is out");
+                    print("\n $from - $till\n");
                     Property pro = Property(
                       name: propNameController.text,
                       location: propLocationController.text,
@@ -340,8 +336,8 @@ class _NewPropertyState extends State<NewProperty> {
                           Provider.of<Session_details>(context, listen: false)
                               .UserId
                               .toString(),
-                      fromdate: DateTime.tryParse(propStartDateController.text),
-                      tilldate: DateTime.tryParse(propEndDateController.text),
+                      fromdate: from,
+                      tilldate: till,
                       price: int.parse(propPriceController.text),
                       images: _storedImage,
                     );
