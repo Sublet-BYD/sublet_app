@@ -5,7 +5,7 @@ import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 
 // import 'package:user_profile_ii_example/widget/button_widget.dart';
-import 'package:sublet_app/widgets/user_widgets/profile_widget';
+import 'package:sublet_app/widgets/user_widgets/profile_widget.dart';
 import 'package:sublet_app/widgets/user_widgets/textfield_widget.dart';
 import '../../providers/Session_details.dart';
 

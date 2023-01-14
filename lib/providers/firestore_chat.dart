@@ -51,12 +51,30 @@ class FirestoreChats {
         .add(chatUser.toJson())
         .then((value) => value.collection('messages').add(newMessage.toJson()))
         .toString();
-    // FirebaseFirestore.instance
-    //     .collection('chats')
-    //     .doc(chatId)
-    //     .collection('messages')
-    //     .add(newMessage.toJson());
-    // FirebaseFirestore.instance.collection('chats').doc(chatId).
     return chatId;
+  }
+
+  bool chatExists(hostId, guestId) {
+    var output = FirebaseFirestore.instance
+        .collection('chats')
+        .where('hostId', isEqualTo: hostId)
+        .where('guestId', isEqualTo: guestId)
+        .snapshots() as QuerySnapshot;
+    return output.docs.isNotEmpty;
+  }
+
+  String getChat(hostId, guestId) {
+    var snap = FirebaseFirestore.instance
+        .collection('chats')
+        .where('hostId', isEqualTo: hostId)
+        .where('guestId', isEqualTo: guestId)
+        .limit(1)
+        .snapshots() as QuerySnapshot;
+    // var hostFilter = FirebaseFirestore.instance
+    // .collection('chats')
+    // .where('hostId', isEqualTo: hostId)
+    //  as QuerySnapshot;
+    //  var document = hostFilter.docs.
+    return snap.docs.first.id;
   }
 }

@@ -9,10 +9,9 @@ import 'package:sublet_app/models/data/message.dart';
 import 'package:sublet_app/providers/Session_details.dart';
 import 'package:sublet_app/models/data/host_data.dart';
 import 'package:sublet_app/models/data/property.dart';
-import 'package:intl/intl.dart';
 import 'package:sublet_app/providers/firestore_chat.dart';
-import 'package:sublet_app/screens/Host/tabs_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:intl/intl.dart';
 
 import '../../providers/current_chat.dart';
 import '../Chat/chat_details_screen.dart';
@@ -78,9 +77,6 @@ class _AssetPageState extends State<AssetPage> {
                                   options: CarouselOptions(
                                     height: 200,
                                     reverse: true,
-                                    //viewportFraction: 1, //only one image
-                                    //enlargeCenterPage: true,
-                                    //enableInfiniteScroll: false, //lime the slider
                                     onPageChanged: (index, reason) =>
                                         setState(() => activateIndex = index),
                                   ),
@@ -94,11 +90,6 @@ class _AssetPageState extends State<AssetPage> {
                                     }
                                     print(property.imageUrls!.length);
                                     final urlImage = property.imageUrls![index];
-                                    // for (int i = 0;
-                                    //     i < property.imageUrls!.length;
-                                    //     i++) {
-                                    //   print(property.imageUrls![i]);
-                                    // }
 
                                     return buildImage(urlImage, index);
                                   }),
@@ -277,6 +268,10 @@ class _AssetPageState extends State<AssetPage> {
                                   // new implementation on chat!
                                   // please ask before change
                                   onTap: () {
+                                    bool chatExists = FirestoreChats()
+                                        .chatExists(
+                                            owner.id, selfAccount.UserId);
+
                                     final newChat = ChatUsers(
                                       hostId: owner.id,
                                       guestId: selfAccount.UserId,
@@ -297,7 +292,10 @@ class _AssetPageState extends State<AssetPage> {
                                         MaterialPageRoute(builder: (context) {
                                       return ChangeNotifierProvider.value(
                                         value: CurrentChat(
-                                          chatId: newChatId,
+                                          chatId: chatExists
+                                              ? FirestoreChats().getChat(
+                                                  owner.id, selfAccount.UserId)
+                                              : newChatId,
                                         ),
                                         child: ChatDetailPage(
                                             name: owner.name,
