@@ -21,7 +21,7 @@ class _MultiImagesState extends State<MultiImages> {
 
   //final ImagePicker imagePicker = ImagePicker();
 
-  List<XFile> _storedImage = [];
+  List<File> _storedImage = [];
 
   Future<void> _pickImage() {
     return showDialog<void>(
@@ -56,15 +56,27 @@ class _MultiImagesState extends State<MultiImages> {
         });
   }
 
+//-------------MultiImages-----------------------
+  Widget buildImage(File file, int index) => Container(
+        margin: EdgeInsets.symmetric(horizontal: 12),
+        color: Colors.white,
+        child: Image.file(
+          File(file.path),
+          fit: BoxFit.cover,
+        ),
+      );
+
   void selectImages(ImageSource source) async {
     final ImagePicker imagePicker = ImagePicker();
     if (source == ImageSource.gallery) {
       final List<XFile>? selectedImages = await imagePicker.pickMultiImage();
       if (selectedImages != null && selectedImages!.isNotEmpty) {
         setState(() {
-          _storedImage!.addAll(selectedImages);
-          print(_storedImage!.length);
-          print(_storedImage);
+          for (int i = 0; i < selectedImages!.length; i = i + 1) {
+            _storedImage.add(File(selectedImages[i].path));
+            print(_storedImage!.length);
+            print(_storedImage);
+          }
         });
       }
     } else if (source == ImageSource.camera) {
@@ -75,8 +87,8 @@ class _MultiImagesState extends State<MultiImages> {
         return;
       }
       setState(() {
-        XFile f = imageFile;
-        _storedImage!.add(f);
+        //XFile f = imageFile;
+        _storedImage.add(File(imageFile.path));
       });
     }
   }
@@ -99,7 +111,7 @@ class _MultiImagesState extends State<MultiImages> {
             //     fit: BoxFit.cover),
           ),
           alignment: Alignment.center,
-          child: _storedImage != null && _storedImage!.isNotEmpty
+          child: _storedImage != null && _storedImage.isNotEmpty
               ? CarouselSlider.builder(
                   options: CarouselOptions(
                     height: 1000,
@@ -107,7 +119,7 @@ class _MultiImagesState extends State<MultiImages> {
                   ),
                   itemCount: _storedImage!.length,
                   itemBuilder: ((context, index, realIndex) {
-                    return buildImage(_storedImage![index], index);
+                    return buildImage(_storedImage[index], index);
                   }),
                 )
               : Image.asset(
@@ -149,13 +161,4 @@ class _MultiImagesState extends State<MultiImages> {
       ],
     );
   }
-
-  Widget buildImage(XFile file, int index) => Container(
-        margin: EdgeInsets.symmetric(horizontal: 12),
-        color: Colors.white,
-        child: Image.file(
-          File(file.path),
-          fit: BoxFit.cover,
-        ),
-      );
 }
