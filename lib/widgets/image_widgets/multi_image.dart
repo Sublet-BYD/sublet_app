@@ -59,11 +59,11 @@ class _MultiImagesState extends State<MultiImages> {
   void selectImages(ImageSource source) async {
     final ImagePicker imagePicker = ImagePicker();
     if (source == ImageSource.gallery) {
-      final List<XFile>? selectedImages = await imagePicker.pickMultiImage();
-      if (selectedImages != null && selectedImages!.isNotEmpty) {
+      final List<XFile> selectedImages = await imagePicker.pickMultiImage();
+      if (selectedImages.isNotEmpty) {
         setState(() {
-          _storedImage!.addAll(selectedImages);
-          print(_storedImage!.length);
+          _storedImage.addAll(selectedImages);
+          print(_storedImage.length);
           print(_storedImage);
         });
       }
@@ -76,7 +76,7 @@ class _MultiImagesState extends State<MultiImages> {
       }
       setState(() {
         XFile f = imageFile;
-        _storedImage!.add(f);
+        _storedImage.add(f);
       });
     }
   }
@@ -99,15 +99,15 @@ class _MultiImagesState extends State<MultiImages> {
             //     fit: BoxFit.cover),
           ),
           alignment: Alignment.center,
-          child: _storedImage != null && _storedImage!.isNotEmpty
+          child: _storedImage.isNotEmpty
               ? CarouselSlider.builder(
                   options: CarouselOptions(
                     height: 1000,
                     enableInfiniteScroll: false,
                   ),
-                  itemCount: _storedImage!.length,
+                  itemCount: _storedImage.length,
                   itemBuilder: ((context, index, realIndex) {
-                    return buildImage(_storedImage![index], index);
+                    return buildImage(_storedImage[index], index);
                   }),
                 )
               : Image.asset(

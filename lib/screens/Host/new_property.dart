@@ -103,12 +103,12 @@ class _NewPropertyState extends State<NewProperty> {
   void selectImages(ImageSource source) async {
     final ImagePicker imagePicker = ImagePicker();
     if (source == ImageSource.gallery) {
-      final List<XFile>? selectedImages = await imagePicker.pickMultiImage();
-      if (selectedImages != null && selectedImages!.isNotEmpty) {
+      final List<XFile> selectedImages = await imagePicker.pickMultiImage();
+      if (selectedImages.isNotEmpty) {
         setState(() {
-          for (int i = 0; i < selectedImages!.length; i = i+1) {
+          for (int i = 0; i < selectedImages.length; i = i+1) {
             _storedImage.add(File(selectedImages[i].path));
-            print(_storedImage!.length);
+            print(_storedImage.length);
             print(_storedImage);
           }
         });
@@ -159,13 +159,13 @@ class _NewPropertyState extends State<NewProperty> {
                       //     fit: BoxFit.cover),
                     ),
                     alignment: Alignment.center,
-                    child: _storedImage != null && _storedImage.isNotEmpty
+                    child: _storedImage.isNotEmpty
                         ? CarouselSlider.builder(
                             options: CarouselOptions(
                               height: 1000,
                               enableInfiniteScroll: false,
                             ),
-                            itemCount: _storedImage!.length,
+                            itemCount: _storedImage.length,
                             itemBuilder: ((context, index, realIndex) {
                               return buildImage(_storedImage[index], index);
                             }),
