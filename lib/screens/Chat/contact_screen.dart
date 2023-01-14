@@ -24,16 +24,14 @@ class ContactScreen extends StatefulWidget {
 
 ContactCard widgetByUserType(
     BuildContext context, ChatUsers chatUsers, index, chatId) {
-  String userId = Provider.of<Session_details>(context).UserId;
+  String userType = Provider.of<Session_details>(context).UserType;
   print(" host imageURL: ${chatUsers.hostImageURL}");
   print("guestIdname: ${chatUsers.guestId} hostIdname: ${chatUsers.hostId}");
-  String stURL = (chatUsers.hostImageURL == '' || chatUsers.guestImageURL == '')
-      ? 'https://firebasestorage.googleapis.com/v0/b/sublet-34e39.appspot.com/o/Empty_profile_pic.jpg?alt=media&token=3d3a8c93-7254-43e4-8a90-0855ce0406ab'
-      : (userId == 'client'
-          ? chatUsers.hostImageURL!
-          : chatUsers.guestImageURL!);
+  String stURL = (userType == 'client'
+      ? chatUsers.hostImageURL!
+      : chatUsers.guestImageURL!);
   return ContactCard(
-    name: userId == 'client' ? chatUsers.hostName : chatUsers.guestName,
+    name: userType == 'client' ? chatUsers.hostName : chatUsers.guestName,
     imageUrl: stURL,
     isMessageRead: (index == 0 || index == 3) ? true : false,
     chatId: chatId,
