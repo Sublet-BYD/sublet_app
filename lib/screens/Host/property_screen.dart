@@ -81,9 +81,9 @@ class _PropertyScreenState extends State<PropertyScreen> {
                               reverse: true,
                               //viewportFraction: 1, //only one image
                               //enlargeCenterPage: true,
-                              enableInfiniteScroll: false, //lime the slider
-                            //  onPageChanged: (index, reason) =>
-                              //    setState(() => activateIndex = index),
+                              enableInfiniteScroll: false, //limt the slider
+                              // onPageChanged: (index, reason) =>
+                              //     setState(() => activateIndex = index),
                             ),
                             itemCount: property.imageUrls!.length,
                             itemBuilder: ((context, index, realIndex) {
@@ -94,30 +94,50 @@ class _PropertyScreenState extends State<PropertyScreen> {
                                 );
                               }
 
-                              //print(property.imageUrls!.length);
                               final urlImage = property.imageUrls![index];
-                              // for (int i = 0;
-                              //     i < property.imageUrls!.length;
-                              //     i++) {
-                              //   print(property.imageUrls![i]);
-                              // }
-                             // print("\n\n");
-                              return buildImage(urlImage, index);
+
+                              //return buildImage(urlImage, index);
+                              return InkWell(
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return Scaffold(
+                                          appBar: AppBar(
+                                            title: Text("Full screen"),
+                                          ),
+                                          body: Hero(
+                                            tag: urlImage,
+                                            child: Image.network(
+                                              urlImage,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  );
+                                },
+                                child: Hero(
+                                  tag: urlImage,
+                                  child: Image.network(
+                                    urlImage,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              );
                             }),
                           ),
-                          const SizedBox(
-                            height: 5,
-                          ),
+                          //--------- for now I off the tot
+                          // const SizedBox(
+                          //   height: 5,
+                          // ),
                           // if (property.imageUrls!.isNotEmpty)
                           //   buildIndicator(property.imageUrls!.length)
                           // else
                           //   buildIndicator(1)
                         ],
                       ),
-
-                      //  Image.asset('assets/Apartment_example.jpg',
-                      //     fit: BoxFit
-                      //         .cover), // (_property.image != null)? _property.image as Widget :
                     ),
                     Column(
                       children: [
@@ -305,20 +325,15 @@ class _PropertyScreenState extends State<PropertyScreen> {
         ),
       );
 
-  Widget buildIndicator(int length) => StreamBuilder<Object>(
-    stream: null,
-    builder: (context, snapshot) {
-      return AnimatedSmoothIndicator(
-            activeIndex: activateIndex,
-            count: length,
-            effect: SlideEffect(
-              activeDotColor: Colors.deepPurple,
-              dotHeight: 10,
-              dotWidth: 10,
-            ),
-          );
-    }
-  );
+  Widget buildIndicator(int length) => AnimatedSmoothIndicator(
+        activeIndex: activateIndex,
+        count: length,
+        effect: SlideEffect(
+          activeDotColor: Colors.deepPurple,
+          dotHeight: 10,
+          dotWidth: 10,
+        ),
+      );
 }
 
 class EditProperty extends StatefulWidget {
