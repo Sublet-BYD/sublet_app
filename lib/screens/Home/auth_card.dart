@@ -35,7 +35,7 @@ class _AuthCardState extends State<AuthCard> {
   };
 
   var _isLoading = false;
-  final _passwordController = TextEditingController(text: '121212');
+  final _passwordController = TextEditingController(text: 'admin1');
 
 //show dialog to the users
   void _showErrorDiallog(String message) {

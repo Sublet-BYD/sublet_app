@@ -96,6 +96,9 @@ class _AssetlistState extends State<Assetlist> {
             );
           } else {
             final _property_data = snapshot.data!.docs.toList();
+            print(_property_data);
+            print('Reqs: ${Provider.of<Session_details>(context)
+                .sort_reqs.toString()}');
             if (Provider.of<Session_details>(context)
                 .sort_reqs
                 .containsKey('till')) {
@@ -107,10 +110,11 @@ class _AssetlistState extends State<Assetlist> {
                 }
               }
             }
+            print(_property_data);
             print(Provider.of<Session_details>(context).sort_reqs['price'].runtimeType);
             if (Provider.of<Session_details>(context).sort_reqs['price']
                 as bool) {
-                  print('${_property_data[0].data()}\n');
+                  // print('${_property_data[0].data()}\n');
               _property_data.sort((a, b) => a.data()['price'] < b.data()['price']);
             }
             else{
