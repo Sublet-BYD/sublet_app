@@ -54,7 +54,6 @@ class _NewPropertyState extends State<NewProperty> {
     }
   }
 
-
   //-------------MultiImages-----------------------
   List<File> _storedImage = [];
 
@@ -90,6 +89,7 @@ class _NewPropertyState extends State<NewProperty> {
           );
         });
   }
+
 //-------------MultiImages-----------------------
   Widget buildImage(File file, int index) => Container(
         margin: EdgeInsets.symmetric(horizontal: 12),
@@ -141,7 +141,6 @@ class _NewPropertyState extends State<NewProperty> {
             children: [
               //ImageInput(_selectImage),
               //MultiImages(_selectImages),
-
 
               //-------------MultiImages-----------------------
               Row(

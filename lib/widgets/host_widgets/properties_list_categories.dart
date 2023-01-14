@@ -62,9 +62,8 @@ class _PropertiesListCategoriesState extends State<PropertiesListCategories> {
                           splashColor: Theme.of(context).primaryColor,
                           borderRadius: BorderRadius.circular(20),
                           onTap: (() {
-                            Provider.of<Session_details>(context, listen: false)
-                                .UpdatePropertyId(propertyObj
-                                    .id!); // Hard null check is safe since propertyObj must have an id as it is pulled from Firebase.
+                            // Provider.of<Session_details>(context)
+                            //     .UpdateProperty(propertyObj);
                             return onPropertyCardPress(context);
                           }),
                           child: PropertyCard(propertyObj),
