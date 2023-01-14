@@ -93,14 +93,12 @@ class Firebase_functions {
       print('Error -> owner doesn\'t exist');
       return false;
     }
-    print('Owner exists\n');
     if (property.id != null && await property_exists(property.id!)) {
       print('Error -> Property already exists\n');
       return false;
     }
     DocumentReference prop = db.collection('properties').doc();
     property.assign_id(prop.id);
-    print('Assigned id\n');
     if (property.imageUrls == null) {
       property.imageUrls = [];
     }
