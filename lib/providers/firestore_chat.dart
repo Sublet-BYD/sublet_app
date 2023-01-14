@@ -49,12 +49,14 @@ class FirestoreChats {
     String chatId = FirebaseFirestore.instance
         .collection('chats')
         .add(chatUser.toJson())
+        .then((value) => value.collection('messages').add(newMessage.toJson()))
         .toString();
-    FirebaseFirestore.instance
-        .collection('chats')
-        .doc(chatId)
-        .collection('messages')
-        .add(newMessage.toJson());
+    // FirebaseFirestore.instance
+    //     .collection('chats')
+    //     .doc(chatId)
+    //     .collection('messages')
+    //     .add(newMessage.toJson());
+    // FirebaseFirestore.instance.collection('chats').doc(chatId).
     return chatId;
   }
 }

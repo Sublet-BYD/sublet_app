@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -107,10 +109,10 @@ class _AuthCardState extends State<AuthCard> {
     'email': '',
     'password': '',
   };
-  final _userName = TextEditingController();
+  final _userName = TextEditingController(text: 'test123@gmail.com');
 
   var _isLoading = false;
-  final _passwordController = TextEditingController(text: '121212');
+  final _passwordController = TextEditingController(text: '123456');
 
 //show dialog to the users
   void _showErrorDiallog(String message) {
@@ -287,6 +289,7 @@ class _AuthCardState extends State<AuthCard> {
                       child: TextFormField(
                         decoration: InputDecoration(labelText: 'E-Mail'),
                         keyboardType: TextInputType.emailAddress,
+                        
                         validator: (value) {
                           if (value!.isEmpty || !value.contains('@')) {
                             return 'Invalid email!';

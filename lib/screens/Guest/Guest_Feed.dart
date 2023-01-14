@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sublet_app/Firebase_functions.dart';
 import 'package:sublet_app/models/data/property.dart';
+import 'package:sublet_app/providers/firestore_properties.dart';
 import 'package:sublet_app/screens/Guest/Asset_Page.dart';
 import 'package:sublet_app/widgets/app_drawer.dart';
 import 'package:provider/provider.dart';
@@ -84,8 +85,8 @@ class _AssetlistState extends State<Assetlist> {
 
   @override
   Widget build(BuildContext context) {
-    var proStream =
-        FirebaseFirestore.instance.collection('properties').snapshots();
+    var proStream = Provider.of<FirestoreProperties>(context)
+        .getSortedProperties(Provider.of<Session_details>(context).SortReqs);
     return StreamBuilder(
         stream: proStream,
         builder: (context, snapshot) {
@@ -94,19 +95,39 @@ class _AssetlistState extends State<Assetlist> {
               child: CircularProgressIndicator(),
             );
           } else {
+            final _property_data = snapshot.data!.docs.toList();
+            if (Provider.of<Session_details>(context)
+                .sort_reqs
+                .containsKey('till')) {
+              for (var element in _property_data) {
+                if ((element.data()['tilldate'] as DateTime).isAfter(
+                    Provider.of<Session_details>(context).sort_reqs['till']
+                        as DateTime)) {
+                  _property_data.remove(element);
+                }
+              }
+            }
+            print(Provider.of<Session_details>(context).sort_reqs['price'].runtimeType);
+            if (Provider.of<Session_details>(context).sort_reqs['price']
+                as bool) {
+                  print('${_property_data[0].data()}\n');
+              _property_data.sort((a, b) => a.data()['price'] < b.data()['price']);
+            }
+            else{
+              _property_data.sort((a, b) => a.data()['price'] > b.data()['price']);
+            }
             return ListView.builder(
               padding: const EdgeInsets.only(bottom: 70),
               physics: BouncingScrollPhysics(),
               itemBuilder: (ctx, index) {
-                final _property_data = snapshot.data!.docs[index]
-                    .data(); // Renamed _propert_id to _property_data
                 // VERY IMPORTANT: Change assetimage to be the first image in the url list of the property.
                 // This will only be doable after finishing the implementation of url list in the Firebase collection
                 // assetImage =
-                final Property property = Property.fromJson(_property_data);
+                final _currProperty = _property_data[index].data();
+                final Property property = Property.fromJson(_currProperty);
                 return GestureDetector(
                     onTap: () async {
-                      onPress(context, _property_data['id'], property.owner_id);
+                      onPress(context, _currProperty['id'], property.owner_id);
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(

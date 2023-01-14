@@ -11,14 +11,14 @@ class Session_details with ChangeNotifier {
   String property_id = "";
   String host_id = "";
   String uname = "";
-  Property? _currentProperty = null;
+  Map<String, Object> sort_reqs = {'price' : true, 'from' : DateTime.now(), 'location' : 'any location'}; // Requirements for sorting the properties in Guest_Feed; Defualt sort will only be by ascending prices.
 
   String get UserId => uid;
   String get UserType => utype;
   String get PropertyId => property_id;
   String get HostId => host_id;
   String get UserName => uname;
-  Property? get currentProperty => _currentProperty;
+  Map<String, Object> get SortReqs => sort_reqs;
 
   void UpdateUid(String uid) {
     this.uid = uid;
@@ -44,6 +44,11 @@ class Session_details with ChangeNotifier {
     this.uname = uname;
   }
 
+  void UpdateRequirements(Map<String, Object> sort_reqs){
+    this.sort_reqs = sort_reqs;
+    notifyListeners();
+  }
+
   Future<Property> GetProperty() async {
     return Firebase_functions.get_property(property_id);
   }
@@ -56,9 +61,7 @@ class Session_details with ChangeNotifier {
     return Pair(await GetProperty(), await GetHost());
   }
 
-  void UpdateProperty(Property newProperty) {
-    _currentProperty = newProperty;
-  }
+ 
 
   void Logout() {
     host_id = "";
@@ -66,5 +69,6 @@ class Session_details with ChangeNotifier {
     utype = "";
     property_id = "";
     uname = "";
+    sort_reqs = {'price' : true, 'from' : DateTime.now(), 'location' : 'any location'};
   }
 }
