@@ -77,6 +77,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
                         children: [
                           CarouselSlider.builder(
                             options: CarouselOptions(
+                              //
                               height: 200,
                               reverse: true,
                               //viewportFraction: 1, //only one image
