@@ -49,7 +49,7 @@ class _ProfilePageState extends State<ProfilePage> {
         children: [
           Text(
             userName,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
           ),
         ],
       );
@@ -59,7 +59,7 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'About Me',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
