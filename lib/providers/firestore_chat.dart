@@ -59,7 +59,8 @@ class FirestoreChats {
         .collection('chats')
         .where('hostId', isEqualTo: hostId)
         .where('guestId', isEqualTo: guestId)
-        .snapshots() as QuerySnapshot;
+        .snapshots()
+        .first as QuerySnapshot;
     return output.docs.isNotEmpty;
   }
 
