@@ -74,7 +74,7 @@ class _TabsScreenState extends State<TabsScreen>
   _init() {
     _tabs = [
       CustomTabItem(
-        label: 'Manage Properties',
+        label: (Provider.of<Session_details>(context).UserType == 'client') ? 'Find Properties' : 'Manage Properties',
         icon: const Icon(Icons.holiday_village),
         screen:
             widget.userType == 'host' ? ManageProperties() : Renter_Screen(),

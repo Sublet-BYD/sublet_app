@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sublet_app/providers/Session_details.dart';
-import 'package:sublet_app/widgets/user_widgets/profile_widget';
+import 'package:sublet_app/widgets/user_widgets/profile_widget.dart';
 import 'package:sublet_app/screens/User/edit_profile_page.dart';
 
 // This class is the Profile Page of each user.

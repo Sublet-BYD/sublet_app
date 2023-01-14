@@ -54,13 +54,13 @@ class FirestoreChats {
     return chatId;
   }
 
-  bool chatExists(hostId, guestId) {
-    var output = FirebaseFirestore.instance
+  Future<bool> chatExists(hostId, guestId) async{
+    var output = await (FirebaseFirestore.instance
         .collection('chats')
         .where('hostId', isEqualTo: hostId)
         .where('guestId', isEqualTo: guestId)
         .snapshots()
-        .first as QuerySnapshot;
+        .first);
     return output.docs.isNotEmpty;
   }
 
