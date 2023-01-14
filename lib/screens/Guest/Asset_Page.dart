@@ -267,7 +267,7 @@ class _AssetPageState extends State<AssetPage> {
                                 GestureDetector(
                                   // new implementation on chat!
                                   // please ask before change
-                                  onTap: () async{
+                                  onTap: () async {
                                     bool chatExists = await FirestoreChats()
                                         .chatExists(
                                             owner.id, selfAccount.UserId);
