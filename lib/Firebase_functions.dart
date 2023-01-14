@@ -140,7 +140,6 @@ class Firebase_functions {
         .set(property.toJson())
         .onError((error, stackTrace) => {print('$stackTrace\n'), res = false});
 
-    //prop.update({'dateAdded': Timestamp.fromDate(DateTime.now())});
     await Add_Property(await get_owner(property.owner_id), property.id!);
 
     return res;

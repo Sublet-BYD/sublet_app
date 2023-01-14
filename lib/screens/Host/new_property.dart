@@ -129,6 +129,8 @@ class _NewPropertyState extends State<NewProperty> {
 
   @override
   Widget build(BuildContext context) {
+    late DateTime from = DateTime.now(); 
+    late DateTime till = DateTime(2024); // Will be assigned by the user when entering data for the new property.
     return Scaffold(
       appBar: appBar,
       body: SingleChildScrollView(
@@ -252,14 +254,13 @@ class _NewPropertyState extends State<NewProperty> {
                           //DateTime.now() - not to allow to choose before today.
                           lastDate: DateTime(2100));
                       if (pickedDate != null) {
-                        print(
-                            pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
                         String formattedDate =
                             DateFormat.yMMMd().format(pickedDate);
                         print(formattedDate);
                         setState(() {
                           propStartDateController.text =
                               formattedDate; //set output date to TextField value.
+                              from = pickedDate;
                         });
                       } else {}
                     }),
@@ -286,8 +287,6 @@ class _NewPropertyState extends State<NewProperty> {
                           //DateTime.now() - not to allow to choose before today.
                           lastDate: DateTime(2100));
                       if (pickedDate != null) {
-                        print(
-                            pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
                         String formattedDate =
                             DateFormat.yMMMd().format(pickedDate);
                         print(formattedDate);
@@ -295,6 +294,7 @@ class _NewPropertyState extends State<NewProperty> {
                           () {
                             propEndDateController.text =
                                 formattedDate; //set output date to TextField value.
+                                till = pickedDate;
                           },
                         );
                       } else {}
@@ -315,8 +315,8 @@ class _NewPropertyState extends State<NewProperty> {
                           Provider.of<Session_details>(context, listen: false)
                               .UserId
                               .toString(),
-                      fromdate: DateTime.tryParse(propStartDateController.text),
-                      tilldate: DateTime.tryParse(propEndDateController.text),
+                      fromdate: from,
+                      tilldate: till,
                       price: int.parse(propPriceController.text),
                     );
                     Firebase_functions.Upload_property(pro).then(

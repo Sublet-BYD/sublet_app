@@ -115,7 +115,7 @@ class _AssetlistState extends State<Assetlist> {
             if (Provider.of<Session_details>(context).sort_reqs['price']
                 as bool) {
                   // print('${_property_data[0].data()}\n');
-              _property_data.sort((a, b) => a.data()['price'] < b.data()['price']);
+              _property_data.sort((a, b) => a.data()['price'] as int < b.data()['price'] as int);
             }
             else{
               _property_data.sort((a, b) => a.data()['price'] > b.data()['price']);
