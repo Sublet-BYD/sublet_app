@@ -62,8 +62,8 @@ class _PropertiesListCategoriesState extends State<PropertiesListCategories> {
                           splashColor: Theme.of(context).primaryColor,
                           borderRadius: BorderRadius.circular(20),
                           onTap: (() {
-                            // Provider.of<Session_details>(context)
-                            //     .UpdateProperty(propertyObj);
+                            Provider.of<Session_details>(context, listen: false)
+                                .UpdatePropertyId(propertyObj.id!);
                             return onPropertyCardPress(context);
                           }),
                           child: PropertyCard(propertyObj),
