@@ -74,7 +74,7 @@ class _TabsScreenState extends State<TabsScreen>
   _init() {
     _tabs = [
       CustomTabItem(
-        label: (Provider.of<Session_details>(context).UserType == 'client') ? 'Find Properties' : 'Manage Properties',
+        label: (widget.userType == 'client') ? 'Find Properties' : 'Manage Properties',
         icon: const Icon(Icons.holiday_village),
         screen:
             widget.userType == 'host' ? ManageProperties() : Renter_Screen(),
@@ -86,7 +86,7 @@ class _TabsScreenState extends State<TabsScreen>
             : null,
       ),
       CustomTabItem(
-        label: 'Customers',
+        label: (widget.userType == 'client') ? 'Hosts' : 'Guests',
         icon: const Icon(Icons.contact_mail_rounded),
         screen: ContactScreen(
             chatUsersStream:

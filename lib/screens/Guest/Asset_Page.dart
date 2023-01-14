@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, prefer_const_constructors
+// ignore_for_file: non_constant_identifier_names, prefer_const_constructors, use_build_context_synchronously
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:sublet_app/models/Pair.dart';
@@ -268,26 +268,32 @@ class _AssetPageState extends State<AssetPage> {
                                   // new implementation on chat!
                                   // please ask before change
                                   onTap: () async {
+                                    late String newChatId;
                                     bool chatExists = await FirestoreChats()
                                         .chatExists(
                                             owner.id, selfAccount.UserId);
-
-                                    final newChat = ChatUsers(
-                                      hostId: owner.id,
-                                      guestId: selfAccount.UserId,
-                                      hostName: owner.name,
-                                      guestName: selfAccount.UserName,
-                                      hostImageURL: (owner.imageUrl.toString()),
-                                      guestImageURL: context
-                                          .read<Session_details>()
-                                          .ImgURL,
-                                    );
-                                    final newMessage = Message(
-                                      text: "Hello ${owner.name}",
-                                      userType: selfAccount.UserType,
-                                    );
-                                    String newChatId = FirestoreChats()
-                                        .startNewChat(newChat, newMessage);
+                                    if (chatExists) {
+                                      final newChat = ChatUsers(
+                                        hostId: owner.id,
+                                        guestId: selfAccount.UserId,
+                                        hostName: owner.name,
+                                        guestName: selfAccount.UserName,
+                                        hostImageURL:
+                                            (owner.imageUrl.toString()),
+                                        guestImageURL: context
+                                            .read<Session_details>()
+                                            .ImgURL,
+                                      );
+                                      final newMessage = Message(
+                                        text: "Hello ${owner.name}",
+                                        userType: selfAccount.UserType,
+                                      );
+                                      String newChatId = FirestoreChats()
+                                          .startNewChat(newChat, newMessage);
+                                    }
+                                    else{
+                                      newChatId = FirestoreChats().getChat(owner.id, selfAccount.UserId);
+                                    }
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) {
                                       return ChangeNotifierProvider.value(

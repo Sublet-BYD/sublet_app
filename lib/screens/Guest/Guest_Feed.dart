@@ -110,8 +110,6 @@ class _AssetlistState extends State<Assetlist> {
                 }
               }
             }
-            print(_property_data);
-            print(Provider.of<Session_details>(context).sort_reqs['price'].runtimeType);
             if (Provider.of<Session_details>(context).sort_reqs['price']
                 as bool) {
                   // print('${_property_data[0].data()}\n');

@@ -61,6 +61,7 @@ class FirestoreChats {
         .where('guestId', isEqualTo: guestId)
         .snapshots()
         .first);
+        print(output.docs.isNotEmpty);
     return output.docs.isNotEmpty;
   }
 
