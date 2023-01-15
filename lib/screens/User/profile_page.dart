@@ -17,6 +17,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<Session_details>(context);
+    print(userData.ImgURL);
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(color: Colors.black),

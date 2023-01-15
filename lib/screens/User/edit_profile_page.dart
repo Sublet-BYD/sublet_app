@@ -7,6 +7,7 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart' as syspaths;
+import 'package:sublet_app/Firebase_functions.dart';
 // import 'package:user_profile_ii_example/widget/button_widget.dart';
 import 'package:sublet_app/widgets/user_widgets/profile_widget.dart';
 import 'package:sublet_app/widgets/user_widgets/textfield_widget.dart';
@@ -20,10 +21,35 @@ class EditProfilePage extends StatefulWidget {
 class _EditProfilePageState extends State<EditProfilePage> {
   String currName = '';
   String currAbout = '';
-  var _storedImage;
+  late File _storedImage;
+
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<Session_details>(context);
+    void selectImages(ImageSource source) async {
+      final ImagePicker imagePicker = ImagePicker();
+      if (source == ImageSource.gallery) {
+        final List<XFile> selectedImages = await imagePicker.pickMultiImage();
+        if (selectedImages.isNotEmpty) {
+          setState(() {
+            _storedImage = File(selectedImages[0].path);
+          });
+        }
+      } else if (source == ImageSource.camera) {
+        final imageFile = await imagePicker.pickImage(
+          source: source,
+        );
+        if (imageFile == null) {
+          return;
+        }
+        setState((){
+          //XFile f = imageFile;
+          _storedImage = File(imageFile.path);
+        });
+        userData.UpdateUserImage(await Firebase_functions.UploadUserImage(userData.UserId, _storedImage));
+      }
+    }
+
     currName = userData.UserName;
     currAbout = userData.userAbout;
     return Scaffold(
@@ -56,22 +82,24 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           ),
                           child: const Text('From Camera'),
                           onPressed: () async {
-                            Navigator.of(context).pop();
-                            final imageFile = await picker.pickImage(
-                              source: ImageSource.camera,
-                            );
-                            if (imageFile == null) {
-                              return;
-                            }
-                            setState(() {
-                              _storedImage = File(imageFile.path);
-                            });
-                            final appDir = await syspaths
-                                .getApplicationDocumentsDirectory();
-                            final fileName = path.basename(imageFile.path);
+                            // Navigator.of(context).pop();
+                            // final imageFile = await picker.pickImage(
+                            //   source: ImageSource.camera,
+                            // );
+                            // if (imageFile == null) {
+                            //   return;
+                            // }
+                            // setState(() {
+                            //   _storedImage = File(imageFile.path);
+                            // });
+                            // final appDir = await syspaths
+                            //     .getApplicationDocumentsDirectory();
+                            // final fileName = path.basename(imageFile.path);
 
-                            final savedImage = await _storedImage!
-                                .copy('${appDir.path}/$fileName');
+                            // final savedImage = await _storedImage!
+                            //     .copy('${appDir.path}/$fileName');
+                            Navigator.of(context).pop();
+                            selectImages(ImageSource.camera);
                           },
                         ),
                         TextButton(
@@ -80,23 +108,25 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           ),
                           child: const Text('From Gallery'),
                           onPressed: () async {
+                            // Navigator.of(context).pop();
+                            // final imageFile = await picker.pickImage(
+                            //   source: ImageSource.gallery,
+                            // );
+                            // if (imageFile == null) {
+                            //   return;
+                            // }
+
+                            // setState(() {
+                            //   _storedImage = File(imageFile.path);
+                            // });
+                            // final appDir = await syspaths
+                            //     .getApplicationDocumentsDirectory();
+                            // final fileName = path.basename(imageFile.path);
+
+                            // final savedImage = await _storedImage!
+                            //     .copy('${appDir.path}/$fileName');
                             Navigator.of(context).pop();
-                            final imageFile = await picker.pickImage(
-                              source: ImageSource.gallery,
-                            );
-                            if (imageFile == null) {
-                              return;
-                            }
-
-                            setState(() {
-                              _storedImage = File(imageFile.path);
-                            });
-                            final appDir = await syspaths
-                                .getApplicationDocumentsDirectory();
-                            final fileName = path.basename(imageFile.path);
-
-                            final savedImage = await _storedImage!
-                                .copy('${appDir.path}/$fileName');
+                            selectImages(ImageSource.gallery);
                           },
                         )
                       ],

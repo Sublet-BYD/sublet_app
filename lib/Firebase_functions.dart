@@ -5,6 +5,8 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sublet_app/providers/Session_details.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'models/data/host_data.dart';
@@ -225,8 +227,8 @@ class Firebase_functions {
 
   //Users functions:
 
-  static Future<bool> userExists(String uid)async{
-     DocumentSnapshot<Map<String, dynamic>> document =
+  static Future<bool> userExists(String uid) async {
+    DocumentSnapshot<Map<String, dynamic>> document =
         await db.collection('users').doc(uid).get();
     return document.exists;
   }
@@ -250,21 +252,53 @@ class Firebase_functions {
     return res['type'];
   }
 
-  static Future<bool> AddChatToUser(String uid, String chatId, String hostId) async {
+  static Future<bool> AddChatToUser(
+      String uid, String chatId, String hostId) async {
     var res = true;
-    if(!(await userExists(uid))){
+    if (!(await userExists(uid))) {
       return false;
     }
     Map<String, dynamic> chatList = await getChatList(uid);
     chatList[chatId] = hostId;
-    db.collection('users').doc(uid).update({'chatIdList' : chatList}).onError((error, stackTrace) => res = false);
+    db.collection('users').doc(uid).update({'chatIdList': chatList}).onError(
+        (error, stackTrace) => res = false);
     return res;
   }
 
-  static Future<Map<String, dynamic>> getChatList(String uid) async{
-    if(!(await userExists(uid))){
+  static Future<Map<String, dynamic>> getChatList(String uid) async {
+    if (!(await userExists(uid))) {
       return {};
     }
-    return db.collection('users').doc(uid).get().then((value) => value.data()!['chatIdList']);
+    return db
+        .collection('users')
+        .doc(uid)
+        .get()
+        .then((value) => value.data()!['chatIdList']);
+  }
+
+  static Future<String> UploadUserImage(String uid, var image) async {
+    String res = '';
+    print(image);
+    if (image != null) {
+      final storageRef = FirebaseStorage.instance.ref();
+      Reference ref =
+          storageRef.child("${DateTime.now().microsecondsSinceEpoch}.jpg");
+      print('Uploaded image\n');
+      //upload the file
+      final metaData = SettableMetadata(contentType: 'image/jpeg');
+      try {
+        await ref.putFile(image, metaData);
+        res = await ref.getDownloadURL();
+        FirebaseAuth auth = FirebaseAuth.instance;
+        db.collection('users').doc(uid).update({'imageURL': res}).onError(
+        (error, stackTrace) => res = '');
+        print(auth.currentUser);
+      } catch (e) {
+        print(e);
+      }
+    } else {
+      res = '';
+    }
+    return res;
   }
 }
