@@ -32,7 +32,7 @@ class _NewPropertyState extends State<NewProperty> {
     text: DateFormat.yMMMd().format(DateTime.now()).toString(),
   );
   var appBar = AppBar(
-    title: Text('Add a new Property'),
+    title: const Text('Add a new Property'),
   );
   DateTime from = DateTime.now(); // Will be assigned by the user when entering data for the new property.
   DateTime till = DateTime(2024); // Will be assigned by the user when entering data for the new property.
@@ -94,7 +94,7 @@ class _NewPropertyState extends State<NewProperty> {
 
 //-------------MultiImages-----------------------
   Widget buildImage(File file, int index) => Container(
-        margin: EdgeInsets.symmetric(horizontal: 12),
+        margin: const EdgeInsets.symmetric(horizontal: 12),
         color: Colors.white,
         child: Image.file(
           File(file.path),
@@ -211,7 +211,7 @@ class _NewPropertyState extends State<NewProperty> {
               ),
               //----------------------------------------
               TextField(
-                decoration: InputDecoration(labelText: 'Property Name'),
+                decoration: const InputDecoration(labelText: 'Property Name'),
                 controller: propNameController,
                 onSubmitted: ((value) {
                   FocusScope.of(context).unfocus();
@@ -219,7 +219,7 @@ class _NewPropertyState extends State<NewProperty> {
                 }),
               ),
               TextField(
-                decoration: InputDecoration(labelText: 'Property Location'),
+                decoration: const InputDecoration(labelText: 'Property Location'),
                 controller: propLocationController,
                 onSubmitted: ((value) {
                   FocusScope.of(context).unfocus();
@@ -227,7 +227,7 @@ class _NewPropertyState extends State<NewProperty> {
                 }),
               ),
               TextField(
-                decoration: InputDecoration(labelText: 'Property Price'),
+                decoration: const InputDecoration(labelText: 'Property Price'),
                 controller: propPriceController,
                 onSubmitted: ((value) {
                   FocusScope.of(context).unfocus();
@@ -235,13 +235,13 @@ class _NewPropertyState extends State<NewProperty> {
                 }),
               ),
               Container(
-                padding: EdgeInsets.only(top: 15, left: 15, right: 15),
+                padding: const EdgeInsets.only(top: 15, left: 15, right: 15),
                 // height: MediaQuery.of(context).size.width / 3,
                 child: Center(
                   child: TextField(
                     controller: propStartDateController,
                     //editing controller of this TextField
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         icon: Icon(Icons.calendar_today), //icon of text field
                         labelText: "From" //label text of field
                         ),
@@ -260,7 +260,6 @@ class _NewPropertyState extends State<NewProperty> {
                         setState(() {
                           propStartDateController.text =
                               formattedDate; //set output date to TextField value.
-                          print(propStartDateController.text);
                         });
                       } else {}
                     }),
@@ -268,13 +267,13 @@ class _NewPropertyState extends State<NewProperty> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(left: 15, right: 15),
+                padding: const EdgeInsets.only(left: 15, right: 15),
                 // height: MediaQuery.of(context).size.width / 3,
                 child: Center(
                   child: TextField(
                     controller: propEndDateController,
                     //editing controller of this TextField
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         icon: Icon(Icons.calendar_today), //icon of text field
                         labelText: "To" //label text of field
                         ),
@@ -290,7 +289,6 @@ class _NewPropertyState extends State<NewProperty> {
                         till = pickedDate;
                         String formattedDate =
                             DateFormat.yMMMd().format(pickedDate);
-                        print(formattedDate);
                         setState(
                           () {
                             propEndDateController.text =
@@ -307,7 +305,6 @@ class _NewPropertyState extends State<NewProperty> {
                   FocusScope.of(context).unfocus();
                   //  _addNewProperty();
                   if (_storedImage.isEmpty) {
-                    print("\n ${from.toIso8601String()} - ${till.toIso8601String()}\n");
                     Property pro = Property(
                       name: propNameController.text,
                       location: propLocationController.text,
@@ -328,7 +325,6 @@ class _NewPropertyState extends State<NewProperty> {
                       },
                     );
                   } else {
-                    print("\n $from - $till\n");
                     Property pro = Property(
                       name: propNameController.text,
                       location: propLocationController.text,
@@ -353,9 +349,9 @@ class _NewPropertyState extends State<NewProperty> {
                     );
                   }
                 },
-                icon: Icon(Icons.add),
-                label: Text('Add Place'),
-                style: ButtonStyle(
+                icon: const Icon(Icons.add),
+                label: const Text('Add Place'),
+                style: const ButtonStyle(
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
               ),

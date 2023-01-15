@@ -47,8 +47,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: Text("Alert"),
-                      content: Text("Image saved successfully"),
+                      title: const Text("Take picture"),
+                      // content: Text("Image saved successfully"),
                       actions: <Widget>[
                         TextButton(
                           style: TextButton.styleFrom(
@@ -150,9 +150,9 @@ class ButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ElevatedButton(
         style: ElevatedButton.styleFrom(
-          shape: StadiumBorder(),
+          shape: const StadiumBorder(),
           onPrimary: Colors.white,
-          padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
         ),
         child: Text(text),
         onPressed: onClicked,
