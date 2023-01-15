@@ -20,7 +20,7 @@ class FirestoreChats {
         .collection('chats')
         .doc(chatId)
         .collection('messages')
-        .orderBy('createdAt')
+        .orderBy('createdAt', descending: true)
         .snapshots();
   }
 

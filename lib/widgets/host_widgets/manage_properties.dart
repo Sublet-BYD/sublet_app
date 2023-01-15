@@ -31,76 +31,63 @@ class _ManagePropertiesState extends State<ManageProperties> {
     return Consumer<FirestoreProperties>(
         builder: (context, firestoreProperties, child) {
       return Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
             child: SingleChildScrollView(
               padding: const EdgeInsets.only(bottom: 60),
               physics: const BouncingScrollPhysics(),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Column(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(bottom: 15.0, left: 20),
-                        child: Text(
-                          'Recently Added',
-                          style: TextStyle(
-                            fontSize: 30 * curScaleFactor,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'OpenSans',
-                          ),
-                        ),
-                      ),
-                      PropertiesListCategories(
-                          title: 'Recently Added',
-                          proStream:
-                              firestoreProperties.getRecentHostProperties(
-                                  Provider.of<Session_details>(context)
-                                      .UserId)),
-                    ],
+                  SizedBox(
+                    height: 15,
                   ),
-                  Column(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(bottom: 15.0, left: 20),
-                        child: Text(
-                          'Occupied Properties',
-                          style: TextStyle(
-                            fontSize: 30 * curScaleFactor,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'OpenSans',
-                          ),
-                        ),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 15.0, left: 20),
+                    child: Text(
+                      'Recent',
+                      style: TextStyle(
+                        fontSize: 30 * curScaleFactor,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'OpenSans',
                       ),
-                      PropertiesListCategories(
-                          title: 'Occupied Properties',
-                          proStream:
-                              firestoreProperties.getOccupiedHostProperties(
-                                  Provider.of<Session_details>(context)
-                                      .UserId)),
-                    ],
+                    ),
                   ),
-                  Column(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(bottom: 15.0, left: 20),
-                        child: Text(
-                          'Unoccupied Properties',
-                          style: TextStyle(
-                            fontSize: 30 * curScaleFactor,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'OpenSans',
-                          ),
-                        ),
+                  PropertiesListCategories(
+                      title: 'Recently Added',
+                      proStream: firestoreProperties.getRecentHostProperties(
+                          Provider.of<Session_details>(context).UserId)),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 15.0, left: 20),
+                    child: Text(
+                      'Occupied',
+                      style: TextStyle(
+                        fontSize: 30 * curScaleFactor,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'OpenSans',
                       ),
-                      PropertiesListCategories(
-                          title: 'Unoccupied Properties',
-                          proStream:
-                              firestoreProperties.getAvailableHostProperties(
-                                  Provider.of<Session_details>(context)
-                                      .UserId)),
-                    ],
+                    ),
                   ),
+                  PropertiesListCategories(
+                      title: 'Occupied',
+                      proStream: firestoreProperties.getOccupiedHostProperties(
+                          Provider.of<Session_details>(context).UserId)),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 15.0, left: 20),
+                    child: Text(
+                      'Unoccupied',
+                      style: TextStyle(
+                        fontSize: 30 * curScaleFactor,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'OpenSans',
+                      ),
+                    ),
+                  ),
+                  PropertiesListCategories(
+                      title: 'Unoccupied',
+                      proStream: firestoreProperties.getAvailableHostProperties(
+                          Provider.of<Session_details>(context).UserId)),
                 ],
               ),
             ),

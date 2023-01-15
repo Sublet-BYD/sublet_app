@@ -50,7 +50,7 @@ class _PropertiesListCategoriesState extends State<PropertiesListCategories> {
                 margin: const EdgeInsets.only(top: 10, bottom: 15),
                 child: SingleChildScrollView(
                   child: SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.25,
+                    height: MediaQuery.of(context).size.height * 0.4,
                     child: ListView.builder(
                       padding: const EdgeInsets.only(left: 10),
                       scrollDirection: Axis.horizontal,

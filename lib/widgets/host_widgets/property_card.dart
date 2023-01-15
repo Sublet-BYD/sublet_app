@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:sublet_app/widgets/host_widgets/properties_list_categories.dart';
 
 import '../../models/data/property.dart';
@@ -13,6 +14,8 @@ class PropertyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Colors.grey[200],
+      elevation: 10,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
         side: BorderSide(
@@ -21,7 +24,8 @@ class PropertyCard extends StatelessWidget {
         ),
       ),
       child: Container(
-        width: 150.0,
+        height: 500,
+        width: 250.0,
         child: LayoutBuilder(
           builder: (context, constrains) {
             return Column(
@@ -40,9 +44,12 @@ class PropertyCard extends StatelessWidget {
                       : Image.network(
                           _property.imageUrls![0],
                           fit: BoxFit.fill,
-                          height: 100,
+                          height: 200,
                           width: 40,
                         ),
+                ),
+                SizedBox(
+                  height: 10,
                 ),
                 FittedBox(
                   fit: BoxFit.scaleDown,

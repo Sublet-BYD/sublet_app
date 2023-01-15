@@ -87,7 +87,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
                                     // width: 200,
                                     child: Image.asset(
                                       'assets/Images/home-placeholder-profile.jpg',
-                                      fit: BoxFit.cover,
+                                      fit: BoxFit.fill,
                                     ),
                                   );
                                 }),
@@ -122,7 +122,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
                                                   tag: urlImage,
                                                   child: Image.network(
                                                     urlImage,
-                                                    fit: BoxFit.cover,
+                                                    fit: BoxFit.fill,
                                                   ),
                                                 ),
                                               );
