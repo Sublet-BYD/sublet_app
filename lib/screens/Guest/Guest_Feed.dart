@@ -87,6 +87,7 @@ class _AssetlistState extends State<Assetlist> {
 
   @override
   Widget build(BuildContext context) {
+    late final _property_data;
     var proStream = Provider.of<FirestoreProperties>(context)
         .getSortedProperties(Provider.of<Session_details>(context).SortReqs);
     return StreamBuilder(
@@ -98,18 +99,18 @@ class _AssetlistState extends State<Assetlist> {
             );
           } else {
             if (snapshot.hasData && snapshot.data!.docs.toList().isNotEmpty) {
-              final _property_data = snapshot.data!.docs.toList();
+              _property_data = snapshot.data!.docs.toList();
               if (Provider.of<Session_details>(context)
                   .sort_reqs
                   .containsKey('till')) {
-                for (var element in _property_data) {
-                  if ((element.data()['tilldate'] as DateTime).isAfter(
-                      Provider.of<Session_details>(context).sort_reqs['till']
-                          as DateTime)) {
-                    _property_data.remove(element);
-                  }
-                }
+                _property_data.removeWhere((element) =>
+                    DateTime.tryParse(element.data()['tilldate']).runtimeType ==
+                        DateTime &&
+                    (DateTime.tryParse(element.data()['tilldate'])!.isAfter(
+                        Provider.of<Session_details>(context).sort_reqs['till']
+                            as DateTime)));
               }
+              print('out of for\n');
               List<Pair> sortedList = [];
               int index = 0;
               _property_data.forEach((element) {
@@ -177,7 +178,7 @@ class _AssetlistState extends State<Assetlist> {
                         ),
                       ));
                 },
-                itemCount: snapshot.data!.docs.length,
+                itemCount: _property_data.length,
               );
             } else {
               return Center(
