@@ -72,6 +72,67 @@ class _AssetPageState extends State<AssetPage> {
                             tag: widget.imagePath,
                             child: Column(
                               children: [
+                          //       if (property.imageUrls!.isEmpty)
+                          //   Builder(builder: (context) {
+                          //     return Container(
+                          //       height: 200,
+                          //       // width: 200,
+                          //       child: Image.asset(
+                          //         'assets/Images/home-placeholder-profile.jpg',
+                          //         fit: BoxFit.cover,
+                          //       ),
+                          //     );
+                          //   }),
+                          // if (property.imageUrls!.isNotEmpty)
+                          //   CarouselSlider.builder(
+                          //     options: CarouselOptions(
+                          //       //
+                          //       height: 200,
+                          //       reverse: true,
+                          //       //viewportFraction: 1, //only one image
+                          //       //enlargeCenterPage: true,
+                          //       enableInfiniteScroll: false, //limt the slider
+                          //       // onPageChanged: (index, reason) =>
+                          //       //     setState(() => activateIndex = index),
+                          //     ),
+                          //     itemCount: property.imageUrls!.length,
+                          //     itemBuilder: ((context, index, realIndex) {
+                          //       final urlImage = property.imageUrls![index];
+
+                          //       //return buildImage(urlImage, index);
+                          //       return InkWell(
+                          //         onTap: () {
+                          //           Navigator.of(context).push(
+                          //             MaterialPageRoute(
+                          //               builder: (context) {
+                          //                 return Scaffold(
+                          //                   appBar: AppBar(
+                          //                     title: Text("Full screen"),
+                          //                   ),
+                          //                   body: Hero(
+                          //                     tag: urlImage,
+                          //                     child: Image.network(
+                          //                       urlImage,
+                          //                       fit: BoxFit.cover,
+                          //                     ),
+                          //                   ),
+                          //                 );
+                          //               },
+                          //             ),
+                          //           );
+                          //         },
+                          //         child: Hero(
+                          //           tag: urlImage,
+                          //           child: Image.network(
+                          //             urlImage,
+                          //             fit: BoxFit.cover,
+                          //           ),
+                          //         ),
+                          //       );
+                          //     }),
+                          //   ),
+                                
+
                                 //Image slider
                                 CarouselSlider.builder(
                                   options: CarouselOptions(
