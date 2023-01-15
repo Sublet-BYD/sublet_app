@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sublet_app/Firebase_functions.dart';
 import 'package:sublet_app/models/data/chat_user.dart';
 import 'package:sublet_app/models/data/message.dart';
 
@@ -46,37 +47,50 @@ class FirestoreChats {
   }
 
   String startNewChat(ChatUsers chatUser, Message newMessage) {
-    String chatId = FirebaseFirestore.instance
-        .collection('chats')
-        .add(chatUser.toJson())
-        .then((value) => value.collection('messages').add(newMessage.toJson()))
-        .toString();
+    DocumentReference newchat =
+        FirebaseFirestore.instance.collection('chats').doc();
+    String chatId = newchat.id;
+    newchat.set(chatUser.toJson());
+    newchat.collection('messages').add(newMessage.toJson());
+    // .then((value) => value.collection('messages').add(newMessage.toJson()))
+    // String chatId = FirebaseFirestore.instance
+    //     .collection('chats')
+    //     .add(chatUser.toJson())
+    //     .then((value) => value.collection('messages').add(newMessage.toJson()))
+    //     .toString();
+    print(chatId);
+    Firebase_functions.AddChatToUser(chatUser.guestId, chatId, chatUser.hostId);
     return chatId;
   }
 
-  Future<bool> chatExists(hostId, guestId) async{
-    var output = await (FirebaseFirestore.instance
-        .collection('chats')
-        .where('hostId', isEqualTo: hostId)
-        .where('guestId', isEqualTo: guestId)
-        .snapshots()
-        .first);
-        print(output.docs.isNotEmpty);
-    return output.docs.isNotEmpty;
+  Future<bool> chatExists(hostId, guestId) async {
+    if (!(await Firebase_functions.userExists(hostId)) ||
+        !(await Firebase_functions.userExists(guestId))) {
+      return false;
+    }
+    Map<String, dynamic> chatList =
+        await Firebase_functions.getChatList(guestId);
+    bool res = false;
+    chatList.forEach((key, value) {
+      if (value == hostId) {
+        res = true;
+        return;
+      }
+    });
+    print(res ? 'Chat exists\n' : 'Doesnt exists\n');
+    return res;
   }
 
-  String getChat(hostId, guestId) {
-    var snap = FirebaseFirestore.instance
-        .collection('chats')
-        .where('hostId', isEqualTo: hostId)
-        .where('guestId', isEqualTo: guestId)
-        .limit(1)
-        .snapshots() as QuerySnapshot;
-    // var hostFilter = FirebaseFirestore.instance
-    // .collection('chats')
-    // .where('hostId', isEqualTo: hostId)
-    //  as QuerySnapshot;
-    //  var document = hostFilter.docs.
-    return snap.docs.first.id;
+  Future<String> getChat(hostId, guestId) async {
+    Map<String, dynamic> chatList =
+        await Firebase_functions.getChatList(guestId);
+    String output = '';
+    chatList.forEach((key, value) {
+      if (value == hostId) {
+        output = key;
+        return;
+      }
+    });
+    return output;
   }
 }

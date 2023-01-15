@@ -225,6 +225,12 @@ class Firebase_functions {
 
   //Users functions:
 
+  static Future<bool> userExists(String uid)async{
+     DocumentSnapshot<Map<String, dynamic>> document =
+        await db.collection('users').doc(uid).get();
+    return document.exists;
+  }
+
   static Future<bool> Add_user(
       String uid, String name, String type, imageURL, String about) async {
     bool res = true;
@@ -233,7 +239,8 @@ class Firebase_functions {
       'name': name,
       'type': type,
       'imageURL': imageURL,
-      'about': about
+      'about': about,
+      'chatIdList': {}
     }).onError((error, stackTrace) => {print('$stackTrace\n'), res = false});
     return res;
   }
@@ -241,5 +248,23 @@ class Firebase_functions {
   static Future<String> get_user_type(String uid) async {
     var res = await db.collection('users').doc(uid).get();
     return res['type'];
+  }
+
+  static Future<bool> AddChatToUser(String uid, String chatId, String hostId) async {
+    var res = true;
+    if(!(await userExists(uid))){
+      return false;
+    }
+    Map<String, dynamic> chatList = await getChatList(uid);
+    chatList[chatId] = hostId;
+    db.collection('users').doc(uid).update({'chatIdList' : chatList}).onError((error, stackTrace) => res = false);
+    return res;
+  }
+
+  static Future<Map<String, dynamic>> getChatList(String uid) async{
+    if(!(await userExists(uid))){
+      return {};
+    }
+    return db.collection('users').doc(uid).get().then((value) => value.data()!['chatIdList']);
   }
 }
