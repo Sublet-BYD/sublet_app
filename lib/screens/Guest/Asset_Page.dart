@@ -68,43 +68,73 @@ class _AssetPageState extends State<AssetPage> {
                         //Image
                         SizedBox(
                           width: MediaQuery.of(context).size.width,
-                          child: Hero(
-                            tag: widget.imagePath,
-                            child: Column(
-                              children: [
-                                //Image slider
+                          //child: Hero(
+                          //tag: widget.imagePath,
+                          child: Column(
+                            children: [
+                              if (property.imageUrls!.isEmpty)
+                                Builder(builder: (context) {
+                                  return Container(
+                                    height: 200,
+                                    // width: 200,
+                                    child: Image.asset(
+                                      'assets/Images/home-placeholder-profile.jpg',
+                                      fit: BoxFit.cover,
+                                    ),
+                                  );
+                                }),
+                              if (property.imageUrls!.isNotEmpty)
                                 CarouselSlider.builder(
                                   options: CarouselOptions(
+                                    //
                                     height: 200,
-                                    reverse: true,
-                                    onPageChanged: (index, reason) =>
-                                        setState(() => activateIndex = index),
+                                    reverse: false,
+                                    //viewportFraction: 1, //only one image
+                                    //enlargeCenterPage: true,
+                                    enableInfiniteScroll:
+                                        false, //limt the slider
+                                    // onPageChanged: (index, reason) =>
+                                    //     setState(() => activateIndex = index),
                                   ),
                                   itemCount: property.imageUrls!.length,
                                   itemBuilder: ((context, index, realIndex) {
-                                    if (property.imageUrls!.isEmpty) {
-                                      return Image.asset(
-                                        'assets/Images/home-placeholder-profile.jpg',
-                                        fit: BoxFit.fill,
-                                      );
-                                    }
-                                    print(property.imageUrls!.length);
                                     final urlImage = property.imageUrls![index];
 
-                                    return buildImage(urlImage, index);
+                                    //return buildImage(urlImage, index);
+                                    return InkWell(
+                                      onTap: () {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) {
+                                              return Scaffold(
+                                                appBar: AppBar(
+                                                  title: Text("Full screen"),
+                                                ),
+                                                body: Hero(
+                                                  tag: urlImage,
+                                                  child: Image.network(
+                                                    urlImage,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        );
+                                      },
+                                      child: Hero(
+                                        tag: urlImage,
+                                        child: Image.network(
+                                          urlImage,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    );
                                   }),
                                 ),
-                                //Dot indicator
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                if (property.imageUrls!.isNotEmpty)
-                                  buildIndicator(property.imageUrls!.length)
-                                else
-                                  buildIndicator(1)
-                              ],
-                            ),
+                            ],
                           ),
+                          //),
                         ),
                         //Back button
                         Positioned(
@@ -268,11 +298,12 @@ class _AssetPageState extends State<AssetPage> {
                                   // new implementation on chat!
                                   // please ask before change
                                   onTap: () async {
-                                    late String newChatId;
+                                    String chatId = await FirestoreChats()
+                                        .getChat(owner.id, selfAccount.UserId);
                                     bool chatExists = await FirestoreChats()
                                         .chatExists(
                                             owner.id, selfAccount.UserId);
-                                    if (chatExists) {
+                                    if (!chatExists) {
                                       final newChat = ChatUsers(
                                         hostId: owner.id,
                                         guestId: selfAccount.UserId,
@@ -288,20 +319,14 @@ class _AssetPageState extends State<AssetPage> {
                                         text: "Hello ${owner.name}",
                                         userType: selfAccount.UserType,
                                       );
-                                      String newChatId = FirestoreChats()
+                                      chatId = FirestoreChats()
                                           .startNewChat(newChat, newMessage);
-                                    }
-                                    else{
-                                      newChatId = FirestoreChats().getChat(owner.id, selfAccount.UserId);
                                     }
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) {
                                       return ChangeNotifierProvider.value(
                                         value: CurrentChat(
-                                          chatId: chatExists
-                                              ? FirestoreChats().getChat(
-                                                  owner.id, selfAccount.UserId)
-                                              : newChatId,
+                                          chatId: chatId,
                                         ),
                                         child: ChatDetailPage(
                                             name: owner.name,

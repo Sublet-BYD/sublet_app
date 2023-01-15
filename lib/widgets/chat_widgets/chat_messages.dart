@@ -31,16 +31,15 @@ class _ChatMessagesState extends State<ChatMessages> {
 
   @override
   Widget build(BuildContext context) {
-    final String chatId =
-        Provider.of<CurrentChat>(context, listen: false).chatId;
-    final receiver =
-        Provider.of<Session_details>(context, listen: false).UserType;
+    final String chatId = Provider.of<CurrentChat>(context, listen: false).chatId;
+    print(chatId);
+    final receiver = Provider.of<Session_details>(context, listen: false).UserType;
+    print(receiver);
     Stream messagesStream = FirestoreChats().getAllMessages(chatId);
 
     return StreamBuilder(
         stream: messagesStream,
         builder: (context, snapshot) {
-          final data = snapshot.data as QuerySnapshot;
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
               return const Center(
@@ -50,11 +49,11 @@ class _ChatMessagesState extends State<ChatMessages> {
               if (!snapshot.hasData) {
                 return SizedBox(
                   height: MediaQuery.of(context).size.height * 0.25,
-                  child: const Text("Not available properties here"),
+                  child: const Text("No available Messages here"),
                 );
               }
           }
-
+          final data = snapshot.data as QuerySnapshot;
           return Stack(
             children: <Widget>[
               ListView.builder(
