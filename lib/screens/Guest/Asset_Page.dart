@@ -329,11 +329,12 @@ class _AssetPageState extends State<AssetPage> {
                                   // new implementation on chat!
                                   // please ask before change
                                   onTap: () async {
-                                    late String newChatId;
+                                    String chatId = await FirestoreChats()
+                                        .getChat(owner.id, selfAccount.UserId);
                                     bool chatExists = await FirestoreChats()
                                         .chatExists(
                                             owner.id, selfAccount.UserId);
-                                    if (chatExists) {
+                                    if (!chatExists) {
                                       final newChat = ChatUsers(
                                         hostId: owner.id,
                                         guestId: selfAccount.UserId,
@@ -349,20 +350,14 @@ class _AssetPageState extends State<AssetPage> {
                                         text: "Hello ${owner.name}",
                                         userType: selfAccount.UserType,
                                       );
-                                      String newChatId = FirestoreChats()
+                                      chatId = FirestoreChats()
                                           .startNewChat(newChat, newMessage);
-                                    }
-                                    else{
-                                      newChatId = FirestoreChats().getChat(owner.id, selfAccount.UserId);
                                     }
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) {
                                       return ChangeNotifierProvider.value(
                                         value: CurrentChat(
-                                          chatId: chatExists
-                                              ? FirestoreChats().getChat(
-                                                  owner.id, selfAccount.UserId)
-                                              : newChatId,
+                                          chatId: chatId,
                                         ),
                                         child: ChatDetailPage(
                                             name: owner.name,

@@ -96,9 +96,6 @@ class _AssetlistState extends State<Assetlist> {
             );
           } else {
             final _property_data = snapshot.data!.docs.toList();
-            print(_property_data);
-            print('Reqs: ${Provider.of<Session_details>(context)
-                .sort_reqs.toString()}');
             if (Provider.of<Session_details>(context)
                 .sort_reqs
                 .containsKey('till')) {
@@ -116,7 +113,7 @@ class _AssetlistState extends State<Assetlist> {
               _property_data.sort((a, b) => a.data()['price'] as int < b.data()['price'] as int);
             }
             else{
-              _property_data.sort((a, b) => a.data()['price'] > b.data()['price']);
+              _property_data.sort((a, b) => a.data()['price'] as int > b.data()['price'] as int);
             }
             return ListView.builder(
               padding: const EdgeInsets.only(bottom: 70),
