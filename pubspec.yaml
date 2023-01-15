@@ -58,6 +58,7 @@ dependencies:
   json_annotation: ^4.7.0
   toggle_switch: ^2.0.1
   flutter_typeahead: ^4.1.1
+  flutter_svg: ^1.1.6
 
 dev_dependencies:
   flutter_test:

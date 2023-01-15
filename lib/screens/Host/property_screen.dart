@@ -64,261 +64,191 @@ class _PropertyScreenState extends State<PropertyScreen> {
               if (snapshot.hasData) {
                 property = Property.fromJson(snapshot.data!.data()!);
                 return SingleChildScrollView(
-                  child: Column(children: <Widget>[
-                    Container(
-                      height: (MediaQuery.of(context).size.height -
-                              MediaQuery.of(context).padding.top) *
-                          0.3,
-                      width: MediaQuery.of(context).size.width,
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Container(
+                          // height: (MediaQuery.of(context).size.height -
+                          //         MediaQuery.of(context).padding.top) *
+                          //     0.3,
+                          // width: MediaQuery.of(context).size.width,
+                          color: Colors.grey,
 
-                      //photo slider
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          if (property.imageUrls!.isEmpty)
-                            Builder(builder: (context) {
-                              return Container(
-                                height: 200,
-                                // width: 200,
-                                child: Image.asset(
-                                  'assets/Images/home-placeholder-profile.jpg',
-                                  fit: BoxFit.cover,
-                                ),
-                              );
-                            }),
-                          if (property.imageUrls!.isNotEmpty)
-                            CarouselSlider.builder(
-                              options: CarouselOptions(
-                                //
-                                height: 200,
-                                reverse: true,
-                                //viewportFraction: 1, //only one image
-                                //enlargeCenterPage: true,
-                                enableInfiniteScroll: false, //limt the slider
-                                // onPageChanged: (index, reason) =>
-                                //     setState(() => activateIndex = index),
-                              ),
-                              itemCount: property.imageUrls!.length,
-                              itemBuilder: ((context, index, realIndex) {
-                                final urlImage = property.imageUrls![index];
-
-                                //return buildImage(urlImage, index);
-                                return InkWell(
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) {
-                                          return Scaffold(
-                                            appBar: AppBar(
-                                              title: Text("Full screen"),
-                                            ),
-                                            body: Hero(
-                                              tag: urlImage,
-                                              child: Image.network(
-                                                urlImage,
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    );
-                                  },
-                                  child: Hero(
-                                    tag: urlImage,
-                                    child: Image.network(
-                                      urlImage,
+                          //photo slider
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (property.imageUrls!.isEmpty)
+                                Builder(builder: (context) {
+                                  return Container(
+                                    height: 300,
+                                    // width: 200,
+                                    child: Image.asset(
+                                      'assets/Images/home-placeholder-profile.jpg',
                                       fit: BoxFit.cover,
                                     ),
+                                  );
+                                }),
+                              if (property.imageUrls!.isNotEmpty)
+                                CarouselSlider.builder(
+                                  options: CarouselOptions(
+                                    //
+                                    height: 300,
+                                    reverse: true,
+                                    //viewportFraction: 1, //only one image
+                                    //enlargeCenterPage: true,
+                                    enableInfiniteScroll:
+                                        false, //limt the slider
+                                    // onPageChanged: (index, reason) =>
+                                    //     setState(() => activateIndex = index),
                                   ),
-                                );
-                              }),
-                            ),
-                          //--------- for now I off the dot
-                          // const SizedBox(
-                          //   height: 5,
-                          // ),
-                          // if (property.imageUrls!.isNotEmpty)
-                          //   buildIndicator(property.imageUrls!.length)
-                          // else
-                          //   buildIndicator(1)
-                        ],
-                      ),
-                    ),
-                    Column(
-                      children: [
-                        Container(
-                          // TITLE
-                          margin: EdgeInsets.only(left: 15, right: 15, top: 10),
-                          // padding: EdgeInsets.only(left: 15, right: 15, top: 10),
-                          alignment: Alignment
-                              .topLeft, // require for the title to begin from left
-                          // height: constrains.maxHeight * 0.2,
-                          // width: double.infinity,
-                          child: FittedBox(
-                            child: Text(
-                              // textAlign: TextAlign.left,
-                              property.name,
-                              style: TextStyle(
-                                fontFamily: 'OpenSans',
-                                // fontSize: constrains.maxHeight * 0.2,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 50,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          //Location TextBox
-                          margin: EdgeInsets.only(top: 10, left: 15),
-                          // padding: EdgeInsets.only(left: 15),
-                          alignment: Alignment
-                              .topLeft, // require for the title to begin from left
-                          // height: constrains.maxHeight * 0.2,
-                          // width: double.infinity,
-                          child: Row(
-                            children: [
-                              Icon(Icons.location_on_outlined),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(bottom: 20),
-                                child: SizedBox(
-                                  // LOCATION
-                                  height: 20,
-                                  child: FittedBox(
-                                    child: Text(
-                                      // textAlign: TextAlign.left,
-                                      property.location,
-                                      style: TextStyle(
-                                        fontFamily: 'OpenSans',
-                                        color: Colors.grey[700],
-                                        fontWeight: FontWeight.bold,
+                                  itemCount: property.imageUrls!.length,
+                                  itemBuilder: ((context, index, realIndex) {
+                                    final urlImage = property.imageUrls![index];
+
+                                    //return buildImage(urlImage, index);
+                                    return InkWell(
+                                      onTap: () {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) {
+                                              return Scaffold(
+                                                appBar: AppBar(
+                                                  title: Text("Full screen"),
+                                                ),
+                                                body: Hero(
+                                                  tag: urlImage,
+                                                  child: Image.network(
+                                                    urlImage,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        );
+                                      },
+                                      child: Hero(
+                                        tag: urlImage,
+                                        child: Image.network(
+                                          urlImage,
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
-                                    ),
-                                  ),
+                                    );
+                                  }),
                                 ),
-                              ),
+                              //--------- for now I off the dot
+                              // const SizedBox(
+                              //   height: 5,
+                              // ),
+                              // if (property.imageUrls!.isNotEmpty)
+                              //   buildIndicator(property.imageUrls!.length)
+                              // else
+                              //   buildIndicator(1)
                             ],
                           ),
                         ),
-                        // Chats with renters
-                        GestureDetector(
-                          onTap: () {
-                            // VERY IMPORTANT: Move user to the apropriate chats page (screen with all chats about this property).
+                        ContentIntro(
+                          houseName: property.name,
+                          houseAddress: property.location,
+                        ),
 
-                            //Move to chat page for this property
-                            print('Moving to chats page\n');
-                          },
-                          child: Container(
-                            height: 50,
-                            decoration: BoxDecoration(
-                              color: Colors.amber[600],
-                              border: Border.all(
-                                  color: (Colors.amber[800]!),
-                                  width:
-                                      3), //Exclamation mark added to assure null safety
-                            ),
-                            // margin: EdgeInsets.only(top: 5),
-                            alignment: Alignment
-                                .topLeft, // require for the title to begin from left
-                            // height: constrains.maxHeight * 0.2,
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                    padding: EdgeInsets.only(top: 13),
-                                    child: Icon(Icons.message),
-                                    margin: EdgeInsets.only(left: 15)),
-                                SizedBox(
-                                  width: 5,
+                        //Occupation status
+
+                        SizedBox(height: 20),
+                        About(),
+
+                        SizedBox(height: 25),
+                        Container(
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            child: ElevatedButton(
+                                onPressed: () {
+                                  ChangeAvailability(property);
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8)),
+                                  primary: Color((property.occupied != null &&
+                                          property.occupied!)
+                                      ? 0xFFEF5350
+                                      : 0xFF8BC34A),
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.only(top: 10),
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  padding: EdgeInsets.symmetric(vertical: 15),
                                   child: Text(
-                                    textAlign: TextAlign.center,
                                     // textAlign: TextAlign.left,
-                                    'Contact your renters',
+                                    (property.occupied!)
+                                        ? 'Occupied'
+                                        : 'Not occupied',
                                     style: TextStyle(
                                       fontFamily: 'OpenSans',
-                                      color: Colors.grey[700],
+                                      color: Colors.black,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 18,
+                                      fontSize: 20,
                                     ),
                                   ),
+                                ))),
+
+                        SizedBox(height: 25),
+                        Container(
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            child: ElevatedButton(
+                                onPressed: () => {_startEditProperty(context)},
+                                style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8)),
+                                  primary: Colors.amber[300],
                                 ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        //Occupation status
-                        GestureDetector(
-                          onTap: () => ChangeAvailability(property),
-                          child: Container(
-                            color: Color((property.occupied != null &&
-                                    property.occupied!)
-                                ? 0xFFEF5350
-                                : 0xFF8BC34A),
-                            margin: EdgeInsets.only(top: 10),
-                            padding: EdgeInsets.symmetric(vertical: 15),
-                            alignment: Alignment
-                                .topLeft, // require for the title to begin from left
-                            // height: constrains.maxHeight * 0.2,
-                            child: Center(
-                              child: FittedBox(
-                                child: Text(
-                                  // textAlign: TextAlign.left,
-                                  (property.occupied!)
-                                      ? 'Occupied. Tap to change status'
-                                      : 'Not occupied. Tap to change status',
-                                  style: TextStyle(
-                                    fontFamily: 'OpenSans',
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                  ),
+                                child: Container(
+                                    alignment: Alignment.center,
+                                    padding: EdgeInsets.symmetric(vertical: 15),
+                                    child: Text('Edit Property',
+                                        style: TextStyle(
+                                            color: Colors.black87,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold))))),
+
+                        SizedBox(height: 25),
+                        Container(
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            child: ElevatedButton(
+                                onPressed: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext ctx) =>
+                                          Delete_prop_dialog(
+                                              property: property));
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8)),
+                                  primary: Colors.red,
                                 ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        //Remove this property -> will be fully implemented in the future
-                        GestureDetector(
-                          onTap: () {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext ctx) =>
-                                    Delete_prop_dialog(property: property));
-                          },
-                          child: Container(
-                            color: Colors.red[800],
-                            margin: EdgeInsets.only(top: 10),
-                            // height: constrains.maxHeight * 0.2,
-                            child: ListTile(
-                              leading: Icon(Icons.delete),
-                              title: Text('Delete this property',
-                                  style: TextStyle(
-                                      fontFamily: 'OpenSans',
-                                      fontWeight: FontWeight.bold)),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ]),
+                                child: Container(
+                                    alignment: Alignment.center,
+                                    padding: EdgeInsets.symmetric(vertical: 15),
+                                    child: Text('Delete Property',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold))))),
+                      ]),
                 );
               } else {
                 return Center(child: Text('An unexpected error has occurred.'));
               }
             }
           }),
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.miniCenterFloat,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => {_startEditProperty(context)},
-        child: Icon(Icons.edit),
-      ),
+      // floatingActionButtonLocation:
+      //     FloatingActionButtonLocation.miniCenterFloat,
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () => {_startEditProperty(context)},
+      //   child: Icon(Icons.edit),
+      // ),
     );
   }
 
@@ -530,6 +460,82 @@ class _EditPropertyState extends State<EditProperty> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class ContentIntro extends StatelessWidget {
+  final String houseName;
+  final String houseAddress;
+  const ContentIntro(
+      {Key? key, required this.houseName, required this.houseAddress})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            houseName,
+            style: TextStyle(
+              fontFamily: 'OpenSans',
+              fontSize: 35,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            houseAddress,
+            style:
+                Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 14),
+          ),
+          SizedBox(height: 10),
+          RichText(
+            text: TextSpan(children: [
+              TextSpan(
+                  text: '\$4455 ',
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline1!
+                      .copyWith(fontSize: 16, fontWeight: FontWeight.bold)),
+            ]),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class About extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'About',
+            style: Theme.of(context)
+                .textTheme
+                .headline1!
+                .copyWith(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            'Enum veniam dolor sint ipsum culpa magna dolor incididunt laborum excepteu...',
+            style:
+                Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 14),
+          )
+        ],
       ),
     );
   }

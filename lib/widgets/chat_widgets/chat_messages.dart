@@ -31,8 +31,10 @@ class _ChatMessagesState extends State<ChatMessages> {
 
   @override
   Widget build(BuildContext context) {
-    final String chatId = Provider.of<CurrentChat>(context).chatId;
-    final receiver = Provider.of<Session_details>(context).UserType;
+    final String chatId =
+        Provider.of<CurrentChat>(context, listen: false).chatId;
+    final receiver =
+        Provider.of<Session_details>(context, listen: false).UserType;
     Stream messagesStream = FirestoreChats().getAllMessages(chatId);
 
     return StreamBuilder(
