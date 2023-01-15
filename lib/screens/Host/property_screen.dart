@@ -91,7 +91,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
                               options: CarouselOptions(
                                 //
                                 height: 200,
-                                reverse: true,
+                                reverse: false,
                                 //viewportFraction: 1, //only one image
                                 //enlargeCenterPage: true,
                                 enableInfiniteScroll: false, //limt the slider
