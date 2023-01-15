@@ -52,12 +52,6 @@ class FirestoreChats {
     String chatId = newchat.id;
     newchat.set(chatUser.toJson());
     newchat.collection('messages').add(newMessage.toJson());
-    // .then((value) => value.collection('messages').add(newMessage.toJson()))
-    // String chatId = FirebaseFirestore.instance
-    //     .collection('chats')
-    //     .add(chatUser.toJson())
-    //     .then((value) => value.collection('messages').add(newMessage.toJson()))
-    //     .toString();
     print(chatId);
     Firebase_functions.AddChatToUser(chatUser.guestId, chatId, chatUser.hostId);
     return chatId;

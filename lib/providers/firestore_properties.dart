@@ -60,7 +60,6 @@ class FirestoreProperties with ChangeNotifier {
       till = DateTime(
           3000); // Arbitrarily far away time; The user has not chosen an end date.
     }
-    print('Attempting query\n');
     if (requirements.containsKey('location') &&
         requirements['location'] != 'any location') {
       // Return only properties from chosen location

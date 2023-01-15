@@ -109,11 +109,10 @@ class _AssetlistState extends State<Assetlist> {
             }
             if (Provider.of<Session_details>(context).sort_reqs['price']
                 as bool) {
-                  // print('${_property_data[0].data()}\n');
-              _property_data.sort((a, b) => a.data()['price'] as int < b.data()['price'] as int);
+              _property_data.sort((a, b) => a.data()['price'].toString().compareTo(b.data()['price'].toString()));
             }
             else{
-              _property_data.sort((a, b) => a.data()['price'] as int > b.data()['price'] as int);
+              _property_data.sort((a, b) => a.data()['price'].toString().compareTo(b.data()['price'].toString()));
             }
             return ListView.builder(
               padding: const EdgeInsets.only(bottom: 70),
