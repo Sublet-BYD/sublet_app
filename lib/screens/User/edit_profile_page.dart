@@ -3,7 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:provider/provider.dart';
-
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart' as syspaths;
 // import 'package:user_profile_ii_example/widget/button_widget.dart';
 import 'package:sublet_app/widgets/user_widgets/profile_widget.dart';
 import 'package:sublet_app/widgets/user_widgets/textfield_widget.dart';
@@ -17,6 +20,7 @@ class EditProfilePage extends StatefulWidget {
 class _EditProfilePageState extends State<EditProfilePage> {
   String currName = '';
   String currAbout = '';
+  var _storedImage;
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<Session_details>(context);
@@ -33,10 +37,73 @@ class _EditProfilePageState extends State<EditProfilePage> {
         physics: const BouncingScrollPhysics(),
         children: [
           ProfileWidget(
-            imagePath: userData.ImgURL,
-            isEdit: true,
-            onClicked: () async {},
-          ),
+              imagePath: userData.ImgURL,
+              isEdit: true,
+              onClicked: () async {
+                final ImagePicker picker = ImagePicker();
+
+                //show dialog
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text("Alert"),
+                      content: Text("Image saved successfully"),
+                      actions: <Widget>[
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            textStyle: Theme.of(context).textTheme.labelLarge,
+                          ),
+                          child: const Text('From Camera'),
+                          onPressed: () async {
+                            Navigator.of(context).pop();
+                            final imageFile = await picker.pickImage(
+                              source: ImageSource.camera,
+                            );
+                            if (imageFile == null) {
+                              return;
+                            }
+                            setState(() {
+                              _storedImage = File(imageFile.path);
+                            });
+                            final appDir = await syspaths
+                                .getApplicationDocumentsDirectory();
+                            final fileName = path.basename(imageFile.path);
+
+                            final savedImage = await _storedImage!
+                                .copy('${appDir.path}/$fileName');
+                          },
+                        ),
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            textStyle: Theme.of(context).textTheme.labelLarge,
+                          ),
+                          child: const Text('From Gallery'),
+                          onPressed: () async {
+                            Navigator.of(context).pop();
+                            final imageFile = await picker.pickImage(
+                              source: ImageSource.gallery,
+                            );
+                            if (imageFile == null) {
+                              return;
+                            }
+
+                            setState(() {
+                              _storedImage = File(imageFile.path);
+                            });
+                            final appDir = await syspaths
+                                .getApplicationDocumentsDirectory();
+                            final fileName = path.basename(imageFile.path);
+
+                            final savedImage = await _storedImage!
+                                .copy('${appDir.path}/$fileName');
+                          },
+                        )
+                      ],
+                    );
+                  },
+                );
+              }),
           const SizedBox(height: 24),
           TextFieldWidget(
             label: 'Full Name',
