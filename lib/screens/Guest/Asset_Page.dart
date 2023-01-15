@@ -1,6 +1,8 @@
 // ignore_for_file: non_constant_identifier_names, prefer_const_constructors, use_build_context_synchronously
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:sublet_app/Firebase_functions.dart';
 import 'package:sublet_app/models/Pair.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +14,7 @@ import 'package:sublet_app/models/data/property.dart';
 import 'package:sublet_app/providers/firestore_chat.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:intl/intl.dart';
+import 'package:sublet_app/screens/User/other_profile_page.dart';
 
 import '../../providers/current_chat.dart';
 import '../Chat/chat_details_screen.dart';
@@ -229,7 +232,7 @@ class _AssetPageState extends State<AssetPage> {
                                                 property.description!.length >
                                                     5)
                                             ? property.description as String
-                                            : '{Man} Once upon a time there was a lovely princess.But she had an enchantment upon her of a fearful sort which could only be broken by loves first kiss.She was locked away in a castle guarded by a terrible fire-breathing dragon.Many brave knigts had attempted to free her from this dreadful prison, but non prevailed.She waited in the dragons keep in the highest room of the tallest tower for her true love and true loves first kiss.{Laughing} Like thats ever gonna happen.',
+                                            : 'No available description.',
                                         style: TextStyle(
                                             fontFamily: 'OpenSans',
                                             fontSize: 10),
@@ -238,24 +241,32 @@ class _AssetPageState extends State<AssetPage> {
                                   ),
                                 ),
                                 //Information about the owner
-                                Card(
-                                  elevation: 0,
-                                  child: Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    padding: EdgeInsets.only(top: 10),
-                                    child: ListTile(
-                                      leading: CircleAvatar(
-                                        backgroundImage: AssetImage(
-                                            'assets/Empty_profile_pic.jpg'), // Commented out: owner.profile_pic
-                                        radius: 40,
+                                GestureDetector(
+                                  onTap: (() async{
+                                    print(owner.id);
+                                    print(Provider.of<Session_details>(context, listen: false).UserId);
+                                    Pair details = await Firebase_functions.GetUserDetails(owner.id);
+                                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => OtherProfilePage(uname: details.obj1, imgUrl: details.obj2.obj1, about: details.obj2.obj2,)));
+                                  }),
+                                  child: Card(
+                                    elevation: 0,
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      padding: EdgeInsets.only(top: 10),
+                                      child: ListTile(
+                                        leading: CircleAvatar(
+                                          backgroundImage: AssetImage(
+                                              'assets/Empty_profile_pic.jpg'), // Commented out: owner.profile_pic
+                                          radius: 40,
+                                        ),
+                                        title: Text(
+                                            'Meet your host, ${owner.name}',
+                                            style: TextStyle(
+                                                fontFamily: 'OpenSans',
+                                                fontWeight: FontWeight.bold)),
+                                        subtitle: Text(
+                                            'They\'ve been hosting since ${(owner != null) ? owner.joined_at : 'literally just now'}'),
                                       ),
-                                      title: Text(
-                                          'Meet your host, ${owner.name}',
-                                          style: TextStyle(
-                                              fontFamily: 'OpenSans',
-                                              fontWeight: FontWeight.bold)),
-                                      subtitle: Text(
-                                          'They\'ve been hosting since ${(owner != null) ? owner.joined_at : 'literally just now'}'),
                                     ),
                                   ),
                                 ),
@@ -267,14 +278,9 @@ class _AssetPageState extends State<AssetPage> {
                                     child: ListTile(
                                       leading: Container(
                                         padding: EdgeInsets.only(left: 25),
-                                        child: GestureDetector(
-                                            onTap: () {
-                                              //open a calendar widget to view dates - to do in the future
-                                              print('Clicked on calendar\n');
-                                            },
-                                            child: Icon(
-                                                Icons.calendar_month_outlined,
-                                                size: 30)),
+                                        child: Icon(
+                                            Icons.calendar_month_outlined,
+                                            size: 30),
                                       ),
                                       title: Center(
                                           child: Text('available_dates:',
@@ -342,7 +348,7 @@ class _AssetPageState extends State<AssetPage> {
                                         border: Border.all(
                                             color: (Colors.amber[800]!),
                                             width:
-                                                3), //Exclamation mark added to assure null safety
+                                                3),
                                       ),
                                       width: MediaQuery.of(context).size.width,
                                       child: ListTile(

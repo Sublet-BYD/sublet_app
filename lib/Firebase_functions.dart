@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sublet_app/models/Pair.dart';
 import 'package:sublet_app/providers/Session_details.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -300,5 +301,10 @@ class Firebase_functions {
       res = '';
     }
     return res;
+  }
+
+  static Future<Pair<String, Pair<String, String>>> GetUserDetails(String uid) async{
+    var user = await db.collection('users').doc(uid).get();
+    return Pair(user['name'] as String, Pair(user['imageURL'] as String ,user['about'] as String));
   }
 }
