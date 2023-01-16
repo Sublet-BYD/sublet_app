@@ -12,6 +12,19 @@ While other popular solutions for subletting act as mediators between a landlord
 
 ## About our code
 
-Our application uses the Google framworks Flutter and Firebase, to have the best connection of the front and back end of the project. Flutter is a relatively new framework offered by Google to develop applications using a single codebase. 
+Our application uses the Google framworks Flutter and Firebase, to have the best connection of the front and back end of the project. Flutter is a relatively new framework offered by Google to develop applications using a single codebase. Since its inception, Flutter was meant to work as a front end to applications using Firebase, and so the connection between the two frameworks is as close to optimal as is achievable.
+
+// Paragraph about the structure of the project and MVVM, including a short explanation of Flutter's aproach to architectural patterns and the idea of providers
+
+## Some examples
+
+//  Include some pics/vids of the app, explaining the guest feed, (host) property screen, chat, etc.
+
+
+## About us
+
+
+
+
 
  
