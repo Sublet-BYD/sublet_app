@@ -60,7 +60,7 @@ Here we see a screenshot of a property screen from a guest's perspective; this p
 
 Introducing this project are: Barak Dafna, Daniel Zer Kavod, and Yossie Kachlon. you can find our individual github pages here:
 
-[Daniel](https://github.com/danielzk107)   [Yossie](https://github.com/YosefKahlon)   [Barak](https://github.com/barakdf)
+[Daniel](https://github.com/danielzk107)   [Yosef](https://github.com/YosefKahlon)   [Barak](https://github.com/barakdf)
 
 We are third year students for CS in Ariel University; this project was submitted as the main assignment for the course "Software Engineering". 
 
