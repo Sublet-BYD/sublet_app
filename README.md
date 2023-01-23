@@ -58,7 +58,7 @@ Here we see a screenshot of a property screen from a guest's perspective; this p
 
 ## About us
 
-Introducing this project are: Barak Dafna, Daniel Zer Kavod, and Yossie Kachlon. you can find our individual github pages here:
+Introducing this project are: Barak Dafna, Daniel Zer Kavod, and Yosef Kahlon. you can find our individual github pages here:
 
 [Daniel](https://github.com/danielzk107)   [Yosef](https://github.com/YosefKahlon)   [Barak](https://github.com/barakdf)
 
